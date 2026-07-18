@@ -1,0 +1,3 @@
+Get()：返回所管理的 COM 对象的原始指针，但不会增加引用计数。
+GetAddressOf()：返回指向指针的地址，常用于作为输出参数（例如CoCreateInstance）。
+ReleaseAndGetAddressOf()：先释放当前对象，然后返回指向指针的地址，可用于重置 COM 对象。

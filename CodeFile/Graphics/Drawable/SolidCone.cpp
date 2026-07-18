@@ -1,0 +1,231 @@
+﻿/** @file SolidCone.cpp
+ *  @brief 纯色锥体可绘制对象实现（线框模式）/ Solid-color cone drawable object implementation (wireframe mode)
+ *
+ *  包含 SolidConeDrawable 类的成员函数实现。
+ *  锥体以线框模式渲染，便于在编辑器中识别聚光灯方向。
+ *  Contains the member function implementations of the SolidConeDrawable class.
+ *  Cones are rendered in wireframe mode for easy spotlight direction identification.
+ */
+#include "SolidCone.h"
+#include "../Bindable/ConstantBuffers.h"
+#include "../Bindable/Rasterizer.h"
+
+namespace YingLong
+{
+	/** @brief 拷贝构造函数
+	 *  Copy constructor
+	 *
+	 *  由 DrawableBase 拷贝构造函数后，需要重新查找静态索引缓冲区。
+	 *  注意：Drawable 基类的拷贝构造函数为空，不复制实例级绑定（TransformCB/ColorCB），
+	 *        因此拷贝后的对象需要手动设置这些绑定才能正确渲染。
+	 *  After DrawableBase copy, must re-find static index buffer.
+	 *  Note: Drawable base copy ctor is empty, instance-level binds (TransformCB/ColorCB)
+	 *        are NOT copied, so the copied object needs manual bind setup to render correctly.
+	 *
+	 *  @param 要拷贝的锥体对象 / The cone object to copy from
+	 */
+	SolidConeDrawable::SolidConeDrawable(const SolidConeDrawable&)
+	{
+		FindIndexBufferFromStatic();
+		// 注意：实例绑定（TransformCB / ColorCB）不会被拷贝，
+		// 需要调用者通过 SetPosition/SetColor 后重新设置。
+		// Note: Instance binds (TransformCB / ColorCB) are not copied,
+		// they must be re-set by caller via SetPosition/SetColor.
+	}
+
+	/** @brief 构造函数
+	 *  Constructor
+	 *
+	 *  使用指定的高度、半径和颜色创建锥体。
+	 *  Creates a cone with specified height, radius and color.
+	 *
+	 *  @param graphics 图形设备对象引用 / Graphics device object reference
+	 *  @param height 锥体高度 / Cone height
+	 *  @param radius 底面半径 / Base radius
+	 *  @param color 锥体颜色 / Cone color
+	 */
+	SolidConeDrawable::SolidConeDrawable(Graphics& graphics, float height, float radius, XMFLOAT3 color)
+		: ConeHeight(height), ConeRadius(radius)
+	{
+		// 首次创建时初始化静态绑定（同类所有实例共享）
+		// Initialize static bindings on first creation (shared by all instances of same type)
+		if (!IsStaticInitialized())
+		{
+			// 定义顶点结构
+			// Define vertex structure
+			struct Vertex
+			{
+				XMFLOAT3 Position; ///< 位置 / Position
+				XMFLOAT3 Color;    ///< 颜色 / Color
+			};
+
+			// 生成锥体模型
+			// Generate cone model
+			auto Model = Cone::Generate<Vertex>(32, ConeHeight, ConeRadius);
+			// 设置顶点颜色
+			// Set vertex colors
+			for (auto& v : Model.vertices)
+			{
+				v.Color = color;
+			}
+			// 添加静态顶点缓冲区
+			// Add static vertex buffer
+			AddStaticBind(std::make_unique<VertexBuffer>(graphics, Model.vertices));
+			// 添加静态索引缓冲区
+			// Add static index buffer
+			AddStaticIndexBuffer(std::make_unique<IndexBuffer>(graphics, Model.indices));
+
+			// 创建顶点着色器并保存字节码用于输入布局
+			// Create vertex shader and save bytecode for input layout
+			auto pVertexShader = std::make_unique<VertexShader>(graphics,
+				"CodeFile/Shader/SolidVertexShader.hlsl");
+			auto pVertexShaderByteCode = pVertexShader->GetBytecode();
+			AddStaticBind(std::move(pVertexShader));
+
+			// 创建像素着色器
+			// Create pixel shader
+			AddStaticBind(std::make_unique<PixelShader>(graphics,
+				"CodeFile/Shader/SolidPixelShader.hlsl"));
+
+			// 定义输入布局描述
+			// Define input layout description
+			const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+			{
+				{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			};
+			// 添加静态输入布局
+			// Add static input layout
+			AddStaticBind(std::make_unique<InputLayout>(graphics, ied, pVertexShaderByteCode));
+
+			// 设置图元拓扑为三角形列表（配合线框光栅化显示为线框网格）
+			// Set primitive topology to triangle list (rendered as wireframe via rasterizer)
+			AddStaticBind(std::make_unique<Topology>(graphics, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+
+			// 线框光栅化状态：聚光灯可视化应渲染为线框，便于与点光源球体区分
+			// Wireframe rasterizer: spotlight viz should be wireframe to distinguish from point light spheres
+			AddStaticBind(std::make_unique<Rasterizer>(graphics,
+				D3D11_FILL_WIREFRAME, D3D11_CULL_NONE));
+		}
+		else
+		{
+			// 静态绑定已存在，从中查找索引缓冲区
+			// Static bindings already exist, find index buffer from them
+			FindIndexBufferFromStatic();
+		}
+
+		// 添加变换常量缓冲区
+		// Add transform constant buffer
+		AddBind(std::make_unique<TransformConstantBuffer>(graphics, *this));
+		// 添加纯色常量缓冲区
+		// Add solid color constant buffer
+		AddBind(std::make_unique<SolidColorConstantBuffer>(graphics, &GetColor()));
+	}
+
+	/** @brief 设置位置
+	 *  Set position
+	 *
+	 *  @param Position 新位置 / New position
+	 */
+	void SolidConeDrawable::SetPosition(DirectX::XMFLOAT3 Position) noexcept
+	{
+		this->Position = Position;
+	}
+
+	/** @brief 设置旋转（弧度）
+	 *  Set rotation (radians)
+	 *
+	 *  @param Rotation 旋转角（弧度）/ Rotation angles in radians
+	 */
+	void SolidConeDrawable::SetRotation(DirectX::XMFLOAT3 Rotation) noexcept
+	{
+		this->Rotation = Rotation;
+	}
+
+	/** @brief 设置颜色
+	 *  Set color
+	 *
+	 *  设置锥体的颜色。
+	 *  Sets the color of the cone.
+	 *
+	 *  @param color 新颜色 / New color
+	 */
+	void SolidConeDrawable::SetColor(DirectX::XMFLOAT3 color) noexcept
+	{
+		this->Color = color;
+	}
+
+	/** @brief 更新锥体角度 / Update cone angle
+	 *
+	 *  重新生成锥体几何体以匹配新的锥角。
+	 *  Regenerates cone geometry to match new cone angle.
+	 *
+	 *  @param height 新高度 / New height
+	 *  @param radius 新底面半径 / New base radius
+	 */
+	void SolidConeDrawable::UpdateAngle(float height, float radius)
+	{
+		ConeHeight = height;
+		ConeRadius = radius;
+		RegenerateGeometry();
+	}
+
+	/** @brief 重新生成顶点和索引缓冲区 / Regenerate vertex and index buffers
+	 *
+	 *  根据当前锥体参数重新生成几何体数据并更新 GPU 缓冲区。
+	 *  Regenerates geometry data based on current cone parameters and updates GPU buffers.
+	 */
+	void SolidConeDrawable::RegenerateGeometry()
+	{
+		// 注意：DX11 的 DrawableBase 不支持动态重新生成静态缓冲区。
+		// 对于动态角度变化，需要重新创建 SolidConeDrawable 实例。
+		// 这是一个占位方法，为将来可能的动态更新预留接口。
+		// Note: DX11's DrawableBase does not support dynamic regeneration of static buffers.
+		// For dynamic angle changes, a new SolidConeDrawable instance needs to be created.
+		// This is a placeholder method for potential future dynamic updates.
+	}
+
+	/** @brief 更新锥体状态
+	 *  Update cone state
+	 *
+	 *  @param dt 时间增量（秒） / Time delta in seconds
+	 *  @param aspect 宽高比 / Aspect ratio
+	 */
+	void SolidConeDrawable::Update(float dt, float aspect) noexcept
+	{
+		// 锥体无动画更新，保持静态
+		// Cone has no animation updates, remains static
+	}
+
+	/** @brief 获取变换矩阵
+	 *  Get transformation matrix
+	 *
+	 *  返回锥体的世界变换矩阵。
+	 *  Returns the world transformation matrix of the cone.
+	 *
+	 *  @return DirectX 变换矩阵 / DirectX transformation matrix
+	 */
+	DirectX::XMMATRIX SolidConeDrawable::GetTransformXM() const noexcept
+	{
+		// 锥体几何体沿 +Z 方向，但聚光灯默认方向为 +X
+		// 先绕 Y 轴旋转 90 度将锥体从 +Z 对齐到 +X，再应用光源旋转和平移
+		// Cone geometry is along +Z, but spotlight default direction is +X
+		// Rotate 90° around Y to align +Z → +X, then apply light rotation and translation
+		return DirectX::XMMatrixRotationY(DirectX::XM_PIDIV2) *
+			DirectX::XMMatrixRotationRollPitchYaw(
+			this->Rotation.x,
+			this->Rotation.y,
+			this->Rotation.z) *
+			DirectX::XMMatrixTranslation(this->Position.x, this->Position.y, this->Position.z);
+	}
+
+	/** @brief 获取颜色
+	 *  Get color
+	 *
+	 *  @return 颜色的常量引用 / Const reference to color
+	 */
+	const XMFLOAT3& SolidConeDrawable::GetColor() const noexcept
+	{
+		return this->Color;
+	}
+}

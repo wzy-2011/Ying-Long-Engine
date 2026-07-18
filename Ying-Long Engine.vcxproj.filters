@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CodeFile">
+      <UniqueIdentifier>{E011FEA1-CCDE-58AD-F5F7-4655E1238E3B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Application">
+      <UniqueIdentifier>{A31D8512-8FAC-0EDC-38CB-22D724391F82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Application\Keyboard">
+      <UniqueIdentifier>{83599897-EF71-7FC1-B81E-0F5B24F6135B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Application\Mouse">
+      <UniqueIdentifier>{3B3FCEF1-274F-7AC2-9008-DFE07C37695B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Application\Window">
+      <UniqueIdentifier>{2A157942-9622-A728-1F09-A3138B1573DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Debug">
+      <UniqueIdentifier>{56042614-42D2-191A-2B66-8A4017D3F57E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\ECS">
+      <UniqueIdentifier>{2AF68EB4-1659-1E59-BFDE-560FAB20EADB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\ECS\Components">
+      <UniqueIdentifier>{FF6CA340-6BA4-EBD7-74AE-4FFBE06412D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\ECS\Entity">
+      <UniqueIdentifier>{362F1819-A290-F526-2BFE-3BD9975E2CE6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\ECS\Scene">
+      <UniqueIdentifier>{C7DA35F2-B3BE-F647-1C1F-F19A0822E1C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\ECS\System">
+      <UniqueIdentifier>{FE15873A-6A77-6448-F3E4-AAFA5F459B07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\EntryPoint">
+      <UniqueIdentifier>{CB2424BB-3786-01C9-C0F3-477B2C543888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Exception">
+      <UniqueIdentifier>{9E75872B-8A59-4881-F3B9-42D4DFBC3203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\FileController">
+      <UniqueIdentifier>{73909154-DFC7-D9EB-E8D1-3D0F548800E5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics">
+      <UniqueIdentifier>{20F69317-8C0C-92AD-D583-1DCF41D96235}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\AABB">
+      <UniqueIdentifier>{B50B9AEE-A105-C340-8A72-5951760B29AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Bindable">
+      <UniqueIdentifier>{004E0FDC-EC5D-BBAC-5517-20CB4146AA45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Camera">
+      <UniqueIdentifier>{98665104-848B-A084-ADD6-8514995A9FA2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\DX12">
+      <UniqueIdentifier>{6E109CEE-5A0A-C540-4377-5B512F102BAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\DepthStencil">
+      <UniqueIdentifier>{B6F26071-A218-2BD8-8B5E-B0A3772350A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Drawable">
+      <UniqueIdentifier>{F1DB634C-DDEB-0F1D-46A5-743B32D4FEB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Geometry">
+      <UniqueIdentifier>{7B076A48-6717-1619-D0D0-7A37BCFF04B2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Light">
+      <UniqueIdentifier>{C721B9C2-3359-015A-3C63-657DA8192853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\ModelImporter">
+      <UniqueIdentifier>{324EAC6A-9E31-BBAA-A734-E9E6139781FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Ray">
+      <UniqueIdentifier>{BB35FD0E-27A2-B809-F095-50675CC1DA71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\RenderTarget">
+      <UniqueIdentifier>{56847011-42AA-3A78-2BF0-BF4317B55F44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Graphics\Surface">
+      <UniqueIdentifier>{78F1238D-E4B3-5717-2D64-E6A3996530F5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Physics">
+      <UniqueIdentifier>{52F5115A-3EEE-30AC-6720-1631537810B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Physics\PhysicsGeometry">
+      <UniqueIdentifier>{F01C6A49-DC6D-558B-05D2-434DF181E8F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeFile\Physics\PhysicsScene">
+      <UniqueIdentifier>{D27C96E6-3E95-7D10-0742-0DAA731912AA}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CodeFile\Application\Application.h">
+      <Filter>CodeFile\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Application\Keyboard\Keyboard.h">
+      <Filter>CodeFile\Application\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Application\Mouse\Mouse.h">
+      <Filter>CodeFile\Application\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Application\Window\Window.h">
+      <Filter>CodeFile\Application\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Debug\DX12Log.h">
+      <Filter>CodeFile\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\Components\Components.h">
+      <Filter>CodeFile\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\Entity\Entity.h">
+      <Filter>CodeFile\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\Scene\Scene.h">
+      <Filter>CodeFile\ECS\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\System\MeshRendererSystem.h">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\System\PhysicsSystem.h">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\ECS\System\System.h">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Exception\Exception.h">
+      <Filter>CodeFile\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\FileController\Saver.h">
+      <Filter>CodeFile\FileController</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\AABB\AABB.h">
+      <Filter>CodeFile\Graphics\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\AABB\AABBManager.h">
+      <Filter>CodeFile\Graphics\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\Bindable.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\ConstantBuffers.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\IndexBuffer.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\InputLayout.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\PixelShader.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\Rasterizer.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\Sampler.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\Texture.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\Topology.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\TransformConstantBuffer.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\VertexBuffer.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Bindable\VertexShader.h">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Camera\Camera.h">
+      <Filter>CodeFile\Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\BindableDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\ConstantBufferDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Core.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12DemoScene.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12DescriptorHeap.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Drawable.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Fence.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12PipelineState.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Primitives.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Renderer.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12RootSignature.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12ShaderCompiler.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12UploadBuffer.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\DepthStencilDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\ImGuiDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\IndexBufferDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\RenderTargetDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\SamplerDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\StructuredBufferDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\TextureDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\VertexBufferDX12.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DepthStencil\DepthStencil.h">
+      <Filter>CodeFile\Graphics\DepthStencil</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\Box.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\Capsule.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\Drawable.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\DrawableBase.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\Mesh.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\Model.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\SolidBoxDrawable.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\SolidCone.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Drawable\SolidSphere.h">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Geometry\Capsule.h">
+      <Filter>CodeFile\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Geometry\Cone.h">
+      <Filter>CodeFile\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Geometry\Cube.h">
+      <Filter>CodeFile\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Geometry\IndexedTriangleList.h">
+      <Filter>CodeFile\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Geometry\Sphere.h">
+      <Filter>CodeFile\Graphics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Graphics.h">
+      <Filter>CodeFile\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Light\LightManager.h">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Light\PointLight.h">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Light\SpotLight.h">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\ModelImporter\ModelImporter.h">
+      <Filter>CodeFile\Graphics\ModelImporter</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Ray\Ray.h">
+      <Filter>CodeFile\Graphics\Ray</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\RenderTarget\RenderTarget.h">
+      <Filter>CodeFile\Graphics\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\Surface\Surface.h">
+      <Filter>CodeFile\Graphics\Surface</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Physics\Physics.h">
+      <Filter>CodeFile\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Physics\PhysicsGeometry\PhysicsCapsule.h">
+      <Filter>CodeFile\Physics\PhysicsGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeFile\Physics\PhysicsScene\PhysicsScene.h">
+      <Filter>CodeFile\Physics\PhysicsScene</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CodeFile\Application\Application.cpp">
+      <Filter>CodeFile\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Application\Keyboard\Keyboard.cpp">
+      <Filter>CodeFile\Application\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Application\Mouse\Mouse.cpp">
+      <Filter>CodeFile\Application\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Application\Window\Window.cpp">
+      <Filter>CodeFile\Application\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\ECS\Entity\Entity.cpp">
+      <Filter>CodeFile\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\ECS\Scene\Scene.cpp">
+      <Filter>CodeFile\ECS\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\ECS\System\MeshRendererSystem.cpp">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\ECS\System\PhysicsSystem.cpp">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\ECS\System\System.cpp">
+      <Filter>CodeFile\ECS\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\EntryPoint\EntryPoint.cpp">
+      <Filter>CodeFile\EntryPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Exception\Exception.cpp">
+      <Filter>CodeFile\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\FileController\Saver.cpp">
+      <Filter>CodeFile\FileController</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\AABB\AABB.cpp">
+      <Filter>CodeFile\Graphics\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\AABB\AABBManager.cpp">
+      <Filter>CodeFile\Graphics\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\Bindable.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\IndexBuffer.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\InputLayout.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\PixelShader.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\Rasterizer.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\Sampler.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\SolidColorConstantBuffer.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\Texture.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\Topology.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\TransformConstantBuffer.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Bindable\VertexShader.cpp">
+      <Filter>CodeFile\Graphics\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Camera\Camera.cpp">
+      <Filter>CodeFile\Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12Core.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12DemoScene.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12DescriptorHeap.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12Drawable.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12Fence.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12PipelineState.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12Primitives.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12Renderer.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12RootSignature.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12UploadBuffer.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\DepthStencilDX12.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\ImGuiDX12.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\RenderTargetDX12.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DepthStencil\DepthStencil.cpp">
+      <Filter>CodeFile\Graphics\DepthStencil</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\Box.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\Capsule.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\Drawable.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\Mesh.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\Model.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\SolidBoxDrawable.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\SolidCone.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Drawable\SolidSphere.cpp">
+      <Filter>CodeFile\Graphics\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Graphics.cpp">
+      <Filter>CodeFile\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Light\LightManager.cpp">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Light\PointLight.cpp">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Light\SpotLight.cpp">
+      <Filter>CodeFile\Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\ModelImporter\ModelImporter.cpp">
+      <Filter>CodeFile\Graphics\ModelImporter</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Ray\Ray.cpp">
+      <Filter>CodeFile\Graphics\Ray</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\RenderTarget\RenderTarget.cpp">
+      <Filter>CodeFile\Graphics\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\Surface\Surface.cpp">
+      <Filter>CodeFile\Graphics\Surface</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Physics\Physics.cpp">
+      <Filter>CodeFile\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Physics\PhysicsGeometry\PhysicsCapsule.cpp">
+      <Filter>CodeFile\Physics\PhysicsGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Physics\PhysicsScene\PhysicsScene.cpp">
+      <Filter>CodeFile\Physics\PhysicsScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ying-Long Engine.rc" />
+  </ItemGroup>
+</Project>
