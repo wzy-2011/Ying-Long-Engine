@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="config">
+      <UniqueIdentifier>{7B6CE4F6-670E-0FCD-50C9-22213C0A961D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{4E40957C-3A77-960D-E363-7C10CF79120F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\entt\config\config.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entt\config\macro.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entt\config\version.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entt\core\attribute.h">
+      <Filter>core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,254 @@
+﻿鐢熸垚鍚姩鏃堕棿涓?2026-06-20 21:59:45銆?
+
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine.sln鈥濆湪鑺傜偣 1 涓?Build 涓洰鏍?銆?
+ValidateSolutionConfiguration:
+  姝ｅ湪鐢熸垚瑙ｅ喅鏂规閰嶇疆鈥淒ebug|x64鈥濄€?
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine.sln鈥?1)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?2) (榛樿鐩爣)銆?
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?2)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Dracovis-Engine\Dracovis-Engine\ImGui\ImGui.vcxproj鈥?3) (榛樿鐩爣)銆?
+PrepareForBuild:
+  宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+InitializeBuildStatus:
+  姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+ClCompile:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+Lib:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+  ImGui.vcxproj -> e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\ImGui.lib
+FinalizeBuildStatus:
+  姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\ImGui.tlog\ImGui.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\ImGui\ImGui.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?2)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Time\Time.vcxproj鈥?4) (榛樿鐩爣)銆?
+PrepareForBuild:
+  宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+InitializeBuildStatus:
+  姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+ClCompile:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+Lib:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+  Time.vcxproj -> e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\Time.lib
+FinalizeBuildStatus:
+  姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Time.tlog\Time.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Time\Time.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?2)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Dracovis-Engine\Dracovis-Engine\yaml-cpp\yaml-cpp.vcxproj鈥?5) (榛樿鐩爣)銆?
+PrepareForBuild:
+  宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+InitializeBuildStatus:
+  姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+ClCompile:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+Lib:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+  yaml-cpp.vcxproj -> e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\yaml-cpp.lib
+FinalizeBuildStatus:
+  姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\yaml-cpp.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\yaml-cpp\yaml-cpp.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+PrepareForBuild:
+  宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+InitializeBuildStatus:
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Dracovis Engine.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX86\x64\CL.exe /c /I..\ImGui\CodeFile /I"..\yaml-cpp\include" /I..\Setup\DirectXTex\Includes /I..\Setup\Assimp\Includes /I..\Setup\PhysX\Includes /Zi /JMC /nologo /W3 /WX- /diagnostics:column /Od /D YAML_CPP_STATIC_DEFINE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /Fo"Intermediate\Debug - windows\x86_64\\" /Fd"Intermediate\Debug - windows\x86_64\vc143.pdb" /external:W3 /Gd /TP /FC /errorReport:queue /FS CodeFile\Graphics\DX12\ImGuiDX12.cpp
+  ImGuiDX12.cpp
+ResourceCompile:
+  鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+Link:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX86\x64\link.exe /ERRORREPORT:QUEUE /OUT:"..\Build\Debug - windows\x86_64\Dracovis Engine.exe" /INCREMENTAL /ILK:"Intermediate\Debug - windows\x86_64\Dracovis Engine.ilk" /NOLOGO /LIBPATH:"..\Setup\DirectX 11\x86_64\Debug" /LIBPATH:..\Setup\DirectXTex\Libraries\Debug /LIBPATH:..\Setup\Assimp\Libraries /LIBPATH:..\Setup\PhysX\Libraries DirectXTex.lib d3d11.lib d3d12.lib d3dcompiler.lib dxgi.lib dxguid.lib DirectXTK.lib "assimp-vc143-mtd.lib" LowLevel_static_64.lib LowLevelAABB_static_64.lib LowLevelDynamics_static_64.lib PhysX_64.lib PhysXCharacterKinematic_static_64.lib PhysXCommon_64.lib PhysXCooking_64.lib PhysXExtensions_static_64.lib PhysXFoundation_64.lib PhysXPvdSDK_static_64.lib PhysXTask_static_64.lib PhysXVehicle_static_64.lib PhysXVehicle2_static_64.lib PVDRuntime_64.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\Build\Debug - windows\x86_64\Dracovis Engine.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\Build\Debug - windows\x86_64\Dracovis Engine.lib" /MACHINE:X64 "Intermediate\Debug - windows\x86_64\Dracovis Engine.res"
+  "Intermediate\Debug - windows\x86_64\Application.obj"
+  "Intermediate\Debug - windows\x86_64\Keyboard.obj"
+  "Intermediate\Debug - windows\x86_64\Mouse.obj"
+  "Intermediate\Debug - windows\x86_64\Window.obj"
+  "Intermediate\Debug - windows\x86_64\Scene.obj"
+  "Intermediate\Debug - windows\x86_64\EntryPoint.obj"
+  "Intermediate\Debug - windows\x86_64\Exception.obj"
+  "Intermediate\Debug - windows\x86_64\Saver.obj"
+  "Intermediate\Debug - windows\x86_64\AABB.obj"
+  "Intermediate\Debug - windows\x86_64\AABBManager.obj"
+  "Intermediate\Debug - windows\x86_64\Bindable.obj"
+  "Intermediate\Debug - windows\x86_64\IndexBuffer.obj"
+  "Intermediate\Debug - windows\x86_64\InputLayout.obj"
+  "Intermediate\Debug - windows\x86_64\PixelShader.obj"
+  "Intermediate\Debug - windows\x86_64\Sampler.obj"
+  "Intermediate\Debug - windows\x86_64\SolidColorConstantBuffer.obj"
+  "Intermediate\Debug - windows\x86_64\Texture.obj"
+  "Intermediate\Debug - windows\x86_64\Topology.obj"
+  "Intermediate\Debug - windows\x86_64\TransformConstantBuffer.obj"
+  "Intermediate\Debug - windows\x86_64\VertexShader.obj"
+  "Intermediate\Debug - windows\x86_64\Camera.obj"
+  "Intermediate\Debug - windows\x86_64\DepthStencil.obj"
+  "Intermediate\Debug - windows\x86_64\Box.obj"
+  "Intermediate\Debug - windows\x86_64\Capsule.obj"
+  "Intermediate\Debug - windows\x86_64\Drawable.obj"
+  "Intermediate\Debug - windows\x86_64\Mesh.obj"
+  "Intermediate\Debug - windows\x86_64\Model.obj"
+  "Intermediate\Debug - windows\x86_64\SolidSphere.obj"
+  "Intermediate\Debug - windows\x86_64\Graphics.obj"
+  "Intermediate\Debug - windows\x86_64\LightManager.obj"
+  "Intermediate\Debug - windows\x86_64\PointLight.obj"
+  "Intermediate\Debug - windows\x86_64\SpotLight.obj"
+  "Intermediate\Debug - windows\x86_64\ModelImporter.obj"
+  "Intermediate\Debug - windows\x86_64\Ray.obj"
+  "Intermediate\Debug - windows\x86_64\RenderTarget.obj"
+  "Intermediate\Debug - windows\x86_64\Surface.obj"
+  "Intermediate\Debug - windows\x86_64\Physics.obj"
+  "Intermediate\Debug - windows\x86_64\PhysicsCapsule.obj"
+  "Intermediate\Debug - windows\x86_64\PhysicsScene.obj"
+  "Intermediate\Debug - windows\x86_64\Entity.obj"
+  "Intermediate\Debug - windows\x86_64\BindableDX12.obj"
+  "Intermediate\Debug - windows\x86_64\DepthStencilDX12.obj"
+  "Intermediate\Debug - windows\x86_64\DX12Core.obj"
+  "Intermediate\Debug - windows\x86_64\DX12DemoScene.obj"
+  "Intermediate\Debug - windows\x86_64\DX12DescriptorHeap.obj"
+  "Intermediate\Debug - windows\x86_64\DX12Drawable.obj"
+  "Intermediate\Debug - windows\x86_64\DX12Fence.obj"
+  "Intermediate\Debug - windows\x86_64\DX12PipelineState.obj"
+  "Intermediate\Debug - windows\x86_64\DX12UploadBuffer.obj"
+  "Intermediate\Debug - windows\x86_64\DX12Primitives.obj"
+  "Intermediate\Debug - windows\x86_64\DX12Renderer.obj"
+  "Intermediate\Debug - windows\x86_64\DX12RootSignature.obj"
+  "Intermediate\Debug - windows\x86_64\ImGuiDX12.obj"
+  "Intermediate\Debug - windows\x86_64\RenderTargetDX12.obj"
+  "e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\ImGui.lib"
+  "e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\Time.lib"
+  "e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\yaml-cpp.lib"
+RenderTargetDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩enderTargetDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+ImGuiDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚mGuiDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12RootSignature.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12RootSignature.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12Renderer.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淒X12Renderer.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12Primitives.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Primitives.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12UploadBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12UploadBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12PipelineState.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12PipelineState.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12Fence.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Fence.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12Drawable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Drawable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12DescriptorHeap.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12DescriptorHeap.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12DemoScene.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12DemoScene.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DX12Core.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Core.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DepthStencilDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒epthStencilDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+BindableDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淏indableDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Entity.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓ntity.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+PhysicsScene.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淧hysicsScene.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+PhysicsCapsule.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧hysicsCapsule.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Physics.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧hysics.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Surface.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪urface.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+RenderTarget.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩enderTarget.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Ray.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩ay.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+ModelImporter.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢odelImporter.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+SpotLight.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淪potLight.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+PointLight.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧ointLight.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+LightManager.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淟ightManager.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Graphics.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淕raphics.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+SolidSphere.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪olidSphere.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Model.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢odel.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Mesh.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢esh.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Drawable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒rawable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Capsule.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淐apsule.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Box.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淏ox.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+DepthStencil.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒epthStencil.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Camera.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淐amera.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+VertexShader.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淰ertexShader.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+TransformConstantBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭ransformConstantBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Topology.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭opology.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Texture.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭exture.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+SolidColorConstantBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪olidColorConstantBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Sampler.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪ampler.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+PixelShader.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧ixelShader.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+InputLayout.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚nputLayout.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+IndexBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚ndexBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Bindable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淏indable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+AABBManager.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎ABBManager.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+AABB.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎ABB.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Saver.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪aver.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Exception.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓xception.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+EntryPoint.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓ntryPoint.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Scene.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪cene.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Window.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淲indow.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Mouse.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢ouse.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Keyboard.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淜eyboard.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+Application.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎pplication.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Dracovis Engine.vcxproj -> e:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\Dracovis Engine.exe
+FinalizeBuildStatus:
+  姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\Dracovis Engine.tlog\unsuccessfulbuild鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Dracovis Engine.tlog\Dracovis Engine.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+椤圭洰鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine.sln鈥?1)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Dracovis-Engine\Dracovis-Engine\entt-master\entt-master.vcxproj鈥?6) (榛樿鐩爣)銆?
+PrepareForBuild:
+  宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+InitializeBuildStatus:
+  姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\entt-master.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\entt-master.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+FinalizeBuildStatus:
+  姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\entt-master.tlog\unsuccessfulbuild鈥濄€?
+  姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\entt-master.tlog\entt-master.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\entt-master\entt-master.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine.sln鈥?Build 涓洰鏍?鐨勬搷浣溿€?
+
+宸叉垚鍔熺敓鎴愩€?
+
+鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine.sln鈥?Build 鐩爣) (1) ->
+鈥渆:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj鈥?榛樿鐩爣) (2) ->
+(Link 鐩爣) -> 
+  RenderTargetDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩enderTargetDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  ImGuiDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚mGuiDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12RootSignature.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12RootSignature.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12Renderer.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淒X12Renderer.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12Primitives.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Primitives.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12UploadBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12UploadBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12PipelineState.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12PipelineState.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12Fence.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Fence.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12Drawable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Drawable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12DescriptorHeap.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12DescriptorHeap.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12DemoScene.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12DemoScene.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DX12Core.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒X12Core.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DepthStencilDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒epthStencilDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  BindableDX12.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淏indableDX12.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Entity.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓ntity.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  PhysicsScene.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淧hysicsScene.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  PhysicsCapsule.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧hysicsCapsule.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Physics.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧hysics.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Surface.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪urface.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  RenderTarget.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩enderTarget.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Ray.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淩ay.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  ModelImporter.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢odelImporter.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  SpotLight.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淪potLight.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  PointLight.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧ointLight.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  LightManager.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淟ightManager.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Graphics.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淕raphics.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  SolidSphere.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪olidSphere.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Model.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢odel.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Mesh.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢esh.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Drawable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒rawable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Capsule.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淐apsule.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Box.obj : warning LNK4099: 鏈壘鍒?PDB鈥溾€?浣跨敤鈥淏ox.obj鈥濇垨鍦ㄢ€溾€濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  DepthStencil.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淒epthStencil.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Camera.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淐amera.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  VertexShader.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淰ertexShader.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  TransformConstantBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭ransformConstantBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Topology.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭opology.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Texture.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淭exture.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  SolidColorConstantBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪olidColorConstantBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Sampler.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪ampler.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  PixelShader.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淧ixelShader.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  InputLayout.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚nputLayout.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  IndexBuffer.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淚ndexBuffer.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Bindable.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淏indable.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  AABBManager.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎ABBManager.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  AABB.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎ABB.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Saver.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪aver.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Exception.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓xception.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  EntryPoint.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淓ntryPoint.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Scene.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淪cene.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Window.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淲indow.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Mouse.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淢ouse.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Keyboard.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淜eyboard.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+  Application.obj : warning LNK4099: 鏈壘鍒?PDB鈥渧c143.pdb鈥?浣跨敤鈥淎pplication.obj鈥濇垨鍦ㄢ€渆:\Projects\Dracovis-Engine\Dracovis-Engine\Build\Debug - windows\x86_64\vc143.pdb鈥濅腑瀵绘壘)锛涙鍦ㄩ摼鎺ュ璞★紝濡傚悓娌℃湁璋冭瘯淇℃伅涓€鏍?[e:\Projects\Dracovis-Engine\Dracovis-Engine\Dracovis Engine\Dracovis Engine.vcxproj]
+
+    54 涓鍛?
+    0 涓敊璇?
+
+宸茬敤鏃堕棿 00:00:06.69
