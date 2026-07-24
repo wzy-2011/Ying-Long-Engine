@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file Scene.cpp
  * @brief ECS 场景类实现 / ECS scene class implementation
  *
@@ -470,6 +470,22 @@ namespace YingLong
 	{
 		PointLights.clear();
 		SpotLights.clear();
+	}
+
+	void Scene::UpdatePointLightData(size_t index, const PointLight::Data& data)
+	{
+		if (index < PointLights.size())
+		{
+			PointLights[index].LightData = data;
+		}
+	}
+
+	void Scene::UpdateSpotLightData(size_t index, const SpotLight::Data& data)
+	{
+		if (index < SpotLights.size())
+		{
+			SpotLights[index].LightData = data;
+		}
 	}
 
 	// --- 模型管理 / Model management ---

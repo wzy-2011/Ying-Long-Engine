@@ -47,7 +47,7 @@ namespace YingLong
 	:
 	SplashWindow(1000, 800, L"Ying-Long Engine Loading", true),
 	MainWindow(1750, 900, windowTitle.c_str()),
-	bUseDX12(true),
+	bUseDX12(false),
 	pDX12DemoScene(nullptr)
 	{
 		// 标记初始化是否完成，用于主线程等待
@@ -537,6 +537,18 @@ namespace YingLong
 		// Update scene (physics + all systems)
 		if (CurrentScene)
 		{
+			// 每帧同步光源数据到 Scene。
+			// Scene::AddPointLight/AddSpotLight 是值拷贝，ImGui 修改的是
+			// Application 中的原始光源对象，如果不同步，Scene 中的副本永远不更新，
+			// 导致移动光源时光照不变。
+			// Sync light data to Scene every frame.
+			// Scene::AddPointLight/AddSpotLight copies by value; ImGui modifies
+			// the original light objects in Application. Without syncing, Scene's
+			// copies never update, causing lighting to not change when moving lights.
+			CurrentScene->UpdatePointLightData(0, PointLightOne->LightData);
+			CurrentScene->UpdatePointLightData(1, PointLightTwo->LightData);
+			CurrentScene->UpdateSpotLightData(0, SpotLightTwo->LightData);
+
 			CurrentScene->Update(0.016f);
 			CurrentScene->Render(MainWindow.graphics());
 		}

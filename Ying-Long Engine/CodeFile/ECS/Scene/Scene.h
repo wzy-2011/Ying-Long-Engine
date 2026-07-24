@@ -328,6 +328,30 @@ namespace YingLong
 		 */
 		void ClearLights();
 
+		/**
+		 * @brief 更新指定点光源的数据 / Update data of a specific point light
+		 *
+		 * 直接更新 Scene 中已有点光源的 LightData，避免值拷贝导致的数据不同步。
+		 * Directly updates LightData of an existing point light in Scene,
+		 * avoiding data desynchronization caused by value copy.
+		 *
+		 * @param index 光源索引 / Light index
+		 * @param data 新的光源数据 / New light data
+		 */
+		void UpdatePointLightData(size_t index, const PointLight::Data& data);
+
+		/**
+		 * @brief 更新指定聚光灯的数据 / Update data of a specific spot light
+		 *
+		 * 直接更新 Scene 中已有聚光灯的 LightData，避免值拷贝导致的数据不同步。
+		 * Directly updates LightData of an existing spot light in Scene,
+		 * avoiding data desynchronization caused by value copy.
+		 *
+		 * @param index 光源索引 / Light index
+		 * @param data 新的光源数据 / New light data
+		 */
+		void UpdateSpotLightData(size_t index, const SpotLight::Data& data);
+
 		// --- 模型管理 / Model management ---
 
 		/**
