@@ -77,6 +77,17 @@ namespace YingLong
 			this->LightData.Rotation.y / 360.0f * XM_2PI,
 			this->LightData.Rotation.z / 360.0f * XM_2PI });
 		mesh.SetColor(this->LightData.Color);
+
+		// 根据外锥角动态调整锥体底面半径（通过 scale 变换，无需重建顶点缓冲区）
+		// Dynamically adjust cone base radius via scale transform (no vertex buffer rebuild needed)
+		// 原始锥体几何体: height=3.0, radius=0.5 (构造时传入)
+		// 需要的底面半径 = visualLength * tan(OuterConeAngle)
+		const float visualLength = 3.0f;
+		const float originalRadius = 0.5f;
+		float neededRadius = visualLength * tanf(this->LightData.OuterConeAngle);
+		float radiusScale = neededRadius / originalRadius;
+		mesh.SetScale(XMFLOAT3{ radiusScale, radiusScale, 1.0f });
+
 		mesh.Draw(graphics);
 	}
 

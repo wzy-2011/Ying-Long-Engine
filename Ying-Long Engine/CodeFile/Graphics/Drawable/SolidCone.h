@@ -75,6 +75,16 @@ namespace YingLong
 		 */
 		void SetColor(XMFLOAT3 Color) noexcept;
 
+		/**
+		 * @brief 设置缩放 / Set scale
+		 *
+		 * 通过缩放矩阵调整锥体大小，无需重建静态顶点缓冲区。
+		 * Adjusts cone size via scale matrix without rebuilding static vertex buffer.
+		 *
+		 * @param Scale 三轴缩放 / 3-axis scale
+		 */
+		void SetScale(XMFLOAT3 Scale) noexcept;
+
 		/** @brief 更新锥体角度 / Update cone angle
 		 *
 		 *  重新生成锥体几何体以匹配新的锥角。
@@ -121,6 +131,7 @@ namespace YingLong
 		XMFLOAT3 Position = { 1.0f, 1.0f, 1.0f };       ///< 位置 / Position
 		XMFLOAT3 Rotation = { 0.0f, 0.0f, 0.0f };       ///< 旋转（弧度）/ Rotation (radians)
 		XMFLOAT3 Color = { 1.0f, 1.0f, 1.0f };          ///< 颜色 / Color
+		XMFLOAT3 Scale = { 1.0f, 1.0f, 1.0f };          ///< 缩放 / Scale
 		float ConeHeight = 1.0f;                         ///< 锥体高度 / Cone height
 		float ConeRadius = 0.5f;                         ///< 底面半径 / Base radius
 

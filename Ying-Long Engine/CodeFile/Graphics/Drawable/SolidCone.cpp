@@ -1,4 +1,4 @@
-﻿/** @file SolidCone.cpp
+/** @file SolidCone.cpp
  *  @brief 纯色锥体可绘制对象实现（线框模式）/ Solid-color cone drawable object implementation (wireframe mode)
  *
  *  包含 SolidConeDrawable 类的成员函数实现。
@@ -155,6 +155,11 @@ namespace YingLong
 		this->Color = color;
 	}
 
+	void SolidConeDrawable::SetScale(DirectX::XMFLOAT3 Scale) noexcept
+	{
+		this->Scale = Scale;
+	}
+
 	/** @brief 更新锥体角度 / Update cone angle
 	 *
 	 *  重新生成锥体几何体以匹配新的锥角。
@@ -208,10 +213,12 @@ namespace YingLong
 	DirectX::XMMATRIX SolidConeDrawable::GetTransformXM() const noexcept
 	{
 		// 锥体几何体沿 +Z 方向，但聚光灯默认方向为 +X
-		// 先绕 Y 轴旋转 90 度将锥体从 +Z 对齐到 +X，再应用光源旋转和平移
+		// 先缩放，再绕 Y 轴旋转 90 度将锥体从 +Z 对齐到 +X，再应用光源旋转和平移
 		// Cone geometry is along +Z, but spotlight default direction is +X
-		// Rotate 90° around Y to align +Z → +X, then apply light rotation and translation
-		return DirectX::XMMatrixRotationY(DirectX::XM_PIDIV2) *
+		// Scale first, then rotate 90° around Y to align +Z → +X,
+		// then apply light rotation and translation
+		return DirectX::XMMatrixScaling(this->Scale.x, this->Scale.y, this->Scale.z) *
+			DirectX::XMMatrixRotationY(DirectX::XM_PIDIV2) *
 			DirectX::XMMatrixRotationRollPitchYaw(
 			this->Rotation.x,
 			this->Rotation.y,
