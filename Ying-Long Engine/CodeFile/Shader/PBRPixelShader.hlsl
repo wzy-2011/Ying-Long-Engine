@@ -32,7 +32,7 @@ SamplerState Sampler : register(s0);
 
 struct PBRPixelShaderInput
 {
-    float3 WorldPosition : POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float3 Normal : NORMAL;
     float4 Position : SV_Position;
     float2 TextureCoord : TextureCoord;

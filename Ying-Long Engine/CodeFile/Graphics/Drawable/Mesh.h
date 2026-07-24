@@ -1,4 +1,4 @@
-﻿/** @file Mesh.h
+/** @file Mesh.h
  *  @brief 网格可绘制对象 - Mesh drawable object
  *
  *  包含网格可绘制对象和 PBR 材质常量缓冲区类定义。
@@ -29,33 +29,24 @@ namespace YingLong
 	 */
 	struct MaterialCBufferData
 	{
-		/** @brief 默认构造函数
-		 *  Default constructor
-		 *
-		 *  初始化材质参数为默认值。
-		 *  Initializes material parameters to default values.
-		 */
 		MaterialCBufferData()
 		{
 			this->Albedo = { 0.0f, 0.0f, 0.0f };
-			this->AmbientOcclusion = 15.0f;
 			this->Metallic = 0.8f;
 			this->Roughness = 0.5f;
+			this->AmbientOcclusion = 1.0f;
 			this->UseAlbedoTexture = 0;
-			this->UseAOTexture = 0;
+			this->UseRoughnessTexture = 0;
 			this->UseMetallicTexture = 0;
 			this->UseNormalTexture = 0;
-			this->UseRoughnessTexture = 0;
+			this->UseAOTexture = 0;
 		}
 
-		/** @brief 拷贝构造函数
-		 *  Copy constructor
-		 */
 		MaterialCBufferData(const MaterialCBufferData& other) = default;
 
 		XMFLOAT3 Albedo;          ///< 反照率颜色 / Albedo color
-		float Roughness;          ///< 粗糙度 / Roughness
 		float Metallic;           ///< 金属度 / Metallic
+		float Roughness;          ///< 粗糙度 / Roughness
 		float AmbientOcclusion;   ///< 环境光遮蔽 / Ambient occlusion
 		int UseAlbedoTexture;     ///< 是否使用反照率纹理 / Whether to use albedo texture
 		int UseRoughnessTexture;  ///< 是否使用粗糙度纹理 / Whether to use roughness texture
@@ -90,7 +81,7 @@ namespace YingLong
 		 *  @param parent 父网格对象指针 / Parent mesh object pointer
 		 */
 		MaterialCBuffer(Graphics& graphics, const Mesh* parent) 
-			: PixelConstantBuffer<MaterialCBufferData>(graphics, 2)
+			: PixelConstantBuffer<MaterialCBufferData>(graphics, 1)
 		{
 			this->Parent = parent;
 		}

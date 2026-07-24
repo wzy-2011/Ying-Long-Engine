@@ -52,7 +52,7 @@ namespace YingLong
 			RenderTargetTextureDesc.Height = height;
 			RenderTargetTextureDesc.MipLevels = 1;
 			RenderTargetTextureDesc.ArraySize = 1;
-			RenderTargetTextureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			RenderTargetTextureDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 			RenderTargetTextureDesc.SampleDesc.Count = 1;
 			RenderTargetTextureDesc.SampleDesc.Quality = 0;
 			RenderTargetTextureDesc.Usage = D3D11_USAGE_DEFAULT;

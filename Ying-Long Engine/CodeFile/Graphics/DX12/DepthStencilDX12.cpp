@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DepthStencilDX12.cpp
  * @brief DX12 深度模板缓冲区类实现 / DX12 depth stencil buffer class implementation
  *
@@ -20,13 +20,14 @@ namespace YingLong
     // 构造函数 / Constructor
     // ========================================================================
     DepthStencilDX12::DepthStencilDX12()
-        : Width(0)
+        : pCore(nullptr)
+        , Width(0)
         , Height(0)
         , Format(::DXGI_FORMAT_D24_UNORM_S8_UINT)
         , MSAACount(1)
         , MSAAQuality(0)
-        , DSVHeapIndex(0)
-        , SRVHeapIndex(0)
+        , DSVHeapIndex(UINT_MAX)
+        , SRVHeapIndex(UINT_MAX)
         , hasSRV(false)
         , CurrentState(::D3D12_RESOURCE_STATE_DEPTH_WRITE)
     {
@@ -54,6 +55,7 @@ namespace YingLong
         UINT msaaCount,
         UINT msaaQuality)
     {
+        pCore = &core;
         Width = width;
         Height = height;
         Format = format;
@@ -110,6 +112,25 @@ namespace YingLong
     // ========================================================================
     void DepthStencilDX12::Shutdown()
     {
+        // 释放 DSV 描述符索引（若已分配），使其可被后续分配复用。
+        // 这对于支持窗口调整大小至关重要：每次调整都会 Shutdown+Initialize，
+        // 若不释放索引会耗尽 DSV 堆（当前容量仅为 4）。
+        // Release the DSV descriptor index (if allocated) so it can be reused by
+        // subsequent allocations. This is critical for supporting window resize:
+        // each resize does Shutdown+Initialize, and not freeing the index would
+        // exhaust the DSV heap (current capacity is only 4).
+        if (pCore && DSVHeapIndex != UINT_MAX)
+        {
+            pCore->GetDSVHeap()->Free(DSVHeapIndex);
+        }
+
+        // 释放 SRV 描述符索引（若已分配）
+        // Release the SRV descriptor index (if allocated)
+        if (pCore && SRVHeapIndex != UINT_MAX)
+        {
+            pCore->GetCBVSRVUAVHeap()->Free(SRVHeapIndex);
+        }
+
         pResource.Reset();
         DSVHandle.ptr = 0;
         SRVHandle.ptr = 0;
@@ -117,6 +138,8 @@ namespace YingLong
         Width = 0;
         Height = 0;
         hasSRV = false;
+        DSVHeapIndex = UINT_MAX;
+        SRVHeapIndex = UINT_MAX;
         CurrentState = ::D3D12_RESOURCE_STATE_DEPTH_WRITE;
     }
 
@@ -164,8 +187,8 @@ namespace YingLong
         if (!pResource)
             return;
 
-        // 如果已经是目标状态则跳过
-        // Skip if already in target state
+        // 跳过冗余屏障：如果状态未变则不发出屏障
+        // Skip redundant barrier: don't emit if state hasn't changed
         if (CurrentState == newState)
             return;
 
@@ -188,9 +211,16 @@ namespace YingLong
     // ========================================================================
     void DepthStencilDX12::CreateDSV(DX12Core& core)
     {
-        // 从 DSV 堆获取描述符（索引 0）
-        // Get descriptor from DSV heap (index 0)
-        DSVHeapIndex = 0;
+        // 从 DSV 堆动态分配描述符索引。
+        // 关键：不能硬编码为 0，因为存在多个 DepthStencilDX12 实例
+        //（主深度模板 + 场景深度模板），硬编码会导致它们共享同一 DSV 描述符，
+        // 互相覆盖，引发深度测试使用错误的深度缓冲区。
+        // Dynamically allocate descriptor index from DSV heap.
+        // Critical: must not hardcode to 0 because multiple DepthStencilDX12
+        // instances exist (main depth stencil + scene depth stencil); hardcoding
+        // would cause them to share the same DSV descriptor, overwriting each
+        // other and causing depth tests to use the wrong depth buffer.
+        DSVHeapIndex = core.GetDSVHeap()->Allocate();
         DSVHandle = core.GetDSVHeap()->GetCPUHandle(DSVHeapIndex);
 
         ::D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
@@ -220,6 +250,14 @@ namespace YingLong
     {
         if (!pResource)
             return;
+
+        // 防止重复分配导致描述符泄漏：若已分配 SRV 索引，先释放旧索引
+        // Guard against re-allocation causing descriptor leak: if an SRV index
+        // was already allocated, free the old one first
+        if (SRVHeapIndex != UINT_MAX)
+        {
+            core.GetCBVSRVUAVHeap()->Free(SRVHeapIndex);
+        }
 
         // 从 CBV/SRV/UAV 堆分配描述符
         // Allocate descriptor from CBV/SRV/UAV heap

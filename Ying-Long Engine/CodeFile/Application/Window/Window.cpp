@@ -16,6 +16,8 @@
 #include "../../Debug/DX12Log.h"
 #include <sstream>
 #include <stdexcept>
+#include <gdiplus.h>
+#pragma comment(lib, "gdiplus.lib")
 
 // ImGui Win32 后端的窗口过程处理函数（外部链接）
 // ImGui Win32 backend window procedure handler (external linkage)
@@ -26,6 +28,39 @@ namespace YingLong
 	// 静态成员定义 / Static member definitions
 	Time Window::time;
 	Timer Window::timer;
+
+	/**
+	 * @brief 使用 GDI+ 加载 JPEG/PG 图片文件并转换为 HBITMAP
+	 *        Load JPEG/PNG image file and convert to HBITMAP using GDI+
+	 *
+	 * Win32 LoadImage() 仅支持 BMP 格式文件，无法加载 JPEG。
+	 * 使用 GDI+ Bitmap 类加载 JPEG，再通过 GetHBITMAP 转换为 HBITMAP。
+	 * 注意：调用此函数前必须确保 GDI+ 已初始化。
+	 *
+	 * Win32 LoadImage() only supports BMP format files, cannot load JPEG.
+	 * Uses GDI+ Bitmap class to load JPEG, then converts to HBITMAP via
+	 * GetHBITMAP. Note: GDI+ must be initialized before calling this.
+	 *
+	 * @param path 图片文件路径 / Image file path
+	 * @return HBITMAP（成功）或 NULL（失败）/ HBITMAP (success) or NULL (failure)
+	 */
+	static HBITMAP LoadImageWithGdiplus(const wchar_t* path)
+	{
+		Gdiplus::Bitmap bitmap(path);
+		if (bitmap.GetLastStatus() != Gdiplus::Ok)
+		{
+			return NULL;
+		}
+
+		HBITMAP hBitmap = NULL;
+		Gdiplus::Color backgroundColor(0, 0, 0);
+		if (bitmap.GetHBITMAP(backgroundColor, &hBitmap) != Gdiplus::Ok)
+		{
+			return NULL;
+		}
+
+		return hBitmap;
+	}
 
 	/**
 	 * @brief 窗口类构造函数：注册 WNDCLASSEX
@@ -374,8 +409,12 @@ namespace YingLong
 	 */
 	LRESULT Window::HandleMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) noexcept
 	{
-		// 先让 ImGui Win32 后端处理消息（如 ImGui 窗口拖拽、输入等）
-		// Let ImGui Win32 backend handle messages first (e.g. ImGui window drag, input)
+		if (message == WM_CLOSE)
+		{
+			PostQuitMessage(0);
+			return 0;
+		}
+
 		if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
 		{
 			return 0;
@@ -383,12 +422,6 @@ namespace YingLong
 
 		switch (message)
 		{
-		case WM_CLOSE:
-			// 窗口关闭时发送退出消息 / Post quit message when window closes
-			PostQuitMessage(0);
-			return 0;
-			break;
-
 		case WM_KILLFOCUS:
 			// 窗口失去焦点时清空按键状态，防止粘键 / Clear key state on focus loss to prevent sticky keys
 			keyboard.ClearState();
@@ -549,25 +582,55 @@ namespace YingLong
 
 			hdc = BeginPaint(hWnd, &ps);
 
-			// 创建兼容 DC 用于加载并显示启动图片 / Create compatible DC for loading and displaying splash image
-			LocalDC = CreateCompatibleDC(hdc);
-			HBITMAP Bitmap = (HBITMAP)LoadImage(NULL, L"Resources\\Icon\\Ying-Long.jpg", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-			if (Bitmap == NULL)
+			// 使用 GDI+ 加载 JPEG 图片（LoadImage 仅支持 BMP，无法加载 JPEG）。
+			// 使用 static 缓存：图片只在首次 WM_PAINT 时加载一次，避免重复 I/O。
+			// 同时 static 管理 GDI+ 的初始化/关闭生命周期。
+			// Use GDI+ to load JPEG (LoadImage only supports BMP, cannot load JPEG).
+			// Static caching: image is loaded only once on first WM_PAINT, avoiding
+			// repeated I/O. Static also manages GDI+ init/shutdown lifecycle.
+			static HBITMAP Bitmap = NULL;
+			static bool loadAttempted = false;
+			if (!loadAttempted)
 			{
-				std::cerr << "Failed to load startup image!" << std::endl;
+				Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+				ULONG_PTR gdiplusToken;
+				if (Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr) == Gdiplus::Ok)
+				{
+					Bitmap = LoadImageWithGdiplus(L"Resources\\Icon\\Ying-Long.jpg");
+					if (Bitmap == NULL)
+					{
+						std::cerr << "Failed to load startup image!" << std::endl;
+					}
+					Gdiplus::GdiplusShutdown(gdiplusToken);
+				}
+				else
+				{
+					std::cerr << "Failed to initialize GDI+!" << std::endl;
+				}
+				loadAttempted = true;
 			}
-			BITMAP qBitmap;
-			GetObject((HGDIOBJ)Bitmap, sizeof(BITMAP), (LPVOID)&qBitmap);
-			SelectObject(LocalDC, Bitmap);
 
-			// 位图块传输到窗口 DC / Bit blit to window DC
-			if (!BitBlt(hdc, 0, 0, qBitmap.bmWidth, qBitmap.bmHeight, LocalDC, 0, 0, SRCCOPY))
+			// 创建兼容 DC 用于显示图片 / Create compatible DC for displaying splash image
+			LocalDC = CreateCompatibleDC(hdc);
+			if (Bitmap != NULL)
 			{
-				std::cerr << "Failed to bit blt!" << std::endl;
+				BITMAP qBitmap;
+				GetObject((HGDIOBJ)Bitmap, sizeof(BITMAP), (LPVOID)&qBitmap);
+				SelectObject(LocalDC, Bitmap);
+
+				// 位图块传输到窗口 DC / Bit blit to window DC
+				if (!BitBlt(hdc, 0, 0, qBitmap.bmWidth, qBitmap.bmHeight, LocalDC, 0, 0, SRCCOPY))
+				{
+					std::cerr << "Failed to bit blt!" << std::endl;
+				}
+
+				// 注意：不在此释放 Bitmap，因为它被 static 缓存以供后续 WM_PAINT 使用。
+				// Bitmap 将在进程退出时自动释放。
+				// Note: do not release Bitmap here, as it is cached statically for
+				// subsequent WM_PAINT calls. It will be released on process exit.
 			}
 
 			DeleteDC(LocalDC);
-			DeleteObject(Bitmap);
 
 			// 透明背景文字：显示"正在初始化" / Transparent background text: display "Initializing"
 			SetBkMode(hdc, TRANSPARENT);

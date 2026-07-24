@@ -4,8 +4,8 @@ static const float2 DOUBLE_PI = PI * 2;
 struct PBRMaterial
 {
     float3 Albedo;
-    float Roughness;
     float Metallic;
+    float Roughness;
     float AmbientOcclusion;
 };
 
@@ -195,6 +195,7 @@ cbuffer SpotLightCB : register(b4)
 {
     SpotLight SpotLightList[50];
     int SpotLightCount;
+    float3 padding;
 };
 
 #else

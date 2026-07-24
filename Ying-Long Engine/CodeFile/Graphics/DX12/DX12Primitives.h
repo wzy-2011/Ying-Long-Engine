@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Primitives.h
  * @brief DX12 几何图元头文件 / DX12 Geometric Primitives Header
  *
@@ -71,6 +71,8 @@ namespace YingLong
         float InnerConeAngle;
         float Direction[3];
         float OuterConeAngle;
+        float Rotation[3];   // 未使用，仅用于匹配 HLSL struct 大小
+        float pad;           // 未使用，仅用于匹配 HLSL struct 大小
     };
 
     struct DX12LightCountCB

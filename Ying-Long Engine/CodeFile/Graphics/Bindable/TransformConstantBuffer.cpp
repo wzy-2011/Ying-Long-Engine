@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file TransformConstantBuffer.cpp
  * @brief DX11 变换常量缓冲区实现文件 / DX11 transform constant buffer implementation file
  *
@@ -18,7 +18,7 @@ namespace YingLong
 		// Lazy initialization of static constant buffer: create if not yet created
 		if (!pVertexConstantBuffer)
 		{
-			pVertexConstantBuffer = std::make_unique<VertexConstantBuffer<Transforms>>(graphics);
+			pVertexConstantBuffer = std::make_unique<VertexConstantBuffer<Transforms>>(graphics, 2);
 		}
 	}
 

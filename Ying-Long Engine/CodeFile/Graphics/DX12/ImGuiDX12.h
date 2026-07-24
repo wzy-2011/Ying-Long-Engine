@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file ImGuiDX12.h
  * @brief ImGui DX12 渲染后端类定义 / ImGui DX12 rendering backend class definition
  *
@@ -157,6 +157,7 @@ namespace YingLong
         // 描述符句柄 / Descriptor handles
         D3D12_CPU_DESCRIPTOR_HANDLE FontTextureSRV;       ///< 字体纹理 SRV CPU 句柄 / Font texture SRV CPU handle
         D3D12_GPU_DESCRIPTOR_HANDLE FontTextureSRV_GPU;   ///< 字体纹理 SRV GPU 句柄 / Font texture SRV GPU handle
+        UINT FontSRVHeapIndex = UINT_MAX;                 ///< 字体纹理 SRV 堆索引（UINT_MAX 表示未分配）/ Font SRV heap index (UINT_MAX = unallocated)
 
         // 管线状态 / Pipeline state
         Microsoft::WRL::ComPtr<ID3D12PipelineState> pPSO;          ///< 管线状态对象 / Pipeline state object

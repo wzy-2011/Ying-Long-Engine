@@ -1,0 +1,152 @@
+﻿閫傜敤浜?.NET Framework MSBuild 鐗堟湰 17.14.40+3e7442088
+鐢熸垚鍚姩鏃堕棿涓?2026-07-24 19:11:25銆?
+
+     1>鑺傜偣 1 涓婄殑椤圭洰鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?榛樿鐩爣)銆?
+     1>椤圭洰鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?1)姝ｅ湪鑺傜偣 1 涓婄敓鎴愨€渆:\Projects\Ying-Long-Engine\ImGui\ImGui.vcxproj鈥?2) (榛樿鐩爣)銆?
+     2>PrepareForBuild:
+         宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+     1>椤圭洰鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?1)姝ｅ湪鑺傜偣 3 涓婄敓鎴愨€渆:\Projects\Ying-Long-Engine\yaml-cpp\yaml-cpp.vcxproj鈥?4) (榛樿鐩爣)銆?
+     4>PrepareForBuild:
+         宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+     1>椤圭洰鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?1)姝ｅ湪鑺傜偣 2 涓婄敓鎴愨€渆:\Projects\Ying-Long-Engine\Time\Time.vcxproj鈥?3) (榛樿鐩爣)銆?
+     3>PrepareForBuild:
+         宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+     2>InitializeBuildStatus:
+         姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+     3>InitializeBuildStatus:
+         姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+     2>InitializeBuildStatus:
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+     3>InitializeBuildStatus:
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+     4>InitializeBuildStatus:
+         姝ｅ湪鍒涘缓鈥淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濓紝鍥犱负宸叉寚瀹氣€淎lwaysCreate鈥濄€?
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+     3>ClCompile:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+       Lib:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+         Time.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\Time.lib
+     4>ClCompile:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+     3>FinalizeBuildStatus:
+         姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\Time.tlog\unsuccessfulbuild鈥濄€?
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Time.tlog\Time.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+     3>宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Ying-Long-Engine\Time\Time.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+     4>Lib:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+         yaml-cpp.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\yaml-cpp.lib
+       FinalizeBuildStatus:
+         姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\unsuccessfulbuild鈥濄€?
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\yaml-cpp.tlog\yaml-cpp.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+     4>宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Ying-Long-Engine\yaml-cpp\yaml-cpp.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+     2>ClCompile:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+       Lib:
+         鎵€鏈夎緭鍑哄潎涓烘渶鏂般€?
+         ImGui.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\ImGui.lib
+       FinalizeBuildStatus:
+         姝ｅ湪鍒犻櫎鏂囦欢鈥淚ntermediate\Debug - windows\x86_64\ImGui.tlog\unsuccessfulbuild鈥濄€?
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\ImGui.tlog\ImGui.lastbuildstate鈥濇墽琛?Touch 浠诲姟銆?
+     2>宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Ying-Long-Engine\ImGui\ImGui.vcxproj鈥?榛樿鐩爣)鐨勬搷浣溿€?
+     1>PrepareForBuild:
+         宸插惎鐢ㄧ粨鏋勫寲杈撳嚭銆傜紪璇戝櫒璇婃柇鐨勬牸寮忚缃皢鍙嶆槧閿欒灞傛缁撴瀯銆傛湁鍏宠缁嗕俊鎭紝璇峰弬闃?https://aka.ms/cpp/structured-output銆?
+       InitializeBuildStatus:
+         姝ｅ湪瀵光€淚ntermediate\Debug - windows\x86_64\Ying-Long Engine.tlog\unsuccessfulbuild鈥濇墽琛?Touch 浠诲姟銆?
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\HostX86\x64\CL.exe /c /I..\ImGui\CodeFile /I"..\yaml-cpp\include" /I..\Setup\DirectXTex\Includes /I..\Setup\Assimp\Includes /I..\Setup\PhysX\Includes /ZI /JMC /nologo /W3 /WX- /diagnostics:column /MP /Od /D _DEBUG /D YAML_CPP_STATIC_DEFINE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /std:c++20 /Fo"Intermediate\Debug - windows\x86_64\\" /Fd"Intermediate\Debug - windows\x86_64\vc143.pdb" /external:W3 /Gd /TP /FC /errorReport:queue CodeFile\Graphics\DX12\DX12Renderer.cpp CodeFile\Graphics\DX12\DepthStencilDX12.cpp
+         DX12Renderer.cpp
+         DepthStencilDX12.cpp
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DepthStencilDX12.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(43,9): error C2660: 鈥淵ingLong::DepthStencilDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?0 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(72,14):
+             鍙傝鈥淵ingLong::DepthStencilDX12::Shutdown鈥濈殑澹版槑
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(43,9):
+             灏濊瘯鍖归厤鍙傛暟鍒楄〃鈥?)鈥濇椂
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(111,28): error C2511: 鈥渧oid YingLong::DepthStencilDX12::Shutdown(void)鈥?鈥淵ingLong::DepthStencilDX12鈥濅腑娌℃湁鎵惧埌閲嶈浇鐨勬垚鍛樺嚱鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(38,11):
+             鍙傝鈥淵ingLong::DepthStencilDX12鈥濈殑澹版槑
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(117,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::Width鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(170,13):
+             鍙傝鈥淵ingLong::DepthStencilDX12::Width鈥濈殑澹版槑
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(118,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::Height鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(171,13):
+             鍙傝鈥淵ingLong::DepthStencilDX12::Height鈥濈殑澹版槑
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(119,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::hasSRV鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(178,14):
+             鍙傝鈥淵ingLong::DepthStencilDX12::hasSRV鈥濈殑澹版槑
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(120,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::CurrentState鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(179,33):
+             鍙傝鈥淵ingLong::DepthStencilDX12::CurrentState鈥濈殑澹版槑
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Camera\Camera.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Primitives.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ConstantBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\StructuredBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Debug\DX12Log.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(686,28): error C2660: 鈥淵ingLong::DepthStencilDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?0 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(72,14):
+             鍙傝鈥淵ingLong::DepthStencilDX12::Shutdown鈥濈殑澹版槑
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(686,28):
+             灏濊瘯鍖归厤鍙傛暟鍒楄〃鈥?)鈥濇椂
+         
+     1>e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(794,37): error C2660: 鈥淵ingLong::RenderTargetDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?1 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\RenderTargetDX12.h(110,14):
+             鍙傝鈥淵ingLong::RenderTargetDX12::Shutdown鈥濈殑澹版槑
+             e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(794,37):
+             灏濊瘯鍖归厤鍙傛暟鍒楄〃鈥?_Ty)鈥濇椂
+                 with
+                 [
+                     _Ty=YingLong::DX12Core
+                 ]
+         
+     1>宸插畬鎴愮敓鎴愰」鐩€渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?榛樿鐩爣)鐨勬搷浣?- 澶辫触銆?
+
+鐢熸垚澶辫触銆?
+
+       鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?榛樿鐩爣) (1) ->
+       (ClCompile 鐩爣) -> 
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Camera\Camera.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Primitives.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ConstantBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\StructuredBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Debug\DX12Log.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+
+
+       鈥渆:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj鈥?榛樿鐩爣) (1) ->
+       (ClCompile 鐩爣) -> 
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(43,9): error C2660: 鈥淵ingLong::DepthStencilDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?0 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(111,28): error C2511: 鈥渧oid YingLong::DepthStencilDX12::Shutdown(void)鈥?鈥淵ingLong::DepthStencilDX12鈥濅腑娌℃湁鎵惧埌閲嶈浇鐨勬垚鍛樺嚱鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(117,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::Width鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(118,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::Height鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(119,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::hasSRV鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp(120,9): error C2597: 瀵归潪闈欐€佹垚鍛樷€淵ingLong::DepthStencilDX12::CurrentState鈥濈殑闈炴硶寮曠敤 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(686,28): error C2660: 鈥淵ingLong::DepthStencilDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?0 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+         e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(794,37): error C2660: 鈥淵ingLong::RenderTargetDX12::Shutdown鈥? 鍑芥暟涓嶆帴鍙?1 涓弬鏁?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+
+    7 涓鍛?
+    8 涓敊璇?
+
+宸茬敤鏃堕棿 00:00:03.99

@@ -1,6 +1,6 @@
 /**
  * @file EntryPoint.cpp
- * @brief Dracovis Engine 程序入口点 / Program entry point of Dracovis Engine
+ * @brief Ying-Long Engine 程序入口点 / Program entry point of Ying-Long Engine
  *
  * 本文件包含 main() 函数，是整个引擎的执行起点。
  * 负责创建 Application 单例、进入主消息循环，并捕获所有类型的异常。

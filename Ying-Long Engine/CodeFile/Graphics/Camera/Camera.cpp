@@ -154,8 +154,8 @@ namespace YingLong
 
 	void Camera::ControlCameraRotation() noexcept
 	{
-		// 按住右键时使用鼠标移动旋转相机（标准FPS控制方式）
-		// Use mouse movement to rotate camera when right mouse button is held (standard FPS control)
+		bool bHasInput = false;
+
 		if (GetAsyncKeyState(VK_RBUTTON))
 		{
 			POINT currentPos;
@@ -170,30 +170,67 @@ namespace YingLong
 			float dx = (float)(currentPos.x - LastMousePos.x);
 			float dy = (float)(currentPos.y - LastMousePos.y);
 
-			// 鼠标水平移动控制偏航角（yaw），灵敏度0.1度/像素
-			// Horizontal mouse movement controls yaw, sensitivity 0.1 deg/pixel
 			this->Rotation.y += dx * 0.1f;
-			// 鼠标垂直移动控制俯仰角（pitch），灵敏度0.1度/像素
-			// Vertical mouse movement controls pitch, sensitivity 0.1 deg/pixel
 			this->Rotation.x += dy * 0.1f;
 
 			LastMousePos = currentPos;
+			bHasInput = true;
+		}
+		else if (GetAsyncKeyState(VK_MBUTTON))
+		{
+			POINT currentPos;
+			GetCursorPos(&currentPos);
+
+			if (bFirstMouse)
+			{
+				LastMousePos = currentPos;
+				bFirstMouse = false;
+			}
+
+			float dx = (float)(currentPos.x - LastMousePos.x);
+
+			this->Rotation.z += dx * 0.1f;
+
+			LastMousePos = currentPos;
+			bHasInput = true;
 		}
 		else
 		{
 			bFirstMouse = true;
 		}
 
-		// Normalize rotation to [0, 360) to prevent unbounded accumulation
-		// across sessions (the camera is serialized every frame to disk).
-		auto wrap = [](float deg) noexcept -> float {
-			deg = fmodf(deg, 360.0f);
-			if (deg < 0.0f) deg += 360.0f;
-			return deg;
-		};
-		this->Rotation.x = wrap(this->Rotation.x);
-		this->Rotation.y = wrap(this->Rotation.y);
-		this->Rotation.z = wrap(this->Rotation.z);
+		if (GetAsyncKeyState(VK_LEFT))
+		{
+			this->Rotation.y -= 0.5f;
+			bHasInput = true;
+		}
+		if (GetAsyncKeyState(VK_RIGHT))
+		{
+			this->Rotation.y += 0.5f;
+			bHasInput = true;
+		}
+		if (GetAsyncKeyState(VK_UP))
+		{
+			this->Rotation.x -= 0.5f;
+			bHasInput = true;
+		}
+		if (GetAsyncKeyState(VK_DOWN))
+		{
+			this->Rotation.x += 0.5f;
+			bHasInput = true;
+		}
+
+		if (bHasInput)
+		{
+			auto wrap = [](float deg) noexcept -> float {
+				deg = fmodf(deg, 360.0f);
+				if (deg < 0.0f) deg += 360.0f;
+				return deg;
+			};
+			this->Rotation.x = wrap(this->Rotation.x);
+			this->Rotation.y = wrap(this->Rotation.y);
+			this->Rotation.z = wrap(this->Rotation.z);
+		}
 	}
 
 	void Camera::Serialize(const std::string& filePath)

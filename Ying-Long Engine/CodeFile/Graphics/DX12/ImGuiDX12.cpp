@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file ImGuiDX12.cpp
  * @brief ImGui DX12 渲染后端类实现 / ImGui DX12 rendering backend class implementation
  *
@@ -236,6 +236,13 @@ namespace YingLong
         {
             ImGui_ImplWin32_Shutdown();
             ImGui::DestroyContext();
+        }
+
+        // 释放字体纹理 SRV 描述符索引 / Free font texture SRV descriptor index
+        if (pCore && FontSRVHeapIndex != UINT_MAX)
+        {
+            pCore->GetCBVSRVUAVHeap()->Free(FontSRVHeapIndex);
+            FontSRVHeapIndex = UINT_MAX;
         }
 
         // 释放 DX12 资源 / Release DX12 resources
@@ -562,8 +569,26 @@ namespace YingLong
                     };
                     commandList->RSSetScissorRects(1, &scissor);
 
-                    // 绑定字体纹理 SRV（根参数索引 1）/ Bind font texture SRV (root param index 1)
-                    commandList->SetGraphicsRootDescriptorTable(1, FontTextureSRV_GPU);
+                    // 根据 ImTextureID 绑定正确的纹理 SRV（根参数索引 1）。
+                    // ImGui 文字命令的 TextureId 为 0（未调用 SetTexID），使用字体纹理。
+                    // ImGui::Image 命令的 TextureId 为用户指定的 GPU 描述符句柄（如场景渲染目标）。
+                    // 之前始终绑定 FontTextureSRV_GPU，导致场景视口显示字体纹理而非 3D 场景。
+                    // Bind correct texture SRV based on ImTextureID (root param index 1).
+                    // Text commands have TextureId = 0 (SetTexID not called), use font texture.
+                    // ImGui::Image commands have TextureId = user-specified GPU descriptor handle
+                    // (e.g., scene render target). Previously always bound FontTextureSRV_GPU,
+                    // causing the scene viewport to show font texture glyphs instead of 3D scene.
+                    ImTextureID texID = pcmd->GetTexID();
+                    if (texID)
+                    {
+                        D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle;
+                        gpuHandle.ptr = (UINT64)texID;
+                        commandList->SetGraphicsRootDescriptorTable(1, gpuHandle);
+                    }
+                    else
+                    {
+                        commandList->SetGraphicsRootDescriptorTable(1, FontTextureSRV_GPU);
+                    }
 
                     // 绘制索引化实例 / Draw indexed instanced
                     commandList->DrawIndexedInstanced(pcmd->ElemCount, 1, pcmd->IdxOffset + global_idx_offset, pcmd->VtxOffset + global_vtx_offset, 0);
@@ -837,9 +862,9 @@ namespace YingLong
         DX12LogSuccess("[ImGuiDX12] Font texture uploaded to GPU\n");
 
         // 为字体纹理创建 SRV / Create SRV for font texture
-        UINT srvHeapIndex = srvHeap->Allocate();
-        FontTextureSRV = srvHeap->GetCPUHandle(srvHeapIndex);
-        FontTextureSRV_GPU = srvHeap->GetGPUHandle(srvHeapIndex);
+        FontSRVHeapIndex = srvHeap->Allocate();
+        FontTextureSRV = srvHeap->GetCPUHandle(FontSRVHeapIndex);
+        FontTextureSRV_GPU = srvHeap->GetGPUHandle(FontSRVHeapIndex);
 
         D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
         srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -1012,7 +1037,17 @@ namespace YingLong
             }
         }
 
-        // 存储字体纹理 ID / Store font texture ID
-        io.Fonts->TexID = (ImTextureID)(uintptr_t)srvHeapIndex;
+        // 存储字体纹理 ID。
+        // 必须使用 GPU 描述符句柄（FontTextureSRV_GPU.ptr），而非堆索引。
+        // 渲染代码将 ImTextureID 视为 D3D12_GPU_DESCRIPTOR_HANDLE，
+        // 若使用堆索引（小整数如 4）会被当作无效 GPU 地址，导致文字渲染读取垃圾数据
+        // （表现为视口中出现放大拉伸的奇怪图案）。
+        // Store font texture ID. Must use the GPU descriptor handle
+        // (FontTextureSRV_GPU.ptr), not the heap index. The render code treats
+        // ImTextureID as a D3D12_GPU_DESCRIPTOR_HANDLE; using the heap index
+        // (a small integer like 4) would be interpreted as an invalid GPU address,
+        // causing text rendering to read garbage (manifesting as enlarged
+        // stretched weird patterns in the viewport).
+        io.Fonts->TexID = (ImTextureID)FontTextureSRV_GPU.ptr;
     }
 }

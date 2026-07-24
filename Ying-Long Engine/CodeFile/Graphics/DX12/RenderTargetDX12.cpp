@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file RenderTargetDX12.cpp
  * @brief DX12 渲染目标类实现 / DX12 render target class implementation
  *
@@ -13,6 +13,7 @@
 
 #include "RenderTargetDX12.h"
 #include "DX12Core.h"
+#include "../../Debug/DX12Log.h"
 
 namespace YingLong
 {
@@ -20,14 +21,16 @@ namespace YingLong
     // 构造函数 / Constructor
     // ========================================================================
     RenderTargetDX12::RenderTargetDX12()
-        : Width(0)
+        : pCore(nullptr)
+        , Width(0)
         , Height(0)
         , Format(DXGI_FORMAT_R8G8B8A8_UNORM)
         , MSAACount(1)
         , MSAAQuality(0)
-        , RTVHeapIndex(0)
-        , SRVHeapIndex(0)
+        , RTVHeapIndex(UINT_MAX)
+        , SRVHeapIndex(UINT_MAX)
         , HasSRV(false)
+        , bOwnsRTV(false)
         , CurrentState(D3D12_RESOURCE_STATE_COMMON)
     {
         RTVHandle.ptr = 0;
@@ -55,12 +58,16 @@ namespace YingLong
         UINT msaaCount,
         UINT msaaQuality)
     {
+        pCore = &core;
         Type = type;
         Width = width;
         Height = height;
         Format = format;
         MSAACount = msaaCount;
         MSAAQuality = msaaQuality;
+        // TextureOutput/MSAA 类型通过 CreateRTV 动态分配 RTV 索引，拥有所有权
+        // TextureOutput/MSAA types allocate RTV index dynamically via CreateRTV, owning it
+        bOwnsRTV = true;
 
         // 后台缓冲区由交换链创建，此处直接返回
         // Back buffer is created by swap chain, return directly here
@@ -127,16 +134,24 @@ namespace YingLong
     // ========================================================================
     void RenderTargetDX12::InitializeFromSwapChain(DX12Core& core, UINT bufferIndex)
     {
+        pCore = &core;
         Type = RenderTargetTypeDX12::BackBuffer;
 
         // 从交换链获取缓冲区资源
         // Get buffer resource from swap chain
         core.GetSwapChain()->GetBuffer(bufferIndex, IID_PPV_ARGS(&pResource));
 
-        // 从核心的 RTV 堆获取 RTV 句柄
-        // Get RTV handle from core's RTV heap
+        // 从核心的 RTV 堆获取 RTV 句柄。
+        // 索引 0..FRAME_COUNT-1 由 DX12Core::CreateDescriptorHeaps 预分配，
+        // 后台缓冲区不拥有 RTV 索引所有权（bOwnsRTV = false），
+        // 因此 Shutdown 不会释放这些索引。
+        // Get RTV handle from core's RTV heap.
+        // Indices 0..FRAME_COUNT-1 are pre-allocated by DX12Core::CreateDescriptorHeaps.
+        // Back buffers do not own the RTV index (bOwnsRTV = false),
+        // so Shutdown will not free these indices.
         RTVHandle = core.GetRTVHeap()->GetCPUHandle(bufferIndex);
         RTVHeapIndex = bufferIndex;
+        bOwnsRTV = false;
 
         CurrentState = D3D12_RESOURCE_STATE_COMMON;
     }
@@ -146,6 +161,22 @@ namespace YingLong
     // ========================================================================
     void RenderTargetDX12::Shutdown()
     {
+        // 释放 RTV 描述符索引（仅当拥有所有权时，即 TextureOutput/MSAA 类型）。
+        // 后台缓冲区的 RTV 索引由 DX12Core 预分配，不在此释放。
+        // Release RTV descriptor index (only if owned, i.e., TextureOutput/MSAA types).
+        // Back buffer RTV indices are pre-allocated by DX12Core, not freed here.
+        if (pCore && bOwnsRTV && RTVHeapIndex != UINT_MAX)
+        {
+            pCore->GetRTVHeap()->Free(RTVHeapIndex);
+        }
+
+        // 释放 SRV 描述符索引（若已分配）
+        // Release SRV descriptor index (if allocated)
+        if (pCore && SRVHeapIndex != UINT_MAX)
+        {
+            pCore->GetCBVSRVUAVHeap()->Free(SRVHeapIndex);
+        }
+
         pResource.Reset();
         RTVHandle.ptr = 0;
         SRVHandle.ptr = 0;
@@ -153,6 +184,9 @@ namespace YingLong
         Width = 0;
         Height = 0;
         HasSRV = false;
+        bOwnsRTV = false;
+        RTVHeapIndex = UINT_MAX;
+        SRVHeapIndex = UINT_MAX;
         CurrentState = D3D12_RESOURCE_STATE_COMMON;
     }
 
@@ -161,6 +195,14 @@ namespace YingLong
     // ========================================================================
     void RenderTargetDX12::Bind(::ID3D12GraphicsCommandList* commandList, const ::D3D12_CPU_DESCRIPTOR_HANDLE* dsv)
     {
+        // 防御性检查：RTV 句柄必须有效
+        // Defensive check: RTV handle must be valid
+        if (RTVHandle.ptr == 0)
+        {
+            DX12LogError("[RenderTargetDX12::Bind] Invalid RTV handle (null), skipping bind\n");
+            return;
+        }
+
         // 设置输出合并阶段的渲染目标（可选深度模板视图）
         // Set render targets on the output merger stage (optional depth stencil view)
         commandList->OMSetRenderTargets(1, &RTVHandle, FALSE, dsv);
@@ -171,6 +213,20 @@ namespace YingLong
     // ========================================================================
     void RenderTargetDX12::Clear(::ID3D12GraphicsCommandList* commandList, const float color[4])
     {
+        // 防御性检查：RTV 句柄和资源必须有效，避免 SDK 层参数错误导致崩溃
+        // Defensive check: RTV handle and resource must be valid to avoid SDK layer
+        // parameter errors that cause crashes
+        if (RTVHandle.ptr == 0)
+        {
+            DX12LogError("[RenderTargetDX12::Clear] Invalid RTV handle (null), skipping clear\n");
+            return;
+        }
+        if (!pResource)
+        {
+            DX12LogError("[RenderTargetDX12::Clear] Invalid resource (null), skipping clear\n");
+            return;
+        }
+
         commandList->ClearRenderTargetView(RTVHandle, color, 0, nullptr);
     }
 
@@ -184,8 +240,12 @@ namespace YingLong
         if (!pResource)
             return;
 
-        // 如果已经是目标状态则跳过
-        // Skip if already in target state
+        // 跳过冗余屏障：如果状态未变则不发出屏障
+        // Skip redundant barrier: don't emit if state hasn't changed
+        // 注意：OnPresented() 在 Present 后将状态追踪同步为 COMMON，
+        // 所以 PRESENT→RENDER_TARGET 不会发生，而是 COMMON→RENDER_TARGET。
+        // Note: OnPresented() syncs state tracking to COMMON after Present,
+        // so PRESENT→RENDER_TARGET doesn't occur; it's COMMON→RENDER_TARGET.
         if (CurrentState == newState)
             return;
 
@@ -201,6 +261,18 @@ namespace YingLong
 
         commandList->ResourceBarrier(1, &barrier);
         CurrentState = newState;
+    }
+
+    // ========================================================================
+    // Present 后重置状态追踪 / Reset state tracking after Present
+    // ========================================================================
+    void RenderTargetDX12::OnPresented()
+    {
+        // 使用 FLIP_DISCARD 时，DXGI 在 Present 后隐式将后台缓冲区重置为
+        // COMMON 状态。同步 CPU 端追踪以避免无效的 PRESENT→RENDER_TARGET 屏障。
+        // With FLIP_DISCARD, DXGI implicitly resets back buffers to COMMON
+        // state after Present. Sync CPU tracking to avoid invalid barriers.
+        CurrentState = D3D12_RESOURCE_STATE_COMMON;
     }
 
     // ========================================================================

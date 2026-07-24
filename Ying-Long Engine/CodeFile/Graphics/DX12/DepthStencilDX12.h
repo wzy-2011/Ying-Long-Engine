@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DepthStencilDX12.h
  * @brief DX12 深度模板缓冲区类定义 / DX12 depth stencil buffer class definition
  *
@@ -34,12 +34,21 @@ namespace YingLong
      * 可用于深度测试、模板测试以及阴影贴图等高级渲染技术。
      * SRV 格式会根据深度格式自动进行类型转换（如 D24_UNORM_S8_UINT -> R24_UNORM_X8_TYPELESS）。
      *
+     * 关键设计：DSV 索引从 DSV 描述符堆动态分配，而非硬编码为 0。
+     * 这允许多个 DepthStencilDX12 实例（如主深度模板和场景深度模板）
+     * 各自拥有独立的 DSV 描述符，避免互相覆盖。
+     *
      * DepthStencilDX12 encapsulates the creation, binding, and management of
      * DX12 depth stencil buffers. Supports creating depth stencil views (DSV)
      * and shader resource views (SRV), and can be used for depth testing,
      * stencil testing, and advanced rendering techniques like shadow mapping.
      * SRV formats are automatically type-converted based on the depth format
      * (e.g., D24_UNORM_S8_UINT -> R24_UNORM_X8_TYPELESS).
+     *
+     * Key design: DSV index is dynamically allocated from the DSV descriptor
+     * heap, not hardcoded to 0. This allows multiple DepthStencilDX12 instances
+     * (e.g., main depth stencil and scene depth stencil) to each have their
+     * own independent DSV descriptor, avoiding overwriting each other.
      */
     class DepthStencilDX12
     {
@@ -168,6 +177,7 @@ namespace YingLong
          */
         void CreateSRV(DX12Core& core);
 
+        DX12Core* pCore;                 ///< DX12Core 指针（用于 Shutdown 时释放描述符）/ DX12Core pointer (for releasing descriptors in Shutdown)
         Microsoft::WRL::ComPtr<::ID3D12Resource> pResource;  ///< 深度模板资源指针 / Depth stencil resource pointer
         ::D3D12_CPU_DESCRIPTOR_HANDLE DSVHandle;             ///< DSV CPU 描述符句柄 / DSV CPU descriptor handle
         ::D3D12_CPU_DESCRIPTOR_HANDLE SRVHandle;             ///< SRV CPU 描述符句柄 / SRV CPU descriptor handle
@@ -179,7 +189,7 @@ namespace YingLong
         UINT MSAACount;                  ///< MSAA 采样数 / MSAA sample count
         UINT MSAAQuality;                ///< MSAA 质量等级 / MSAA quality level
 
-        UINT DSVHeapIndex;               ///< DSV 描述符堆索引 / DSV descriptor heap index
+        UINT DSVHeapIndex;               ///< DSV 描述符堆索引（UINT_MAX 表示未分配）/ DSV descriptor heap index (UINT_MAX means unallocated)
         UINT SRVHeapIndex;               ///< SRV 描述符堆索引 / SRV descriptor heap index
         bool hasSRV;                     ///< 是否有 SRV / Whether has SRV
         ::D3D12_RESOURCE_STATES CurrentState;  ///< 当前资源状态 / Current resource state

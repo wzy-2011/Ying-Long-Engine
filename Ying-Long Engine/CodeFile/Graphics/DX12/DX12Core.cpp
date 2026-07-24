@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Core.cpp
  * @brief DX12 核心模块实现文件 / DX12 Core Module Implementation
  *
@@ -305,14 +305,15 @@ namespace YingLong
             pRenderTargets[i].Reset();
         }
 
-        // 释放交换链、命令队列和设备
-        // Release swap chain, command queue, and device
+        // 释放交换链和命令队列
+        // Release swap chain and command queue
         pSwapChain.Reset();
         pCommandQueue.Reset();
-        pDevice.Reset();
 
-        // 释放描述符堆和其他对象
-        // Release descriptor heaps and other objects
+        // 释放描述符堆和其他对象（必须在设备之前释放，
+        // 否则 D3D12 调试层会报告这些对象为泄漏）
+        // Release descriptor heaps and other objects BEFORE the device,
+        // otherwise the D3D12 debug layer reports them as leaked.
         RTVHeap.reset();
         DSVHeap.reset();
         CBVSRVUAVHeap.reset();
@@ -331,6 +332,10 @@ namespace YingLong
         // 清理静态图元的光源缓冲区资源
         // Clean up static primitive light buffer resources
         DX12Primitive::CleanupLightBuffers();
+
+        // 设备必须在最后释放（所有 D3D12 对象都依赖设备）
+        // Device must be released last (all D3D12 objects depend on it)
+        pDevice.Reset();
 
         DX12Log("[DX12Core] Shutdown complete\n");
     }
@@ -547,26 +552,42 @@ namespace YingLong
      */
     void DX12Core::CreateDescriptorHeaps(int width, int height)
     {
-        // RTV 堆 - 为帧缓冲区分配 FRAME_COUNT 个描述符
-        // RTV Heap - Allocate FRAME_COUNT descriptors for frame buffers
+        // RTV 堆 - 容量 = FRAME_COUNT(2) + 场景渲染目标(1) + 调整大小余量(1) = 4
+        // 预分配 FRAME_COUNT 个索引供后台缓冲区使用（索引 0, 1），
+        // 这样 CreateRenderTargetViews 可直接使用 GetCPUHandle(i)，
+        // 而 SceneRenderTarget 的 CreateRTV 调用 Allocate() 会返回索引 2，
+        // 不会覆盖后台缓冲区的 RTV 描述符。
+        // RTV Heap - Capacity = FRAME_COUNT(2) + scene RT(1) + resize spare(1) = 4.
+        // Pre-allocate FRAME_COUNT indices for back buffers (indices 0, 1),
+        // so CreateRenderTargetViews can directly use GetCPUHandle(i), and
+        // SceneRenderTarget's CreateRTV via Allocate() returns index 2,
+        // not overwriting back buffer RTV descriptors.
         RTVHeap = std::make_unique<DX12DescriptorHeap>(
             pDevice.Get(),
             D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
-            FRAME_COUNT,
+            FRAME_COUNT + 2,
             D3D12_DESCRIPTOR_HEAP_FLAG_NONE
         );
+        // 预分配 FRAME_COUNT 个索引供后台缓冲区 RTV 使用
+        // Pre-allocate FRAME_COUNT indices for back buffer RTVs
+        for (UINT i = 0; i < FRAME_COUNT; ++i)
+        {
+            RTVHeap->Allocate();
+        }
 
         // DSV 堆 - 分配4个描述符用于深度模板（支持调整大小）
-        // DSV Heap - Allocate 4 descriptors for depth stencil (supports resize)
+        // 容量说明：主深度模板 + 场景深度模板 = 2 个，预留 2 个用于调整大小时的
+        // 临时分配（Shutdown 释放旧索引后 Initialize 分配新索引，期间不会超出容量）。
+        // DSV Heap - Allocate 4 descriptors for depth stencil (supports resize).
+        // Capacity rationale: main DS + scene DS = 2; 2 spare for resize-time
+        // allocations (Shutdown frees old index, Initialize allocates new one,
+        // never exceeding capacity).
         DSVHeap = std::make_unique<DX12DescriptorHeap>(
             pDevice.Get(),
             D3D12_DESCRIPTOR_HEAP_TYPE_DSV,
             4,
             D3D12_DESCRIPTOR_HEAP_FLAG_NONE
         );
-        // 预先分配索引0供 DepthStencilDX12 使用
-        // Pre-allocate index 0 for DepthStencilDX12
-        DSVHeap->Allocate();
 
         // CBV/SRV/UAV 堆 - 分配100个描述符用于资源（着色器可见）
         // CBV/SRV/UAV Heap - Allocate 100 descriptors for resources (shader visible)

@@ -104,13 +104,11 @@ namespace YingLong
 		if (this->pDeviceContext && this->GUIRenderTarget->GetRenderTargetView() && this->pSwapChain)
 		{
 			pDeviceContext->OMSetRenderTargets(0u, NULL, NULL);
-
-			this->GUIRenderTarget->GetRenderTargetView()->Release();
-
 			pDeviceContext->Flush();
 
 			pSwapChain->ResizeBuffers(0u, NewWidth, NewHeight, DXGI_FORMAT_UNKNOWN, 0u);
 
+			this->GUIRenderTarget = std::make_unique<RenderTarget>();
 			this->GUIRenderTarget->InitializeRenderTarget(
 				RenderTargetType::DE_RTTYPE_WINOUTPUT, *this);
 			this->GUIViewport.Width = (float)NewWidth;
@@ -124,17 +122,16 @@ namespace YingLong
 		{
 			this->CameraObject.SetResolution({ (float)NewWidth, (float)NewHeight });
 
-			this->SceneRenderTarget->GetRenderTargetView()->Release();
-			this->SceneRenderTarget->GetRenderTargetResource()->Release();
+			pDeviceContext->OMSetRenderTargets(0u, NULL, NULL);
+			pDeviceContext->Flush();
 
+			this->SceneRenderTarget = std::make_unique<RenderTarget>();
 			this->SceneRenderTarget->InitializeRenderTarget(
 				RenderTargetType::DE_RTTYPE_TEXTUREOUTPUT, *this, NewWidth, NewHeight);
 			this->SceneViewport.Width = (float)NewWidth;
 			this->SceneViewport.Height = (float)NewHeight;
 
-			this->SceneDepthStencil->GetDepthStencilView()->Release();
-			this->SceneDepthStencil->GetDepthStencilState()->Release();
-
+			this->SceneDepthStencil = std::make_unique<DepthStencil>();
 			this->SceneDepthStencil->InitializeDepthStencil(*this, NewWidth, NewHeight);
 		}
 	}
@@ -192,34 +189,7 @@ namespace YingLong
 		this->SceneDepthStencil->BindDepthStencil(*this);
 
 		pDeviceContext->RSSetViewports(1u, &SceneViewport);
-
 		pDeviceContext->RSSetState(nullptr);
-
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
-		ImGuiWindowFlags WindowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_MenuBar;
-		const ImGuiViewport* Viewport = ImGui::GetMainViewport();
-		ImGui::SetNextWindowPos(Viewport->WorkPos);
-		ImGui::SetNextWindowSize(Viewport->WorkSize);
-		ImGui::SetNextWindowViewport(Viewport->ID);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		WindowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-		WindowFlags |= ImGuiWindowFlags_NoBackground;
-
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-		ImGui::Begin("Ying-Long Engine Editor", NULL, WindowFlags);
-
-		ImGui::PopStyleVar();
-		ImGui::PopStyleVar(2);
-
-		ImGuiID dockspace_id = ImGui::GetID("Dracovis Editor Dockspace");
-		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f));
-
-		ImGui::End();
 	}
 
 	void Graphics::DrawIndexed(UINT count) noexcept

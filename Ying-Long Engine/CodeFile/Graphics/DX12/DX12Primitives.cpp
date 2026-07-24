@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Primitives.cpp
  * @brief DX12 几何图元实现文件 / DX12 Geometric Primitives Implementation
  *
@@ -13,6 +13,7 @@
 #include "DX12Primitives.h"
 #include <DirectXMath.h>
 #include <cmath>
+#include <cassert>
 
 using namespace DirectX;
 
@@ -360,9 +361,24 @@ namespace YingLong
      */
     void DX12Primitive::InitializeLightBuffers(DX12Core& core, UINT initialCapacity)
     {
+        // 根参数 4 是一个包含 2 个 SRV（t4-t5）的描述符表，
+        // 要求 PointLightBuffer 和 SpotLightBuffer 的 SRV 在堆中连续。
+        // 当 FreeList 为空时，两次 Allocate() 返回连续索引。
+        // 此方法应在初始化早期调用（在描述符释放之前）以确保连续性。
+        // Root parameter 4 is a descriptor table with 2 SRVs (t4-t5),
+        // requiring PointLightBuffer and SpotLightBuffer SRVs to be
+        // consecutive in the heap. When FreeList is empty, two Allocate()
+        // calls return consecutive indices. This method should be called
+        // early in initialization (before any descriptor frees) to ensure
+        // contiguity.
         UINT pointLightSRVIndex = core.GetCBVSRVUAVHeap()->Allocate();
         UINT spotLightSRVIndex = core.GetCBVSRVUAVHeap()->Allocate();
-        
+
+        // 验证索引连续性（仅在调试构建中检查）
+        // Verify index contiguity (checked only in debug builds)
+        assert(spotLightSRVIndex == pointLightSRVIndex + 1 &&
+            "Light buffer SRV indices must be consecutive for descriptor table!");
+
         PointLightBuffer.InitializeWithSRVIndex(core, initialCapacity, pointLightSRVIndex);
         SpotLightBuffer.InitializeWithSRVIndex(core, initialCapacity, spotLightSRVIndex);
     }
@@ -915,13 +931,13 @@ namespace YingLong
     {
         XMMATRIX modelMatrix = XMMatrixIdentity();
 
-        // 使用正确的变换顺序：先旋转再平移（R * T）
-        // 确保锥体顶点固定在光源位置，旋转绕顶点进行
-        // Correct transform order: rotate first, then translate (R * T)
-        // Ensures cone apex stays at light position, rotation around apex
+        // 使用正确的变换顺序：缩放 * 旋转 * 平移（S * R * T）
+        // 与基类保持一致
+        // Correct transform order: scale * rotation * translation (S * R * T)
+        // Consistent with base class
+        modelMatrix *= XMMatrixScaling(Scale, Scale, Scale);
         modelMatrix *= XMMatrixRotationRollPitchYaw(Rotation[0], Rotation[1], Rotation[2]);
         modelMatrix *= XMMatrixTranslation(Position[0], Position[1], Position[2]);
-        modelMatrix *= XMMatrixScaling(Scale, Scale, Scale);
 
         XMMATRIX viewMatrix = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(ViewMatrix));
         XMMATRIX projMatrix = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(ProjectionMatrix));

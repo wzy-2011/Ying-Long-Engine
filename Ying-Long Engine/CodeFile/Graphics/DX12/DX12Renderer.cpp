@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Renderer.cpp
  * @brief DX12 渲染器实现文件 / DX12 Renderer Implementation
  *
@@ -27,13 +27,18 @@ namespace YingLong
         : pCamera(nullptr)              ///< 摄像机初始化为空 / Camera initialized to null
         , Width(0)                       ///< 宽度初始化为0 / Width initialized to 0
         , Height(0)                      ///< 高度初始化为0 / Height initialized to 0
+        , SceneWidth(0)                  ///< 场景宽度初始化为0 / Scene width initialized to 0
+        , SceneHeight(0)                 ///< 场景高度初始化为0 / Scene height initialized to 0
         , bInitialized(false)            ///< 未初始化 / Not initialized
         , bInFrame(false)                ///< 不在帧中 / Not in frame
         , bInImGuiFrame(false)           ///< 不在 ImGui 帧中 / Not in ImGui frame
         , hWnd(nullptr)                  ///< 窗口句柄为空 / Window handle is null
         , bNeedsResize(false)            ///< 不需要调整大小 / No resize needed
+        , bNeedsSceneResize(false)       ///< 不需要调整场景大小 / No scene resize needed
         , PendingWidth(0)                ///< 待处理宽度为0 / Pending width is 0
         , PendingHeight(0)               ///< 待处理高度为0 / Pending height is 0
+        , PendingSceneWidth(0)           ///< 待处理场景宽度为0 / Pending scene width is 0
+        , PendingSceneHeight(0)          ///< 待处理场景高度为0 / Pending scene height is 0
     {
         // 设置默认清除颜色为深灰色
         // Set default clear color to dark gray
@@ -267,6 +272,16 @@ namespace YingLong
             pImGui.reset();
         }
 
+        // 释放场景渲染目标和场景深度模板（必须在 pCore 之前释放，
+        // 因为它们的 Shutdown 需要通过 pCore 释放描述符索引，
+        // 否则 pCore 被销毁后 pCore 指针变为悬垂指针，Free() 会 use-after-free）
+        // Release scene render target and scene depth stencil before pCore,
+        // because their Shutdown() frees descriptor indices via pCore.
+        // Without this, pCore is destroyed first and the pCore pointer
+        // becomes dangling, causing use-after-free in Free().
+        pSceneRenderTarget.reset();
+        pSceneDepthStencil.reset();
+
         // 释放深度模板
         // Release depth stencil
         pDepthStencil.reset();
@@ -337,6 +352,7 @@ namespace YingLong
         // 执行待处理的调整大小
         // Execute pending resize
         ExecuteResize();
+        ExecuteSceneResize();
 
         // 确定使用的清除颜色
         // Determine clear color to use
@@ -368,6 +384,21 @@ namespace YingLong
         // 资源状态转换：深度模板 -> 深度写入状态
         // Resource state transition: depth stencil -> depth write state
         pDepthStencil->TransitionTo(commandList, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+
+        // 防御性检查：在 Clear 前验证 RTV 句柄和资源有效性
+        // Defensive check: verify RTV handle and resource validity before Clear
+        if (rt->GetRTVHandle().ptr == 0)
+        {
+            DX12LogError("[DX12Renderer::BeginFrame] Render target RTV handle is null, skipping clear/bind\n");
+            bInFrame = true;
+            return;
+        }
+        if (!rt->GetResource())
+        {
+            DX12LogError("[DX12Renderer::BeginFrame] Render target resource is null, skipping clear/bind\n");
+            bInFrame = true;
+            return;
+        }
 
         // 清除渲染目标和深度模板
         // Clear render target and depth stencil
@@ -495,6 +526,15 @@ namespace YingLong
         // 结束 DX12 核心帧并呈现
         // End DX12 core frame and present
         pCore->EndFrame();
+
+        // Present 后 DXGI 将 FLIP_DISCARD 缓冲区重置为 COMMON 状态。
+        // 同步 CPU 端追踪，防止下一帧发出无效的 PRESENT→RENDER_TARGET 屏障。
+        // After Present, DXGI resets FLIP_DISCARD buffers to COMMON state.
+        // Sync CPU tracking to prevent invalid PRESENT→RENDER_TARGET barriers.
+        if (rt)
+        {
+            rt->OnPresented();
+        }
 
         // 标记离开帧状态
         // Mark out-of-frame state
@@ -735,5 +775,233 @@ namespace YingLong
         {
             pCore->WaitForGPU();
         }
+    }
+
+    /**
+     * @brief 更新场景渲染尺寸 / Update scene render size
+     *
+     * 设置待处理的场景渲染尺寸变更请求。
+     * Sets a pending scene render size change request.
+     *
+     * @param width 新宽度 / New width
+     * @param height 新高度 / New height
+     */
+    void DX12Renderer::UpdateSceneSize(int width, int height)
+    {
+        if (width <= 0 || height <= 0)
+            return;
+
+        if (SceneWidth == width && SceneHeight == height && !bNeedsSceneResize)
+            return;
+
+        PendingSceneWidth = width;
+        PendingSceneHeight = height;
+        bNeedsSceneResize = true;
+    }
+
+    /**
+     * @brief 执行待处理的场景尺寸调整 / Execute pending scene resize
+     *
+     * 创建或重建离屏场景渲染目标和深度模板缓冲区。
+     * Creates or recreates the off-screen scene render target and depth stencil.
+     */
+    void DX12Renderer::ExecuteSceneResize()
+    {
+        if (!bNeedsSceneResize || !pCore)
+            return;
+
+        WaitForGPU();
+
+        try
+        {
+            if (pSceneRenderTarget)
+            {
+                pSceneRenderTarget->Shutdown();
+                pSceneRenderTarget.reset();
+            }
+            if (pSceneDepthStencil)
+            {
+                pSceneDepthStencil->Shutdown();
+                pSceneDepthStencil.reset();
+            }
+
+            pSceneRenderTarget = std::make_unique<RenderTargetDX12>();
+            pSceneRenderTarget->Initialize(
+                *pCore,
+                RenderTargetTypeDX12::TextureOutput,
+                PendingSceneWidth,
+                PendingSceneHeight,
+                DXGI_FORMAT_R8G8B8A8_UNORM,
+                1, 0);
+
+            pSceneDepthStencil = std::make_unique<DepthStencilDX12>();
+            pSceneDepthStencil->Initialize(*pCore, PendingSceneWidth, PendingSceneHeight);
+
+            SceneWidth = PendingSceneWidth;
+            SceneHeight = PendingSceneHeight;
+            bNeedsSceneResize = false;
+        }
+        catch (const std::exception& e)
+        {
+            DX12LogError(("[DX12Renderer::ExecuteSceneResize] FAILED: " +
+                          std::string(e.what()) + "\n").c_str());
+            pSceneRenderTarget.reset();
+            pSceneDepthStencil.reset();
+            SceneWidth = 0;
+            SceneHeight = 0;
+            bNeedsSceneResize = false;
+        }
+    }
+
+    /**
+     * @brief 开始渲染到场景纹理 / Begin rendering to scene texture
+     *
+     * 将渲染目标从交换链后台缓冲区切换到离屏场景渲染目标，
+     * 清除颜色和深度，绑定渲染目标和深度模板，设置视口。
+     *
+     * Switches render target from swap chain back buffer to off-screen
+     * scene render target, clears color and depth, binds render target
+     * and depth stencil, sets viewport.
+     *
+     * @param clearColor 清除颜色 / Clear color
+     */
+    void DX12Renderer::BeginSceneRender(const float clearColor[4])
+    {
+        if (!bInitialized || !pCore)
+            return;
+
+        if (!pSceneRenderTarget || !pSceneDepthStencil ||
+            !pSceneRenderTarget->GetResource() || !pSceneDepthStencil->GetResource())
+        {
+            if (PendingSceneWidth > 0 && PendingSceneHeight > 0)
+            {
+                ExecuteSceneResize();
+            }
+            else if (SceneWidth > 0 && SceneHeight > 0)
+            {
+                ExecuteSceneResize();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (!pSceneRenderTarget || !pSceneDepthStencil ||
+            !pSceneRenderTarget->GetResource() || !pSceneDepthStencil->GetResource())
+            return;
+
+        const float* color = clearColor ? clearColor : ClearColor;
+
+        ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
+        if (!commandList)
+            return;
+
+        if (pCore->GetRootSignature() && pCore->GetRootSignature()->GetRootSignature())
+        {
+            commandList->SetGraphicsRootSignature(
+                pCore->GetRootSignature()->GetRootSignature());
+        }
+
+        if (pCore->GetPipelineState() && pCore->GetPipelineState()->IsInitialized())
+        {
+            pCore->GetPipelineState()->Bind(commandList);
+        }
+
+        pSceneRenderTarget->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
+        pSceneDepthStencil->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+
+        pSceneRenderTarget->Clear(commandList, color);
+        pSceneDepthStencil->Clear(commandList, true, true);
+
+        auto dsvHandle = pSceneDepthStencil->GetDSVHandle();
+        pSceneRenderTarget->Bind(commandList, &dsvHandle);
+
+        D3D12_VIEWPORT viewport = {};
+        viewport.TopLeftX = 0.0f;
+        viewport.TopLeftY = 0.0f;
+        viewport.Width = static_cast<float>(SceneWidth);
+        viewport.Height = static_cast<float>(SceneHeight);
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.left = 0;
+        scissorRect.top = 0;
+        scissorRect.right = SceneWidth;
+        scissorRect.bottom = SceneHeight;
+        commandList->RSSetScissorRects(1, &scissorRect);
+    }
+
+    /**
+     * @brief 结束渲染场景纹理 / End rendering to scene texture
+     *
+     * 将场景渲染目标转换为像素着色器资源状态以便 ImGui 读取，
+     * 恢复交换链后台缓冲区作为渲染目标。
+     *
+     * Transitions the scene render target to pixel shader resource state
+     * for ImGui reading, restores the swap chain back buffer as render target.
+     */
+    void DX12Renderer::EndSceneRender()
+    {
+        if (!bInitialized || !pCore || !pSceneRenderTarget)
+            return;
+
+        ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
+        if (!commandList)
+            return;
+
+        pSceneRenderTarget->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        pSceneDepthStencil->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_COMMON);
+
+        UINT backBufferIndex = pCore->GetCurrentBackBufferIndex();
+        RenderTargetDX12* rt = pRenderTargets[backBufferIndex].get();
+        if (rt)
+        {
+            rt->TransitionTo(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+            if (pDepthStencil)
+            {
+                pDepthStencil->TransitionTo(
+                    commandList, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+                auto dsvHandle = pDepthStencil->GetDSVHandle();
+                rt->Bind(commandList, &dsvHandle);
+            }
+            else
+            {
+                rt->Bind(commandList, nullptr);
+            }
+        }
+
+        D3D12_VIEWPORT viewport = {};
+        viewport.Width = static_cast<float>(Width);
+        viewport.Height = static_cast<float>(Height);
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.right = Width;
+        scissorRect.bottom = Height;
+        commandList->RSSetScissorRects(1, &scissorRect);
+    }
+
+    /**
+     * @brief 获取场景纹理的 GPU SRV 句柄 / Get GPU SRV handle for scene texture
+     *
+     * 返回场景渲染目标的 GPU 端 SRV 句柄，供 ImGui::Image 使用。
+     * Returns the GPU-side SRV handle of the scene render target for ImGui::Image.
+     *
+     * @return GPU SRV 描述符句柄 / GPU SRV descriptor handle
+     */
+    D3D12_GPU_DESCRIPTOR_HANDLE DX12Renderer::GetSceneSRVHandle() const noexcept
+    {
+        if (pSceneRenderTarget && pSceneRenderTarget->HasShaderResourceView())
+            return pSceneRenderTarget->GetGPU_SRVHandle();
+        return D3D12_GPU_DESCRIPTOR_HANDLE{};
     }
 }

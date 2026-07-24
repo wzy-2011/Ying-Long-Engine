@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Log.h
  * @brief DX12 日志系统 / DX12 Logging System
  *
@@ -235,7 +235,7 @@ namespace YingLong
             s.error_buffer += ts;
             s.error_buffer += msg;
         }
-        TryFlushLogFiles();
+        FlushLogFiles();
     }
 
     /**

@@ -1,6 +1,6 @@
 /**
  * @file Application.cpp
- * @brief Ying-Long Engine 应用程序实现 / Application implementation of Dracovis Engine
+ * @brief Ying-Long Engine 应用程序实现 / Application implementation of Ying-Long Engine
  *
  * 包含 Application 类的所有实现：构造函数中的多线程资源加载、
  * 主循环、DX11/DX12 帧渲染、场景初始化、模式切换等。
@@ -45,9 +45,9 @@ namespace YingLong
 	 */
 	Application::Application(std::wstring windowTitle)
 	:
-	SplashWindow(1000, 800, L"Dracovis Loading", true),
+	SplashWindow(1000, 800, L"Ying-Long Engine Loading", true),
 	MainWindow(1750, 900, windowTitle.c_str()),
-	bUseDX12(false),
+	bUseDX12(true),
 	pDX12DemoScene(nullptr)
 	{
 		// 标记初始化是否完成，用于主线程等待
@@ -72,18 +72,26 @@ namespace YingLong
 		// Start background initialization thread to avoid blocking the main thread's message loop
 		std::thread InitializationThread([this]()
 		{
-			// 创建 PhysX 物理上下文（PxPhysics 工厂对象）
-			// Create PhysX physics context (PxPhysics factory object)
-			this->PhysicsContext = Physics::Create();
+			try
+			{
+				// 创建 PhysX 物理上下文（PxPhysics 工厂对象）
+				// Create PhysX physics context (PxPhysics factory object)
+				this->PhysicsContext = Physics::Create();
 
-			// 初始化光源管理器
-			// Initialize the light manager
-			LightManager::Initialize(this->MainWindow.graphics());
+			// 初始化光源管理器（仅 DX11 模式）
+			// Initialize the light manager (DX11 mode only)
+			if (!bUseDX12)
+			{
+				LightManager::Initialize(this->MainWindow.graphics());
+			}
 
-			// 几何体加载线程：生成 10 个随机旋转盒子 + 1 个胶囊体
-			// Geometry loading thread: generate 10 random-rotated boxes + 1 capsule
+			// 几何体加载线程：生成 10 个随机旋转盒子 + 1 个胶囊体（仅 DX11 模式）
+			// Geometry loading thread: generate 10 random-rotated boxes + 1 capsule (DX11 mode only)
 			std::thread GeometryLoadingThread([this]()
 				{
+					if (bUseDX12)
+						return;
+
 					// 随机数生成器，用于随机盒子的位置和旋转
 					// Random number generator for random box positions and rotations
 					std::mt19937 rng(std::random_device{ }());
@@ -108,17 +116,23 @@ namespace YingLong
 						this->MainWindow.graphics(), 1.0f, 2.0f, XMFLOAT3{ 1.0f, 0.5, 0.0f }));
 				});
 
-			// 模型 1 加载线程：加载 Cube 模型（Nanosuit 占位用）
-			// Model 1 loading thread: load Cube model (placeholder for Nanosuit)
+			// 模型 1 加载线程：加载 Cube 模型（Nanosuit 占位用）（仅 DX11 模式）
+			// Model 1 loading thread: load Cube model (placeholder for Nanosuit) (DX11 mode only)
 			std::thread Model1LoadingThread([this]()
 				{
+					if (bUseDX12)
+						return;
+
 					std::lock_guard<std::mutex> guard(this->Locker);
 					this->Nanosuit = Model(this->MainWindow.graphics(), "Resources/Cube/Cube.obj");
 				});
-			// 模型 2 加载线程：加载 Cerberus FBX 模型
-			// Model 2 loading thread: load Cerberus FBX model
+			// 模型 2 加载线程：加载 Cerberus FBX 模型（仅 DX11 模式）
+			// Model 2 loading thread: load Cerberus FBX model (DX11 mode only)
 			std::thread Model2LoadingThread([this]()
 				{
+					if (bUseDX12)
+						return;
+
 					std::lock_guard<std::mutex> guard(this->Locker);
 					this->Cerberus = Model(this->MainWindow.graphics(), "Resources/Cerberus/Cerberus.fbx");
 				});
@@ -153,11 +167,25 @@ namespace YingLong
 
 			// 初始化 ECS 场景
 			// Initialize the ECS scene
+			std::cerr << "[InitializationThread] Calling InitializeScene..." << std::endl;
 			this->InitializeScene();
+			std::cerr << "[InitializationThread] InitializeScene completed" << std::endl;
 
 			// 标记初始化完成，主线程退出等待循环
 			// Mark initialization as finished, main thread exits the wait loop
+			std::cerr << "[InitializationThread] Setting IsInitializationFinished = true" << std::endl;
 			IsInitializationFinished = true;
+			}
+			catch (const std::exception& e)
+			{
+				std::cerr << "[InitializationThread] Exception: " << e.what() << std::endl;
+				IsInitializationFinished = true;
+			}
+			catch (...)
+			{
+				std::cerr << "[InitializationThread] Unknown exception" << std::endl;
+				IsInitializationFinished = true;
+			}
 		});
 		// 分离初始化线程，由它自己管理生命周期
 		// Detach the initialization thread, letting it manage its own lifecycle
@@ -186,10 +214,13 @@ namespace YingLong
 		// Destroy the splash window
 		this->SplashWindow.Destroy();
 
+		std::cerr << "[Application] After splash window destroyed, bUseDX12=" << (bUseDX12 ? "true" : "false") << std::endl;
+
 		// 如果启用了 DX12 模式，初始化 DX12 渲染器和演示场景
 		// If DX12 mode is enabled, initialize DX12 renderer and demo scene
 		if (bUseDX12)
 		{
+			std::cerr << "[Application] Calling InitializeDX12..." << std::endl;
 			MainWindow.InitializeDX12();
 			if (MainWindow.IsDX12Enabled())
 			{
@@ -223,24 +254,20 @@ namespace YingLong
 	{
 		MSG message = { 0 };
 
-		// 循环处理消息，直到收到退出消息
-		// Loop processing messages until quit message is received
-		while (message.message != WM_QUIT)
+		while (true)
 		{
-			// 取出所有待处理消息并分发
-			// Retrieve all pending messages and dispatch them
 			while (PeekMessage(&message, NULL, NULL, NULL, PM_REMOVE))
 			{
+				if (message.message == WM_QUIT)
+				{
+					return (int)message.wParam;
+				}
 				TranslateMessage(&message);
 				DispatchMessageW(&message);
 			}
 
-			// 无消息时执行一帧更新与渲染
-			// Execute one frame of update and render when no messages
 			DoFrame();
 		}
-
-		return (int)message.wParam;
 	}
 
 	/**
@@ -477,6 +504,33 @@ namespace YingLong
 			this->MainWindow.graphics().color[0],
 			this->MainWindow.graphics().color[1],
 			this->MainWindow.graphics().color[2]);
+
+		// 启动 ImGui 新帧
+		// Start new ImGui frame
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		// 创建 DockSpace 主窗口
+		// Create DockSpace main window
+		ImGuiWindowFlags WindowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_MenuBar;
+		const ImGuiViewport* Viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(Viewport->WorkPos);
+		ImGui::SetNextWindowSize(Viewport->WorkSize);
+		ImGui::SetNextWindowViewport(Viewport->ID);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		WindowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		WindowFlags |= ImGuiWindowFlags_NoBackground;
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("Ying-Long Engine Editor", NULL, WindowFlags);
+		ImGui::PopStyleVar();
+		ImGui::PopStyleVar(2);
+		ImGuiID dockspace_id = ImGui::GetID("Ying-Long Engine Editor Dockspace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f));
+		ImGui::End();
+
 		this->MainWindow.graphics().ColorEditor();
 
 		// 更新场景（物理 + 所有系统）
@@ -592,16 +646,35 @@ namespace YingLong
 			(LastScenePanelSize.y != CurrentScenePanelSize.y) || IsFirst)
 		{
 			LastScenePanelSize = CurrentScenePanelSize;
-
-			this->MainWindow.graphics().UpdateSceneGraphicsResolution(
-				(int)CurrentScenePanelSize.x, (int)CurrentScenePanelSize.y);
 			Aspect = CurrentScenePanelSize.x / CurrentScenePanelSize.y;
 			IsFirst = false;
+
+			if (bUseDX12 && MainWindow.GetDX12Renderer())
+			{
+				MainWindow.GetDX12Renderer()->UpdateSceneSize(
+					(int)CurrentScenePanelSize.x, (int)CurrentScenePanelSize.y);
+			}
+			else
+			{
+				this->MainWindow.graphics().UpdateSceneGraphicsResolution(
+					(int)CurrentScenePanelSize.x, (int)CurrentScenePanelSize.y);
+			}
 		}
 		// 将场景渲染目标作为纹理显示在 ImGui 面板中
 		// Display the scene render target as a texture in the ImGui panel
-		ImGui::Image((ImTextureID)this->MainWindow.graphics().SceneRenderTarget->GetRenderTargetResource().Get(),
-			ImGui::GetContentRegionAvail());
+		if (bUseDX12 && MainWindow.GetDX12Renderer())
+		{
+			D3D12_GPU_DESCRIPTOR_HANDLE srvHandle = MainWindow.GetDX12Renderer()->GetSceneSRVHandle();
+			if (srvHandle.ptr != 0)
+			{
+				ImGui::Image((ImTextureID)srvHandle.ptr, ImGui::GetContentRegionAvail());
+			}
+		}
+		else
+		{
+			ImGui::Image((ImTextureID)this->MainWindow.graphics().SceneRenderTarget->GetRenderTargetResource().Get(),
+				ImGui::GetContentRegionAvail());
+		}
 		
 		ImVec2 size = ImGui::GetWindowSize();
 		XMFLOAT2 WindowSize = { size.x, size.y };
@@ -802,38 +875,31 @@ namespace YingLong
 			}
 			DX12LogSuccess("[Application::InitializeDX12DemoScene] Boxes created successfully\n");
 
-			// Initialize DX12 light containers from the DX11 light objects.
-			// PointLightOne/Two and SpotLightTwo were loaded from disk in the
-			// import thread; copy their data so the DX12 scene starts lit.
+			// Initialize DX12 light containers with default values
+			// DX11 light objects are not available in DX12 mode, so use defaults
 			DX12PointLights.clear();
 			DX12SpotLights.clear();
-			if (PointLightOne)
+
+			// Add default point light 1
 			{
 				DX12PointLightState pl;
-				pl.Position = PointLightOne->LightData.Position;
-				pl.Color = PointLightOne->LightData.Color;
-				pl.Intensity = PointLightOne->LightData.Intensity;
+				pl.Position = { 5.0f, 5.0f, 5.0f };
+				pl.Color = { 1.0f, 0.5f, 0.5f };
+				pl.Intensity = 10000.0f;
+				pl.Enabled = true;
 				DX12PointLights.push_back(pl);
 			}
-			if (PointLightTwo)
+
+			// Add default point light 2
 			{
 				DX12PointLightState pl;
-				pl.Position = PointLightTwo->LightData.Position;
-				pl.Color = PointLightTwo->LightData.Color;
-				pl.Intensity = PointLightTwo->LightData.Intensity;
+				pl.Position = { -5.0f, 5.0f, -5.0f };
+				pl.Color = { 0.5f, 0.5f, 1.0f };
+				pl.Intensity = 10000.0f;
+				pl.Enabled = true;
 				DX12PointLights.push_back(pl);
 			}
-			if (SpotLightTwo)
-			{
-				DX12SpotLightState sl;
-				sl.Position = SpotLightTwo->LightData.Position;
-				sl.Color = SpotLightTwo->LightData.Color;
-				sl.Intensity = SpotLightTwo->LightData.Intensity;
-				sl.Rotation = SpotLightTwo->LightData.Rotation;
-				sl.OuterConeAngle = SpotLightTwo->LightData.OuterConeAngle;
-				sl.InnerConeAngle = SpotLightTwo->LightData.InnerConeAngle;
-				DX12SpotLights.push_back(sl);
-			}
+
 			// Add a downward-facing spot light for scene observation.
 			// Rotation {0,0,-90} rotates default dir (1,0,0) to (0,-1,0).
 			{
@@ -842,6 +908,9 @@ namespace YingLong
 				sl.Color = { 0.8f, 0.8f, 1.0f };
 				sl.Intensity = 20000.0f;
 				sl.Rotation = { 0.0f, 0.0f, -90.0f }; // point -Y (downward)
+				sl.OuterConeAngle = XM_PI / 4.0f;
+				sl.InnerConeAngle = XM_PI / 6.0f;
+				sl.Enabled = true;
 				DX12SpotLights.push_back(sl);
 			}
 			DX12LogSuccess("[Application::InitializeDX12DemoScene] Lights initialized\n");
@@ -963,6 +1032,10 @@ namespace YingLong
 			data.Direction[1] = dirF.y;
 			data.Direction[2] = dirF.z;
 			data.OuterConeAngle = cosf(sl.OuterConeAngle);
+			// Rotation 和 pad 仅在 HLSL SpotLight struct 中用于对齐，不参与实际计算
+			// Rotation and pad are only for alignment in HLSL SpotLight struct, not used in calculations
+			data.Rotation[0] = data.Rotation[1] = data.Rotation[2] = 0.0f;
+			data.pad = 0.0f;
 			spotLightList.push_back(data);
 		}
 
@@ -1043,11 +1116,70 @@ namespace YingLong
 				ImGui::PopStyleVar();
 				ImGui::PopStyleVar(2);
 
-				ImGuiID dockspaceId = ImGui::GetID("Dracovis Editor Dockspace");
+				ImGuiID dockspaceId = ImGui::GetID("Ying-Long Editor Dockspace");
 				ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f),
 					ImGuiDockNodeFlags_PassthruCentralNode);
 				ImGui::End();
 			}
+
+			// ===== Scene viewport panel: displays 3D scene render result =====
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+			ImGui::Begin("Scene");
+
+			ImVec2 CurrentScenePanelSize = ImGui::GetContentRegionAvail();
+			static ImVec2 LastScenePanelSize = CurrentScenePanelSize;
+			static bool IsFirst = true;
+			if ((LastScenePanelSize.x != CurrentScenePanelSize.x) ||
+				(LastScenePanelSize.y != CurrentScenePanelSize.y) || IsFirst)
+			{
+				LastScenePanelSize = CurrentScenePanelSize;
+				renderer->UpdateSceneSize((int)CurrentScenePanelSize.x, (int)CurrentScenePanelSize.y);
+				IsFirst = false;
+			}
+
+			renderer->BeginSceneRender(clearColor);
+
+			if (pDX12DemoScene)
+			{
+				int sceneWidth = renderer->GetSceneWidth();
+				int sceneHeight = renderer->GetSceneHeight();
+				if (sceneWidth > 0 && sceneHeight > 0)
+				{
+					MainWindow.camera.SetResolution(XMFLOAT2{ (float)sceneWidth, (float)sceneHeight });
+				}
+				pDX12DemoScene->Update(0.016f);
+				ID3D12GraphicsCommandList* commandList = renderer->GetCore()->GetCommandList();
+				if (commandList)
+				{
+					DX12Primitive::UpdateLightBuffers(commandList);
+					pDX12DemoScene->Render(commandList);
+				}
+			}
+
+			if (CurrentScene && renderer)
+			{
+				auto* meshRenderer = CurrentScene->GetSystem<MeshRendererSystem>();
+				if (meshRenderer)
+				{
+					XMMATRIX viewMat = MainWindow.camera.GetMatrix();
+					XMMATRIX projMat = MainWindow.camera.GetProjection();
+					XMFLOAT4X4 viewF, projF;
+					XMStoreFloat4x4(&viewF, viewMat);
+					XMStoreFloat4x4(&projF, projMat);
+					meshRenderer->RenderDX12(*CurrentScene, *renderer->GetCore(),
+						renderer->GetCore()->GetCommandList(),
+						reinterpret_cast<const float*>(&viewF),
+						reinterpret_cast<const float*>(&projF),
+						0.016f);
+				}
+			}
+
+			renderer->EndSceneRender();
+
+			ImGui::Image((ImTextureID)renderer->GetSceneSRVHandle().ptr, ImGui::GetContentRegionAvail());
+
+			ImGui::End();
+			ImGui::PopStyleVar();
 
 			// DX12 Mode UI
 			ImGui::Begin("DX12 Mode");
@@ -1165,38 +1297,10 @@ namespace YingLong
 			// Camera control
 			MainWindow.camera.SpawnControlWindow("DX12 Camera");
 
-			// Update and render demo scene
-				if (pDX12DemoScene)
-				{
-					pDX12DemoScene->SpawnControlWindow();
-					pDX12DemoScene->Update(0.016f);
-
-				// Get command list and render
-				ID3D12GraphicsCommandList* commandList = renderer->GetCore()->GetCommandList();
-				if (commandList)
-				{
-					pDX12DemoScene->Render(commandList);
-				}
-			}
-
-			// Render ECS entities (MeshComponent) via DX12Box placeholders.
-			// MeshRendererSystem lazily creates one DX12Box per entity and caches it.
-			if (CurrentScene && renderer)
+			// Demo scene control panel
+			if (pDX12DemoScene)
 			{
-				auto* meshRenderer = CurrentScene->GetSystem<MeshRendererSystem>();
-				if (meshRenderer)
-				{
-					XMMATRIX viewMat = MainWindow.camera.GetMatrix();
-					XMMATRIX projMat = MainWindow.camera.GetProjection();
-					XMFLOAT4X4 viewF, projF;
-					XMStoreFloat4x4(&viewF, viewMat);
-					XMStoreFloat4x4(&projF, projMat);
-					meshRenderer->RenderDX12(*CurrentScene, *renderer->GetCore(),
-						renderer->GetCore()->GetCommandList(),
-						reinterpret_cast<const float*>(&viewF),
-						reinterpret_cast<const float*>(&projF),
-						0.016f);
-				}
+				pDX12DemoScene->SpawnControlWindow();
 			}
 
 			// Physics editor panel (DX12 path)

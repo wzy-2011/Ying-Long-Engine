@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "DX12Core.h"
 #include "DX12DescriptorHeap.h"
@@ -35,13 +35,21 @@ namespace YingLong
 
         void Update(const std::vector<ElementType>& data)
         {
-            if (!pBuffer || !pCore || !pUploadBuffer)
+            if (!pBuffer || !pCore || !pUploadBuffers[0] || !pUploadBuffers[1])
                 return;
 
             size_t dataSize = data.size() * sizeof(ElementType);
-            
+
             if (dataSize > bufferSize)
             {
+                // 缓冲区扩容前必须等待 GPU 完成所有待处理命令，
+                // 因为 ReleaseResources() 会销毁 GPU 可能正在使用的缓冲区。
+                // 此操作会导致 CPU 停顿，但仅在光源数量超过初始容量时发生。
+                // Buffer resize must wait for GPU to complete all pending
+                // commands, because ReleaseResources() destroys buffers that
+                // the GPU may still be using. This causes a CPU stall, but
+                // only occurs when light count exceeds initial capacity.
+                pCore->WaitForGPU();
                 UINT newCapacity = static_cast<UINT>(data.size()) * 2;
                 ReleaseResources();
                 CreateBuffer(newCapacity);
@@ -49,34 +57,42 @@ namespace YingLong
             }
 
             if (data.empty())
+            {
+                needsUpdate = true;
+                currentDataSize = 0;
                 return;
+            }
 
+            // 写入当前上传缓冲区（与 GPU 正在复制的缓冲区不同）
+            // Write to current upload buffer (different from the one GPU is copying from)
             D3D12_RANGE readRange = {};
             readRange.Begin = 0;
             readRange.End = 0;
 
             void* pData;
-            HRESULT hr = pUploadBuffer->Map(0, &readRange, &pData);
+            HRESULT hr = pUploadBuffers[writeIndex]->Map(0, &readRange, &pData);
             if (FAILED(hr) || !pData)
                 return;
 
             if (lastDataSize == dataSize && memcmp(pData, data.data(), dataSize) == 0)
             {
-                pUploadBuffer->Unmap(0, nullptr);
+                pUploadBuffers[writeIndex]->Unmap(0, nullptr);
                 return;
             }
 
             memcpy(pData, data.data(), dataSize);
-            pUploadBuffer->Unmap(0, nullptr);
+            pUploadBuffers[writeIndex]->Unmap(0, nullptr);
 
             lastDataSize = dataSize;
             needsUpdate = true;
             currentDataSize = static_cast<UINT>(dataSize);
+            pendingIndex = writeIndex;
+            writeIndex = (writeIndex + 1) % 2;
         }
 
         void ApplyUpdate(ID3D12GraphicsCommandList* commandList)
         {
-            if (!needsUpdate || !pBuffer || !pUploadBuffer)
+            if (!needsUpdate || !pBuffer || pendingIndex < 0)
                 return;
 
             D3D12_RESOURCE_BARRIER barrier = {};
@@ -88,23 +104,27 @@ namespace YingLong
             barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
             commandList->ResourceBarrier(1, &barrier);
 
-            commandList->CopyBufferRegion(pBuffer.Get(), 0, pUploadBuffer.Get(), 0, currentDataSize);
+            commandList->CopyBufferRegion(pBuffer.Get(), 0, pUploadBuffers[pendingIndex].Get(), 0, currentDataSize);
 
             barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
             barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_GENERIC_READ;
             commandList->ResourceBarrier(1, &barrier);
 
             needsUpdate = false;
+            pendingIndex = -1;
         }
 
         void ReleaseResources()
         {
             pBuffer.Reset();
-            pUploadBuffer.Reset();
+            pUploadBuffers[0].Reset();
+            pUploadBuffers[1].Reset();
             capacity = 0;
             bufferSize = 0;
             needsUpdate = false;
             lastDataSize = 0;
+            writeIndex = 0;
+            pendingIndex = -1;
         }
 
         void Bind(ID3D12GraphicsCommandList* commandList, UINT rootParameterIndex)
@@ -175,27 +195,32 @@ namespace YingLong
             uploadHeapProps.CreationNodeMask = 1;
             uploadHeapProps.VisibleNodeMask = 1;
 
-            hr = device->CreateCommittedResource(
-                &uploadHeapProps,
-                D3D12_HEAP_FLAG_NONE,
-                &resourceDesc,
-                D3D12_RESOURCE_STATE_GENERIC_READ,
-                nullptr,
-                IID_PPV_ARGS(&pUploadBuffer)
-            );
+            // 创建双上传缓冲区，避免 CPU/GPU 竞态
+            // Create double upload buffers to avoid CPU/GPU race
+            for (int i = 0; i < 2; i++)
+            {
+                hr = device->CreateCommittedResource(
+                    &uploadHeapProps,
+                    D3D12_HEAP_FLAG_NONE,
+                    &resourceDesc,
+                    D3D12_RESOURCE_STATE_GENERIC_READ,
+                    nullptr,
+                    IID_PPV_ARGS(&pUploadBuffers[i])
+                );
+                if (FAILED(hr))
+                {
+                    pBuffer.Reset();
+                    pUploadBuffers[0].Reset();
+                    pUploadBuffers[1].Reset();
+                    return;
+                }
+            }
 
-            if (SUCCEEDED(hr))
-            {
-                this->capacity = capacity;
-                if (srvIndex == UINT_MAX)
-                    AllocateSRV();
-                else
-                    CreateSRV();
-            }
+            this->capacity = capacity;
+            if (srvIndex == UINT_MAX)
+                AllocateSRV();
             else
-            {
-                pBuffer.Reset();
-            }
+                CreateSRV();
         }
 
         void AllocateSRV()
@@ -228,12 +253,14 @@ namespace YingLong
 
         DX12Core* pCore = nullptr;
         Microsoft::WRL::ComPtr<ID3D12Resource> pBuffer;
-        Microsoft::WRL::ComPtr<ID3D12Resource> pUploadBuffer;
+        Microsoft::WRL::ComPtr<ID3D12Resource> pUploadBuffers[2];
         UINT capacity = 0;
         UINT bufferSize = 0;
         UINT srvIndex = UINT_MAX;
         bool needsUpdate = false;
         UINT currentDataSize = 0;
         size_t lastDataSize = 0;
+        int writeIndex = 0;
+        int pendingIndex = -1;
     };
 }

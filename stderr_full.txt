@@ -1,0 +1,7 @@
+[InitializationThread] Calling InitializeScene...
+[InitializationThread] InitializeScene completed
+[InitializationThread] Setting IsInitializationFinished = true
+[Application] After splash window destroyed, bUseDX12=true
+[Application] Calling InitializeDX12...
+[ImGuiDX12] VB REBUILD[frame=0]: old=5080 bytes, new=41280 bytes (need=36280)
+[ImGuiDX12] IB REBUILD[frame=0]: old=2012 bytes, new=8450 bytes (need=6450)

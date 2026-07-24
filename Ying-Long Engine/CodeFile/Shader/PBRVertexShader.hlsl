@@ -62,7 +62,7 @@ struct PBRVertexShaderInput
  */
 struct PBRVertexShaderOutput
 {
-    float3 WorldPosition : POSITION;   ///< 世界空间位置 / World-space position
+    float3 WorldPosition : WORLD_POSITION;   ///< 世界空间位置 / World-space position
     float3 Normal : NORMAL;            ///< 世界空间法线 / World-space normal
     float4 Position : SV_Position;     ///< 裁剪空间位置（系统值）/ Clip-space position (system value)
     float2 TexCoord : TextureCoord;    ///< 纹理坐标 / Texture coordinates

@@ -1,4 +1,4 @@
-﻿/** @file Drawable.cpp
+/** @file Drawable.cpp
  *  @brief 可绘制对象基类实现（已弃用） - Drawable base class implementation (deprecated)
  *
  *  包含 Drawable 基类的成员函数实现。
@@ -30,15 +30,15 @@ namespace YingLong
 	 */
 	void Drawable::Draw(Graphics& graphics) const noexcept
 	{
-		// 先绑定实例级资源（每个实例独有的）
-		// First bind instance-level resources (unique per instance)
-		for (auto& b : binds)
+		// 先绑定静态级资源（同类实例共享的）
+		// First bind static-level resources (shared by instances of same type)
+		for (auto& b : GetStaticBinds())
 		{
 			b->Bind(graphics);
 		}
-		// 再绑定静态级资源（同类实例共享的）
-		// Then bind static-level resources (shared by instances of same type)
-		for (auto& b : GetStaticBinds())
+		// 再绑定实例级资源（每个实例独有的）
+		// Then bind instance-level resources (unique per instance)
+		for (auto& b : binds)
 		{
 			b->Bind(graphics);
 		}

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file RenderTargetDX12.h
  * @brief DX12 渲染目标类定义 / DX12 render target class definition
  *
@@ -134,6 +134,18 @@ namespace YingLong
         );
 
         /**
+         * @brief Present 后重置状态追踪 / Reset state tracking after Present
+         *
+         * 使用 FLIP_DISCARD 交换效果时，DXGI 在 Present 后隐式地将
+         * 后台缓冲区重置为 COMMON 状态。此方法同步 CPU 端追踪。
+         *
+         * With FLIP_DISCARD swap effect, DXGI implicitly resets the
+         * back buffer to COMMON state after Present. This method
+         * synchronizes the CPU-side tracking.
+         */
+        void OnPresented();
+
+        /**
          * @brief 获取底层资源指针 / Get the underlying resource pointer
          * @return 指向 ID3D12Resource 的指针 / Pointer to ID3D12Resource
          */
@@ -176,6 +188,12 @@ namespace YingLong
         ::DXGI_FORMAT GetFormat() const noexcept { return Format; }
 
         /**
+         * @brief 查询是否有 SRV / Query whether SRV exists
+         * @return 如果有 SRV 返回 true / true if SRV exists
+         */
+        bool HasShaderResourceView() const noexcept { return HasSRV; }
+
+        /**
          * @brief 检查是否已初始化 / Check if initialized
          * @return true 表示已初始化 / true if initialized
          */
@@ -204,6 +222,7 @@ namespace YingLong
          */
         void CreateSRV(DX12Core& core);
 
+        DX12Core* pCore;                 ///< DX12Core 指针（用于 Shutdown 时释放描述符）/ DX12Core pointer (for releasing descriptors in Shutdown)
         Microsoft::WRL::ComPtr<::ID3D12Resource> pResource;  ///< 渲染目标资源指针 / Render target resource pointer
         ::D3D12_CPU_DESCRIPTOR_HANDLE RTVHandle;             ///< RTV CPU 描述符句柄 / RTV CPU descriptor handle
         ::D3D12_CPU_DESCRIPTOR_HANDLE SRVHandle;             ///< SRV CPU 描述符句柄 / SRV CPU descriptor handle
@@ -216,9 +235,10 @@ namespace YingLong
         UINT MSAACount;                  ///< MSAA 采样数 / MSAA sample count
         UINT MSAAQuality;                ///< MSAA 质量等级 / MSAA quality level
 
-        UINT RTVHeapIndex;               ///< RTV 描述符堆索引 / RTV descriptor heap index
+        UINT RTVHeapIndex;               ///< RTV 描述符堆索引（UINT_MAX 表示未分配/由 DX12Core 预分配）/ RTV descriptor heap index (UINT_MAX means unallocated/pre-allocated by DX12Core)
         UINT SRVHeapIndex;               ///< SRV 描述符堆索引 / SRV descriptor heap index
         bool HasSRV;                     ///< 是否有 SRV / Whether has SRV
+        bool bOwnsRTV;                   ///< 是否拥有 RTV 索引所有权（TextureOutput/MSAA 为 true，BackBuffer 为 false）/ Whether owns RTV index (true for TextureOutput/MSAA, false for BackBuffer)
         ::D3D12_RESOURCE_STATES CurrentState;  ///< 当前资源状态 / Current resource state
     };
 }

@@ -59,8 +59,10 @@ namespace YingLong
 			Direction = XMVector3Normalize(Direction);
 			XMStoreFloat3(&spotLightData.SpotLightList[i].Direction, Direction);
 
-			spotLightData.SpotLightList[i].OuterConeAngle = cosf(spotLightData.SpotLightList[i].OuterConeAngle);
-			spotLightData.SpotLightList[i].InnerConeAngle = cosf(spotLightData.SpotLightList[i].InnerConeAngle);
+			float originalOuterAngle = pSpotLightList[i].LightData.OuterConeAngle;
+			float originalInnerAngle = pSpotLightList[i].LightData.InnerConeAngle;
+			spotLightData.SpotLightList[i].OuterConeAngle = cosf(originalOuterAngle);
+			spotLightData.SpotLightList[i].InnerConeAngle = cosf(originalInnerAngle);
 		}
 		spotLightData.SpotLightCount = (int)pSpotLightList.size();
 

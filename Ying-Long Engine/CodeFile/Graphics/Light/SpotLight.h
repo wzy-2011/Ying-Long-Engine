@@ -15,13 +15,6 @@
  *       DX12SpotLightState/DX12SpotLightCB。
  *       This is the DX11 path spot light class. The DX12 path uses
  *       independent DX12SpotLightState/DX12SpotLightCB.
- *
- * @warning LightManager 路径中的 InnerConeAngle/OuterConeAngle
- *          存储的是原始弧度值，但 PBR 着色器中使用 dot() 比较，
- *          应该使用余弦值。这可能是一个已知缺陷。
- *          The InnerConeAngle/OuterConeAngle in the LightManager path
- *          stores raw radians, but the PBR shader compares with dot(),
- *          which should use cosine values. This may be a known bug.
  */
 #pragma once
 #include <filesystem>
@@ -92,6 +85,8 @@ namespace YingLong
 		public:
 			Data SpotLightList[50];   ///< 聚光灯数组 / Spot light array
 			int SpotLightCount;       ///< 聚光灯数量 / Spot light count
+		private:
+			float padding[3];         ///< 16字节对齐填充 / 16-byte alignment padding
 		};
 
 		/**

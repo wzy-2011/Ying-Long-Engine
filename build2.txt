@@ -1,0 +1,719 @@
+﻿閫傜敤浜?.NET Framework MSBuild 鐗堟湰 17.14.40+3e7442088
+
+  Time.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\Time.lib
+  yaml-cpp.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\yaml-cpp.lib
+  ImGui.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\ImGui.lib
+  Application.cpp
+  Window.cpp
+  DX12Renderer.cpp
+  DepthStencilDX12.cpp
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DepthStencilDX12.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Camera\Camera.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+  WARNING: Graphics.h is deprecated. Use DX12Renderer instead.
+  WARNING: Bindable.h is deprecated. Use BindableDX12 instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Primitives.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+  WARNING: DepthStencil.h is deprecated. Use DepthStencilDX12 instead.
+  WARNING: RenderTarget.h is deprecated. Use RenderTargetDX12 instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ConstantBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\StructuredBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Debug\DX12Log.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Graphics/DX12/DX12Renderer.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Camera\Camera.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(238,19): warning C4996: 'YingLong::RenderTarget': Use RenderTargetDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(239,19): warning C4996: 'YingLong::RenderTarget': Use RenderTargetDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(240,19): warning C4996: 'YingLong::DepthStencil': Use DepthStencilDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Renderer.cpp(784,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.h(176,3): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.h(244,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\IndexBuffer.h(23,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+  WARNING: Drawable.h is deprecated. Use DX12Drawable instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(116,32): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(144,45): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(148,31): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(59,38): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(59,38):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(34,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::DrawableBase鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(123,37): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(128,38): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(133,30): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+  WARNING: Graphics.h is deprecated. Use DX12Renderer instead.
+  WARNING: DepthStencil.h is deprecated. Use DepthStencilDX12 instead.
+  WARNING: RenderTarget.h is deprecated. Use RenderTargetDX12 instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Camera\Camera.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(238,19): warning C4996: 'YingLong::RenderTarget': Use RenderTargetDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(239,19): warning C4996: 'YingLong::RenderTarget': Use RenderTargetDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Graphics.h(240,19): warning C4996: 'YingLong::DepthStencil': Use DepthStencilDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(49,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(49,15):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(26,9):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::ConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(82,18): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(116,18): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(164,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(164,13):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(149,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::VertexConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,13):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(180,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::PixelConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(30,41): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(42,27): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(42,53): warning C4996: 'YingLong::Drawable': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(54,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(70,9): warning C4996: 'YingLong::Drawable': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(40,42): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(51,28): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(60,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Capsule.h(45,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(24,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(36,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(46,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(31,30): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(47,16): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(63,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(72,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(28,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(44,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(59,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(68,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(24,26): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(35,12): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(44,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+  WARNING: Bindable.h is deprecated. Use BindableDX12 instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\IndexBuffer.h(23,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\IndexBuffer.h(34,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\IndexBuffer.h(44,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\IndexBuffer.h(53,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+  WARNING: Drawable.h is deprecated. Use DX12Drawable instead.
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(92,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(116,32): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(144,45): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Drawable.h(148,31): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(59,38): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(59,38):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(34,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::DrawableBase鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(123,37): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(128,38): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(133,30): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(49,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(49,15):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(26,9):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::ConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(82,18): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(116,18): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(164,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(164,13):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(149,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::VertexConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,13):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(180,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::PixelConstantBuffer鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(30,41): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(42,27): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(42,53): warning C4996: 'YingLong::Drawable': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(54,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\TransformConstantBuffer.h(70,9): warning C4996: 'YingLong::Drawable': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(40,42): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(51,28): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\SolidColorConstantBuffer.h(60,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Capsule.h(45,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(24,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(36,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\InputLayout.h(46,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(31,30): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(47,16): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(63,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexShader.h(72,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(28,29): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(44,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(59,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\PixelShader.h(68,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(24,26): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(35,12): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Topology.h(44,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(25,25): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(42,11): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(59,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(68,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(29,33): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(46,22): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(76,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(79,13): warning C4996: 'YingLong::Bindable::GetDevicContext': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\SolidSphere.h(49,23): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(87,14): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(99,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Box.h(51,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(25,25): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(42,11): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(59,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Texture.h(68,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(29,33): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(46,22): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(76,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\VertexBuffer.h(79,13): warning C4996: 'YingLong::Bindable::GetDevicContext': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\SolidSphere.h(49,23): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(87,14): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\PointLight.h(99,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Box.h(51,15): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Geometry\Cone.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\SolidCone.h(55,21): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.h(176,3): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.h(244,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(96,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(108,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\LightManager.h(40,26): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\LightManager.h(70,22): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Geometry\Cone.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\SolidCone.h(55,21): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(96,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\SpotLight.h(108,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\LightManager.h(40,26): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Light\LightManager.h(70,22): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(23,25): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(38,11): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(53,26): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(62,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(76,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(88,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(23,25): warning C4996: 'YingLong::Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(38,11): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(53,26): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\Sampler.h(62,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(32,3): warning C4996: 'YingLong::Bindable::~Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(202,1):
+      鍙傝瀵瑰嚱鏁?"YingLong::ConstantBuffer<C>::ConstantBuffer(void)" 鐨勫紩鐢?
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(118,8): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Model.h(42,9): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Model.h(62,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(76,19): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(88,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(32,3): warning C4996: 'YingLong::Bindable::~Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(202,1):
+      鍙傝瀵瑰嚱鏁?"YingLong::ConstantBuffer<C>::ConstantBuffer(void)" 鐨勫紩鐢?
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(118,8): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Model.h(42,9): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Model.h(62,13): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ConstantBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ConstantBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Primitives.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\StructuredBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Primitives.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\StructuredBufferDX12.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Debug\DX12Log.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Debug\DX12Log.h(1,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\SolidBoxDrawable.h(51,26): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(147,34): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(194,2): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\ECS\System\MeshRendererSystem.h(109,39): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(449,24): warning C4996: 'YingLong::Graphics::UpdateGUIGraphicsResolution': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(157,34): warning C4996: 'YingLong::Graphics::ImportBackgroundColor': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(417,14): warning C4267: 鈥滃垵濮嬪寲鈥? 浠庘€渟ize_t鈥濊浆鎹㈠埌鈥渋nt鈥濓紝鍙兘涓㈠け鏁版嵁 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(422,18): warning C4244: 鈥?=鈥? 浠庘€渄ouble鈥濊浆鎹㈠埌鈥渋nt鈥濓紝鍙兘涓㈠け鏁版嵁 [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(504,31): warning C4996: 'YingLong::Graphics::color': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(505,31): warning C4996: 'YingLong::Graphics::color': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(506,31): warning C4996: 'YingLong::Graphics::color': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(675,57): warning C4996: 'YingLong::Graphics::SceneRenderTarget': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(718,1): warning C4819: 璇ユ枃浠跺寘鍚笉鑳藉湪褰撳墠浠ｇ爜椤?936)涓〃绀虹殑瀛楃銆傝灏嗚鏂囦欢淇濆瓨涓?Unicode 鏍煎紡浠ラ槻姝㈡暟鎹涪澶?[e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(503,31): warning C4996: 'YingLong::Graphics::ClearBuffer': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(534,31): warning C4996: 'YingLong::Graphics::ColorEditor': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(549,33): warning C4996: 'YingLong::Graphics::SetCamera': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(577,31): warning C4996: 'YingLong::Graphics::SaveBackgroundColor': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(595,7): warning C4996: 'YingLong::Drawable::Draw': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(601,7): warning C4996: 'YingLong::Drawable::Draw': Use DX12Drawable instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(659,33): warning C4996: 'YingLong::Graphics::UpdateSceneGraphicsResolution': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(675,77): warning C4996: 'YingLong::RenderTarget::GetRenderTargetResource': Use RenderTargetDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(724,31): warning C4996: 'YingLong::Graphics::EndFrame': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Application.cpp(810,27): warning C4996: 'YingLong::Graphics::ReInitImGui': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35): warning C4996: 'YingLong::Graphics::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(147,21):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑鍑芥暟 妯℃澘 瀹炰緥鍖栤€渟td::unique_ptr<YingLong::Graphics,std::default_delete<YingLong::Graphics>> std::make_unique<YingLong::Graphics,HWND&,0>(HWND &)鈥濈殑寮曠敤
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(61,33):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€淵ingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>鈥濈殑寮曠敤
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(180,37):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€淵ingLong::ConstantBuffer<C>鈥濈殑寮曠敤
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(116,3):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥淵ingLong::ConstantBuffer<C>::ConstantBuffer(YingLong::Graphics &,UINT)鈥濇椂
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+              e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(185,3):
+              璇峰弬闃?"YingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>::PixelConstantBuffer" 涓 "YingLong::ConstantBuffer<C>::ConstantBuffer" 鐨勭涓€涓紩鐢?
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(117,3): warning C4996: 'YingLong::Bindable::~Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4): warning C4996: 'YingLong::Bindable::GetDevice': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(196,14): warning C4996: 'YingLong::Bindable::GetDevicContext': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(196,14):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,8):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥渧oid YingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>::Bind(YingLong::Graphics &) noexcept鈥濇椂
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4): warning C4996: 'YingLong::Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\Mesh.h(61,33):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€淵ingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>鈥濈殑寮曠敤
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(180,37):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€淵ingLong::ConstantBuffer<C>鈥濈殑寮曠敤
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(116,3):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥淵ingLong::ConstantBuffer<C>::ConstantBuffer(YingLong::Graphics &,UINT)鈥濇椂
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+              e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(185,3):
+              璇峰弬闃?"YingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>::PixelConstantBuffer" 涓 "YingLong::ConstantBuffer<C>::ConstantBuffer" 鐨勭涓€涓紩鐢?
+          with
+          [
+              C=YingLong::MaterialCBufferData
+          ]
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(117,3): warning C4996: 'YingLong::Bindable::~Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(130,4): warning C4996: 'YingLong::Bindable::GetDevice': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+  
+e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(196,14): warning C4996: 'YingLong::Bindable::GetDevicContext': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(196,14):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Bindable\ConstantBuffers.h(194,8):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥渧oid YingLong::PixelConstantBuffer<YingLong::MaterialCBufferData>::Bind(YingLong::Graphics &) noexcept鈥濇椂
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9): warning C4996: 'YingLong::Graphics::~Graphics': Use DX12Renderer instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Window/Window.cpp鈥?
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.h(244,29):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€渟td::unique_ptr<YingLong::Graphics,std::default_delete<YingLong::Graphics>>鈥濈殑寮曠敤
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3352,92):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€渟td::default_delete<YingLong::Graphics>鈥濈殑寮曠敤
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3307,23):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥渧oid std::default_delete<YingLong::Graphics>::operator ()(_Ty *) noexcept const鈥濇椂
+          with
+          [
+              _Ty=YingLong::Graphics
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3427,33):
+              璇峰弬闃?"std::unique_ptr<YingLong::Graphics,std::default_delete<YingLong::Graphics>>::~unique_ptr" 涓 "std::default_delete<YingLong::Graphics>::operator ()" 鐨勭涓€涓紩鐢?
+              e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Application\Window\Window.cpp(95,2):
+              璇峰弬闃?"YingLong::Window::Window" 涓 "std::unique_ptr<YingLong::Graphics,std::default_delete<YingLong::Graphics>>::~unique_ptr" 鐨勭涓€涓紩鐢?
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9): warning C4996: 'YingLong::Bindable::~Bindable': Use BindableDX12 instead [e:\Projects\Ying-Long-Engine\Ying-Long Engine\Ying-Long Engine.vcxproj]
+  (缂栬瘧婧愭枃浠垛€淐odeFile/Application/Application.cpp鈥?
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9):
+      妯℃澘瀹炰緥鍖栦笂涓嬫枃(鏈€鏃╃殑瀹炰緥鍖栦笂涓嬫枃)涓?
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(34,8):
+          鍦ㄧ紪璇戠被妯℃澘鈥淵ingLong::DrawableBase鈥濇椂
+          e:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\Drawable\DrawableBase.h(63,4):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€渟td::unique_ptr<YingLong::Bindable,std::default_delete<YingLong::Bindable>>鈥濈殑寮曠敤
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3352,92):
+          鏌ョ湅瀵规鍦ㄧ紪璇戠殑 绫?妯℃澘 瀹炰緥鍖栤€渟td::default_delete<YingLong::Bindable>鈥濈殑寮曠敤
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3307,23):
+          鍦ㄧ紪璇?绫?妯℃澘 鎴愬憳鍑芥暟鈥渧oid std::default_delete<YingLong::Bindable>::operator ()(_Ty *) noexcept const鈥濇椂
+          with
+          [
+              _Ty=YingLong::Bindable
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3427,33):
+              璇峰弬闃?"std::unique_ptr<YingLong::Bindable,std::default_delete<YingLong::Bindable>>::~unique_ptr" 涓 "std::default_delete<YingLong::Bindable>::operator ()" 鐨勭涓€涓紩鐢?
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3483,1):
+              璇峰弬闃?"std::unique_ptr<YingLong::Bindable,std::default_delete<YingLong::Bindable>>::~unique_ptr" 涓 "std::unique_ptr<YingLong::Bindable,std::default_delete<YingLong::Bindable>>::~unique_ptr" 鐨勭涓€涓紩鐢?
+  
+  Ying-Long Engine.vcxproj -> e:\Projects\Ying-Long-Engine\Build\Debug - windows\x86_64\Ying-Long Engine.exe

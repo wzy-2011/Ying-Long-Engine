@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file PointLight.h
  * @brief 点光源类 / Point light class
  *
@@ -73,6 +73,9 @@ namespace YingLong
 		public:
 			Data PointLightList[50];    ///< 点光源数组 / Point light array
 			int PointLightCount;        ///< 点光源数量 / Point light count
+		private:
+			float padding[3];           ///< 16字节对齐填充 / 16-byte alignment padding (int -> float3)
+		public:
 			XMFLOAT3 CameraPosition;    ///< 相机位置（用于镜面反射计算） / Camera position (for specular calculation)
 		};
 

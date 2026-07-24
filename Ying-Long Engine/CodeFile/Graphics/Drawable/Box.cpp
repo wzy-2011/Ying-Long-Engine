@@ -122,7 +122,7 @@ namespace YingLong
 		// 添加实例级纹理
 		// Add instance-level texture
 		std::unique_ptr<Texture> texture =
-			std::make_unique<Texture>(graphics, Surface("Resources/Icon/Dracovis.jpg"));
+			std::make_unique<Texture>(graphics, Surface("Resources/Icon/Ying-Long.jpg"));
 		AddBind(std::move(texture));
 
 		// 添加变换常量缓冲区

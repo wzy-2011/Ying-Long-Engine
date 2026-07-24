@@ -1,4 +1,4 @@
-﻿#include "DX12DemoScene.h"
+#include "DX12DemoScene.h"
 #include <DirectXMath.h>
 #include <ImGui/imgui.h>
 #include "../../Application/Application.h"
@@ -96,12 +96,6 @@ namespace YingLong
 
     void DX12DemoScene::Update(float deltaTime)
     {
-        // Sync camera aspect ratio with current window size
-        int width = Core.GetWidth();
-        int height = Core.GetHeight();
-        if (height > 0)
-            UpdateAspectRatio(static_cast<float>(width), static_cast<float>(height));
-
         // Update camera matrices
         UpdateCameraMatrices();
 

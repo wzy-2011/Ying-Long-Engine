@@ -30,7 +30,7 @@
  * Contains the model matrix and model-view-projection matrix
  * for transforming vertices from model space to clip space.
  */
-cbuffer TransformCB
+cbuffer TransformCB : register(b2)
 {
     matrix model;              ///< 模型矩阵（模型空间 -> 世界空间）/ Model matrix (model -> world space)
     matrix modelViewProject;   ///< 模型-视图-投影矩阵（模型空间 -> 裁剪空间）/ Model-View-Projection matrix (model -> clip space)
