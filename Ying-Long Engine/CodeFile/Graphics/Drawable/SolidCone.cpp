@@ -212,12 +212,21 @@ namespace YingLong
 	 */
 	DirectX::XMMATRIX SolidConeDrawable::GetTransformXM() const noexcept
 	{
-		// 锥体几何体沿 +Z 方向，但聚光灯默认方向为 +X
-		// 先缩放，再绕 Y 轴旋转 90 度将锥体从 +Z 对齐到 +X，再应用光源旋转和平移
-		// Cone geometry is along +Z, but spotlight default direction is +X
-		// Scale first, then rotate 90° around Y to align +Z → +X,
-		// then apply light rotation and translation
+		// Cone::Generate 生成：apex 在 Z=height，底面在 Z=0
+		// 目标：apex 在光源位置（Position），底面沿实际光照方向在前方
+		// 注意：shader 中 CalculateSpotLightAttenuation 使用 dot(-vertexToLight, Direction)，
+		// 导致实际光照方向与 light.Direction 相反。因此锥体方向需要与 light.Direction 相反，
+		// 才能与实际光照方向一致。
+		// 变换顺序：缩放 → 平移(-Z)使 apex 到原点 → RotateY(+90°)使底面朝 -X → 光源旋转 → 平移到 Position
+		// Cone::Generate: apex at Z=height, base at Z=0
+		// Target: apex at light Position, base along actual lighting direction
+		// Note: shader's CalculateSpotLightAttenuation uses dot(-vertexToLight, Direction),
+		// causing actual lighting direction to be opposite of light.Direction. So the cone
+		// must point opposite to light.Direction to match the actual lighting direction.
+		// Order: Scale → Translate(-Z) to put apex at origin → RotateY(+90°) to face base toward -X
+		//        → light rotation → translate to Position
 		return DirectX::XMMatrixScaling(this->Scale.x, this->Scale.y, this->Scale.z) *
+			DirectX::XMMatrixTranslation(0.0f, 0.0f, -ConeHeight) *
 			DirectX::XMMatrixRotationY(DirectX::XM_PIDIV2) *
 			DirectX::XMMatrixRotationRollPitchYaw(
 			this->Rotation.x,
