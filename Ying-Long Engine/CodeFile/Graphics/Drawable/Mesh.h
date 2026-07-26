@@ -40,6 +40,7 @@ namespace YingLong
 			this->UseMetallicTexture = 0;
 			this->UseNormalTexture = 0;
 			this->UseAOTexture = 0;
+			this->Unlit = 0;
 		}
 
 		MaterialCBufferData(const MaterialCBufferData& other) = default;
@@ -53,6 +54,7 @@ namespace YingLong
 		int UseMetallicTexture;   ///< 是否使用金属度纹理 / Whether to use metallic texture
 		int UseNormalTexture;     ///< 是否使用法线纹理 / Whether to use normal texture
 		int UseAOTexture;         ///< 是否使用环境光遮蔽纹理 / Whether to use AO texture
+		int Unlit;                ///< 是否无光照（直接输出 Albedo）/ Whether unlit (output Albedo directly)
 	};
 
 	class Mesh;

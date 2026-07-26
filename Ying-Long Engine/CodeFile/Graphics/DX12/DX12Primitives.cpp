@@ -485,9 +485,8 @@ namespace YingLong
         materialData.UseMetallicTexture = 0;         ///< 不使用金属度纹理 / No metallic texture
         materialData.UseNormalTexture = 0;           ///< 不使用法线纹理 / No normal texture
         materialData.UseAOTexture = 0;               ///< 不使用 AO 纹理 / No AO texture
+        materialData.Unlit = 0;                     ///< 参与光照计算 / Participates in lighting
     }
-
-    // =============================================================================
     // DX12Box
     // DX12 立方体
     // =============================================================================
@@ -588,7 +587,8 @@ namespace YingLong
         materialData.UseRoughnessTexture = 0;       ///< 不使用粗糙度纹理 / No roughness texture
         materialData.UseMetallicTexture = 0;        ///< 不使用金属度纹理 / No metallic texture
         materialData.UseNormalTexture = 0;          ///< 不使用法线纹理 / No normal texture
-        materialData.UseAOTexture = 0;              ///< 不使用 AO 纹理 / No AO texture
+        materialData.UseAOTexture = 0;          ///< 不使用 AO 纹理 / No AO texture
+        materialData.Unlit = 0;                ///< 参与光照计算 / Participates in lighting
     }
 
     /**
@@ -716,6 +716,9 @@ namespace YingLong
         materialData.UseMetallicTexture = 0;
         materialData.UseNormalTexture = 0;
         materialData.UseAOTexture = 0;
+        // 球体作为点光源可视化，不参与光照计算，直接输出纯色
+        // Sphere acts as point light visualization, skips lighting and outputs pure color
+        materialData.Unlit = 1;
     }
 
     /**
@@ -829,6 +832,7 @@ namespace YingLong
         materialData.UseMetallicTexture = 0;
         materialData.UseNormalTexture = 0;
         materialData.UseAOTexture = 0;
+        materialData.Unlit = 0;
     }
 
     /**

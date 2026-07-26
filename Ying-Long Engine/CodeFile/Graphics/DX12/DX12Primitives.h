@@ -104,7 +104,8 @@ namespace YingLong
         int UseMetallicTexture;      ///< 是否使用金属度纹理 / Whether to use metallic texture
         int UseNormalTexture;        ///< 是否使用法线纹理 / Whether to use normal texture
         int UseAOTexture;            ///< 是否使用 AO 纹理 / Whether to use AO texture
-        float pad[3];                ///< 填充（16字节对齐）/ Padding (16-byte alignment)
+        int Unlit;                   ///< 是否无光照（直接输出 Albedo）/ Whether unlit (output Albedo directly)
+        float pad[2];                ///< 填充（16字节对齐）/ Padding (16-byte alignment)
     };
 
     /**

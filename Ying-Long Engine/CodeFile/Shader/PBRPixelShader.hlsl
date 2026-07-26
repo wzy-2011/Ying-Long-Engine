@@ -17,6 +17,7 @@ cbuffer MaterialConstantBuffer : register(b1)
     int UseMetallicTexture;
     int UseNormalTexture;
     int UseAOTexture;
+    int Unlit;
 };
 
 struct PBRPixelShaderOutput
@@ -100,6 +101,14 @@ PBRMaterial GenerateMaterial(PBRPixelShaderInput InputData)
 PBRPixelShaderOutput main(PBRPixelShaderInput InputData)
 {
     PBRPixelShaderOutput PBRPixelShaderOutObject;
+
+    // Unlit 模式：直接输出 Albedo 颜色，不参与光照计算
+    // Unlit mode: output Albedo color directly, skip lighting calculation
+    if (Unlit)
+    {
+        PBRPixelShaderOutObject.FinalColor = float4(Albedo, 1.0f);
+        return PBRPixelShaderOutObject;
+    }
 
     PBRMaterial Material = GenerateMaterial(InputData);
 
