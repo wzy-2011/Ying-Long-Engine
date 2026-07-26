@@ -115,7 +115,7 @@ float3 PBRPointLightDirectLight(PointLight light, PBRMaterial material,
 
 float CalculateSpotLightAttenuation(SpotLight light, float3 vertexToLight)
 {
-    float cosAngle = dot(normalize(-vertexToLight), normalize(light.Direction));
+    float cosAngle = dot(normalize(vertexToLight), normalize(light.Direction));
 
     if (cosAngle < light.OuterConeAngle)
         return 0.0f;

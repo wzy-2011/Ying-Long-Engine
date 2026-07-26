@@ -775,13 +775,13 @@ namespace YingLong
         apex.Position[2] = 0.0f;
         vertices.push_back(apex);
 
-        // 顶点 1..Segments：底面边缘顶点（位于 X = -ConeHeight 处，锥体沿 -X 方向延伸）
-        // Vertices 1..Segments: Base rim vertices (at X = -ConeHeight, cone extends along -X)
+        // 顶点 1..Segments：底面边缘顶点（位于 X = ConeHeight 处，锥体沿 +X 方向延伸）
+        // Vertices 1..Segments: Base rim vertices (at X = ConeHeight, cone extends along +X)
         for (UINT i = 0; i < Segments; ++i)
         {
             float angle = static_cast<float>(i) * XM_2PI / Segments;
             DX12Vertex rimVertex = {};
-            rimVertex.Position[0] = -ConeHeight;
+            rimVertex.Position[0] = ConeHeight;
             rimVertex.Position[1] = ConeRadius * cosf(angle);
             rimVertex.Position[2] = ConeRadius * sinf(angle);
             vertices.push_back(rimVertex);
