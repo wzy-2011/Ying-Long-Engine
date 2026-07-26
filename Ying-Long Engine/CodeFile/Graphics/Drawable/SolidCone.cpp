@@ -71,9 +71,29 @@ namespace YingLong
 			// 添加静态顶点缓冲区
 			// Add static vertex buffer
 			AddStaticBind(std::make_unique<VertexBuffer>(graphics, Model.vertices));
+
+			// 生成线段索引（只渲染侧面边和底面圆周线，与 DX12 WireframeCone 一致）
+			// Generate line indices (only side edges and base circumference, matching DX12 WireframeCone)
+			// 顶点 0 是 apex，顶点 1..32 是底面边缘顶点
+			// Vertex 0 is apex, vertices 1..32 are base rim vertices
+			const UINT segments = 32;
+			std::vector<unsigned short> lineIndices;
+			for (UINT i = 0; i < segments; ++i)
+			{
+				unsigned short rim0 = 1 + static_cast<unsigned short>(i);
+				unsigned short rim1 = 1 + static_cast<unsigned short>((i + 1) % segments);
+				// 侧面边线：apex → 底面边缘
+				// Side edge: apex → rim
+				lineIndices.push_back(0);
+				lineIndices.push_back(rim0);
+				// 底面圆周线：底面边缘 → 下一个底面边缘
+				// Base circumference: rim → next rim
+				lineIndices.push_back(rim0);
+				lineIndices.push_back(rim1);
+			}
 			// 添加静态索引缓冲区
 			// Add static index buffer
-			AddStaticIndexBuffer(std::make_unique<IndexBuffer>(graphics, Model.indices));
+			AddStaticIndexBuffer(std::make_unique<IndexBuffer>(graphics, lineIndices));
 
 			// 创建顶点着色器并保存字节码用于输入布局
 			// Create vertex shader and save bytecode for input layout
@@ -98,14 +118,14 @@ namespace YingLong
 			// Add static input layout
 			AddStaticBind(std::make_unique<InputLayout>(graphics, ied, pVertexShaderByteCode));
 
-			// 设置图元拓扑为三角形列表（配合线框光栅化显示为线框网格）
-			// Set primitive topology to triangle list (rendered as wireframe via rasterizer)
-			AddStaticBind(std::make_unique<Topology>(graphics, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+			// 设置图元拓扑为线段列表（直接渲染线段，无需线框光栅化）
+			// Set primitive topology to line list (render lines directly, no wireframe rasterizer needed)
+			AddStaticBind(std::make_unique<Topology>(graphics, D3D11_PRIMITIVE_TOPOLOGY_LINELIST));
 
-			// 线框光栅化状态：聚光灯可视化应渲染为线框，便于与点光源球体区分
-			// Wireframe rasterizer: spotlight viz should be wireframe to distinguish from point light spheres
+			// 实体光栅化状态：LINELIST 拓扑下直接渲染线条，与 DX12 WireframeCone 一致
+			// Solid rasterizer: renders lines directly under LINELIST topology, matching DX12 WireframeCone
 			AddStaticBind(std::make_unique<Rasterizer>(graphics,
-				D3D11_FILL_WIREFRAME, D3D11_CULL_NONE));
+				D3D11_FILL_SOLID, D3D11_CULL_NONE));
 		}
 		else
 		{

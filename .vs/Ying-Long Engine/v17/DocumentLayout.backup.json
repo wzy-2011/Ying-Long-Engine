@@ -1,0 +1,133 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Projects\\Ying-Long-Engine\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\Application\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4FFB7AB0-3BF4-9902-6426-7F87507E790E}|Ying-Long Engine\\Ying-Long Engine.vcxproj|solutionrelative:Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Application.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Application.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\Application\\Application.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Application.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\Application\\Application.cpp",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADEAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-18T12:21:44.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RenderTargetDX12.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\Graphics\\DX12\\RenderTargetDX12.cpp",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAAK0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-19T15:24:51.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Window.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\Application\\Window\\Window.cpp",
+              "ViewState": "AgIAAB4CAAAAAAAAAAAAACgCAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-24T11:38:18.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DX12Core.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\Graphics\\DX12\\DX12Core.cpp",
+              "ViewState": "AgIAAIcDAAAAAAAAAADwv4cDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-23T14:20:29.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EntryPoint.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\EntryPoint\\EntryPoint.cpp",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAAIAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-23T14:04:19.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Box.cpp",
+              "DocumentMoniker": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp",
+              "RelativeDocumentMoniker": "Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp",
+              "ToolTip": "E:\\Projects\\Ying-Long-Engine\\Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp",
+              "RelativeToolTip": "Ying-Long Engine\\CodeFile\\Graphics\\Drawable\\Box.cpp",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAQwHwAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-07-23T14:03:19.016Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
