@@ -179,6 +179,18 @@ namespace YingLong
         void SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType);
 
         /**
+         * @brief 设置渲染目标格式 / Set render target formats
+         *
+         * 配置 PSO 的渲染目标格式。支持单 RT 和多 RT (MRT)。
+         * Configures the PSO's render target formats. Supports single and multiple RTs (MRT).
+         *
+         * @param formats 格式数组指针 / Pointer to format array
+         * @param count RT 数量 / Number of render targets
+         * @param dsvFormat 深度模板格式 / Depth stencil format
+         */
+        void SetRenderTargetFormats(const DXGI_FORMAT* formats, UINT count, DXGI_FORMAT dsvFormat = DXGI_FORMAT_D24_UNORM_S8_UINT);
+
+        /**
          * @brief 获取输入布局描述 / Get input layout description
          * @return 输入布局描述常量引用 / Input layout description const reference
          */
@@ -280,6 +292,13 @@ D3D12_PRIMITIVE_TOPOLOGY_TYPE PrimitiveTopologyType; ///< PSO 图元拓扑类型
         // PSO desc
         // PSO 描述
         D3D12_GRAPHICS_PIPELINE_STATE_DESC PSODesc;           ///< PSO 描述结构体 / PSO description structure
+
+        // Render target formats (for MRT support)
+        // 渲染目标格式（用于 MRT 支持）
+        DXGI_FORMAT RTVFormatsArr[D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT];  ///< 渲染目标格式数组 / RT format array
+        UINT RTVCount;                                         ///< 渲染目标数量 / RT count
+        DXGI_FORMAT DSVFormat;                                 ///< 深度模板格式 / DSV format
+        bool bUseCustomRTVFormats;                             ///< 是否使用自定义 RTV 格式 / Whether using custom RTV formats
 
         bool IsCustomPSO;                                     ///< 是否为自定义 PSO / Whether it's a custom PSO
     };

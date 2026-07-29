@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file DX12Primitives.h
  * @brief DX12 几何图元头文件 / DX12 Geometric Primitives Header
  *
@@ -270,6 +270,32 @@ namespace YingLong
          * @param commandList 命令列表 / Command list
          */
         static void UpdateLightBuffers(ID3D12GraphicsCommandList* commandList);
+
+        /**
+         * @brief 获取点光源结构化缓冲区的 SRV 描述符索引 / Get point light SRV descriptor index
+         *
+         * 用于延迟渲染 Lighting Pass 绑定根参数 4（t4-t5 描述符表）。
+         * 如果缓冲区未初始化，返回 UINT_MAX。
+         *
+         * Used by the deferred rendering Lighting Pass to bind root parameter 4
+         * (t4-t5 descriptor table). Returns UINT_MAX if buffer is not initialized.
+         *
+         * @return 点光源 SRV 描述符索引 / Point light SRV descriptor index
+         */
+        static UINT GetPointLightSRVIndex() { return PointLightBuffer.GetSRVIndex(); }
+
+        /**
+         * @brief 获取聚光源结构化缓冲区的 SRV 描述符索引 / Get spot light SRV descriptor index
+         *
+         * 用于延迟渲染 Lighting Pass 绑定根参数 4（t4-t5 描述符表）。
+         * 如果缓冲区未初始化，返回 UINT_MAX。
+         *
+         * Used by the deferred rendering Lighting Pass to bind root parameter 4
+         * (t4-t5 descriptor table). Returns UINT_MAX if buffer is not initialized.
+         *
+         * @return 聚光源 SRV 描述符索引 / Spot light SRV descriptor index
+         */
+        static UINT GetSpotLightSRVIndex() { return SpotLightBuffer.GetSRVIndex(); }
 
     protected:
         /**

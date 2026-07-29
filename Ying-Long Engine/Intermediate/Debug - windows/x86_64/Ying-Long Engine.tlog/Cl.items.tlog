@@ -35,6 +35,7 @@ E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12Rendere
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12RootSignature.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\DX12RootSignature.obj
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DX12UploadBuffer.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\DX12UploadBuffer.obj
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\DepthStencilDX12.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\DepthStencilDX12.obj
+E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\GBuffer.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\GBuffer.obj
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\ImGuiDX12.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\ImGuiDX12.obj
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DX12\RenderTargetDX12.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\RenderTargetDX12.obj
 E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Graphics\DepthStencil\DepthStencil.cpp;E:\Projects\Ying-Long-Engine\Ying-Long Engine\Intermediate\Debug - windows\x86_64\DepthStencil.obj

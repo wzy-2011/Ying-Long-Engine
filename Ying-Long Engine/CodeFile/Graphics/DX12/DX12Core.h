@@ -29,6 +29,7 @@
 #include "DX12UploadBuffer.h"
 #include "DX12RootSignature.h"
 #include "DX12PipelineState.h"
+#include "GBuffer.h"
 
 namespace YingLong
 {
@@ -217,6 +218,18 @@ namespace YingLong
          * @return 线管线状态指针 / Line pipeline state pointer
          */
         DX12PipelineState* GetLinePipelineState() const noexcept { return LinePipelineState.get(); }
+
+        /**
+         * @brief 获取 Geometry Pass 管线状态对象 / Get Geometry Pass pipeline state object
+         * @return Geometry Pass 管线状态指针 / Geometry Pass pipeline state pointer
+         */
+        DX12PipelineState* GetGeometryPipelineState() const noexcept { return GeometryPipelineState.get(); }
+
+        /**
+         * @brief 获取 Lighting Pass 管线状态对象 / Get Lighting Pass pipeline state object
+         * @return Lighting Pass 管线状态指针 / Lighting Pass pipeline state pointer
+         */
+        DX12PipelineState* GetLightingPipelineState() const noexcept { return LightingPipelineState.get(); }
 
         /**
          * @brief 获取当前渲染目标资源 / Get current render target resource
@@ -439,6 +452,22 @@ namespace YingLong
         void CreateLinePipelineState();
 
         /**
+         * @brief创建 Geometry Pass 管线状态对象 / Create Geometry Pass pipeline state object
+         *
+         * 编译 GBuffer 顶点/像素着色器，创建 MRT (4 render targets) 管线状态。
+         * Compiles GBuffer vertex/pixel shaders, creates MRT (4 render targets) pipeline state.
+         */
+        void CreateGeometryPipelineState();
+
+        /**
+         * @brief 创建 Lighting Pass 管线状态对象 / Create Lighting Pass pipeline state object
+         *
+         * 编译 LightingPass 顶点/像素着色器，创建全屏三角形管线状态（无输入布局）。
+         * Compiles LightingPass vertex/pixel shaders, creates full-screen triangle pipeline state (no input layout).
+         */
+        void CreateLightingPipelineState();
+
+        /**
          * @brief 释放渲染目标视图 / Release render target views
          *
          * 释放所有渲染目标资源引用。
@@ -475,6 +504,8 @@ namespace YingLong
         // Pipeline state / 管线状态
         std::unique_ptr<DX12PipelineState> PipelineState;      ///< 管线状态对象（三角形拓扑）/ Pipeline state object (triangle topology)
         std::unique_ptr<DX12PipelineState> LinePipelineState;  ///< 线管线状态对象（线拓扑）/ Line pipeline state object (line topology)
+        std::unique_ptr<DX12PipelineState> GeometryPipelineState;  ///< Geometry Pass 管线状态（延迟渲染）/ Geometry Pass pipeline state (deferred)
+        std::unique_ptr<DX12PipelineState> LightingPipelineState;  ///< Lighting Pass 管线状态（延迟渲染）/ Lighting Pass pipeline state (deferred)
 
         // Upload buffer for resource uploads / 资源上传缓冲区
         std::unique_ptr<DX12UploadBuffer> UploadBuffer;    ///< 上传缓冲区对象 / Upload buffer object

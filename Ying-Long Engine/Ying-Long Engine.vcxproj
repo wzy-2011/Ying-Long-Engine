@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -59,8 +59,6 @@
     <IntDir>Intermediate\Debug - windows\x86_64\</IntDir>
     <TargetName>Ying-Long Engine</TargetName>
     <TargetExt>.exe</TargetExt>
-    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
-    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,7 +78,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_DEBUG;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ImGui\CodeFile;..\yaml-cpp\include;..\Setup\DirectXTex\Includes;..\Setup\Assimp\Includes;..\Setup\PhysX\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -105,20 +103,20 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_DEBUG;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ImGui\CodeFile;..\yaml-cpp\include;..\Setup\DirectXTex\Includes;..\Setup\Assimp\Includes;..\Setup\PhysX\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ImGui\CodeFile;..\yaml-cpp\include;..\Setup\DirectXTex\Includes;..\Setup\Assimp\Includes;..\Setup\PhysX\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
@@ -126,27 +124,27 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>DirectXTex.lib;d3d12.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;DirectXTK.lib;assimp-vc143-mtd.lib;LowLevel_static_64.lib;LowLevelAABB_static_64.lib;LowLevelDynamics_static_64.lib;PhysX_64.lib;PhysXCharacterKinematic_static_64.lib;PhysXCommon_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXFoundation_64.lib;PhysXPvdSDK_static_64.lib;PhysXTask_static_64.lib;PhysXVehicle_static_64.lib;PhysXVehicle2_static_64.lib;PVDRuntime_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Setup\DirectX 11\x86_64\Release;..\Setup\DirectXTex\Libraries\Debug;..\Setup\Assimp\Libraries;..\Setup\PhysX\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Setup\DirectX 11\x86_64\Release;..\Setup\DirectXTex\Libraries\Release;..\Setup\Assimp\Libraries;..\Setup\PhysX\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_DEBUG;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ImGui\CodeFile;..\yaml-cpp\include;..\Setup\DirectXTex\Includes;..\Setup\Assimp\Includes;..\Setup\PhysX\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>_DEBUG;YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\ImGui\CodeFile;..\yaml-cpp\include;..\Setup\DirectXTex\Includes;..\Setup\Assimp\Includes;..\Setup\PhysX\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
@@ -154,7 +152,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>DirectXTex.lib;d3d12.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;DirectXTK.lib;assimp-vc143-mtd.lib;LowLevel_static_64.lib;LowLevelAABB_static_64.lib;LowLevelDynamics_static_64.lib;PhysX_64.lib;PhysXCharacterKinematic_static_64.lib;PhysXCommon_64.lib;PhysXCooking_64.lib;PhysXExtensions_static_64.lib;PhysXFoundation_64.lib;PhysXPvdSDK_static_64.lib;PhysXTask_static_64.lib;PhysXVehicle_static_64.lib;PhysXVehicle2_static_64.lib;PVDRuntime_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Setup\DirectX 11\x86_64\Distribution;..\Setup\DirectXTex\Libraries\Debug;..\Setup\Assimp\Libraries;..\Setup\PhysX\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Setup\DirectX 11\x86_64\Distribution;..\Setup\DirectXTex\Libraries\Distribution;..\Setup\Assimp\Libraries;..\Setup\PhysX\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -202,6 +200,7 @@
     <ClInclude Include="CodeFile\Graphics\DX12\DX12ShaderCompiler.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12UploadBuffer.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DepthStencilDX12.h" />
+    <ClInclude Include="CodeFile\Graphics\DX12\GBuffer.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\ImGuiDX12.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\IndexBufferDX12.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\RenderTargetDX12.h" />
@@ -275,6 +274,7 @@
     <ClCompile Include="CodeFile\Graphics\DX12\DX12RootSignature.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12UploadBuffer.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DepthStencilDX12.cpp" />
+    <ClCompile Include="CodeFile\Graphics\DX12\GBuffer.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\ImGuiDX12.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\RenderTargetDX12.cpp" />
     <ClCompile Include="CodeFile\Graphics\DepthStencil\DepthStencil.cpp" />

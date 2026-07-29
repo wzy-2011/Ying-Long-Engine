@@ -28,6 +28,9 @@ namespace YingLong
     DX12PipelineState::DX12PipelineState()
         : PrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST)  ///< 默认三角形列表 / Default triangle list
         , PrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE)  ///< 默认三角形拓扑 / Default triangle topology
+        , RTVCount(0)
+        , DSVFormat(DXGI_FORMAT_D24_UNORM_S8_UINT)
+        , bUseCustomRTVFormats(false)
         , IsCustomPSO(false)                                       ///< 非自定义 PSO / Not custom PSO
     {
         // 清零所有状态结构体
@@ -37,6 +40,7 @@ namespace YingLong
         ZeroMemory(&RasterizerState, sizeof(D3D12_RASTERIZER_DESC));
         ZeroMemory(&BlendState, sizeof(D3D12_BLEND_DESC));
         ZeroMemory(&DepthStencilState, sizeof(D3D12_DEPTH_STENCIL_DESC));
+        ZeroMemory(RTVFormatsArr, sizeof(RTVFormatsArr));
     }
 
     /**
@@ -278,6 +282,18 @@ namespace YingLong
         PrimitiveTopologyType = topologyType;
     }
 
+    void DX12PipelineState::SetRenderTargetFormats(const DXGI_FORMAT* formats, UINT count, DXGI_FORMAT dsvFormat)
+    {
+        if (count > D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT)
+            count = D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT;
+
+        for (UINT i = 0; i < count; ++i)
+            RTVFormatsArr[i] = formats[i];
+        RTVCount = count;
+        DSVFormat = dsvFormat;
+        bUseCustomRTVFormats = true;
+    }
+
     /**
      * @brief 创建 PSO 对象 / Create the PSO object
      *
@@ -345,10 +361,20 @@ namespace YingLong
         psoDesc.PrimitiveTopologyType = PrimitiveTopologyType;
 
         // 渲染目标格式
-        // Render target format
-        psoDesc.NumRenderTargets = 1;
-        psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-        psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+        // Render target format - use custom formats if set (for MRT), otherwise default single RT
+        if (bUseCustomRTVFormats && RTVCount > 0)
+        {
+            psoDesc.NumRenderTargets = RTVCount;
+            for (UINT i = 0; i < RTVCount; ++i)
+                psoDesc.RTVFormats[i] = RTVFormatsArr[i];
+            psoDesc.DSVFormat = DSVFormat;
+        }
+        else
+        {
+            psoDesc.NumRenderTargets = 1;
+            psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+            psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+        }
 
         // 采样描述
         // Sample description

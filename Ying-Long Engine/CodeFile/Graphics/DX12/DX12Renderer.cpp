@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file DX12Renderer.cpp
  * @brief DX12 渲染器实现文件 / DX12 Renderer Implementation
  *
@@ -32,6 +32,8 @@ namespace YingLong
         , bInitialized(false)            ///< 未初始化 / Not initialized
         , bInFrame(false)                ///< 不在帧中 / Not in frame
         , bInImGuiFrame(false)           ///< 不在 ImGui 帧中 / Not in ImGui frame
+        , bInGeometryPass(false)         ///< 不在 Geometry Pass 中 / Not in geometry pass
+        , bUseDeferredRendering(false)   ///< 默认使用前向渲染 / Default to forward rendering
         , hWnd(nullptr)                  ///< 窗口句柄为空 / Window handle is null
         , bNeedsResize(false)            ///< 不需要调整大小 / No resize needed
         , bNeedsSceneResize(false)       ///< 不需要调整场景大小 / No scene resize needed
@@ -279,8 +281,13 @@ namespace YingLong
         // because their Shutdown() frees descriptor indices via pCore.
         // Without this, pCore is destroyed first and the pCore pointer
         // becomes dangling, causing use-after-free in Free().
+        pGBuffer.reset();
         pSceneRenderTarget.reset();
         pSceneDepthStencil.reset();
+
+        // 释放光源计数常量缓冲区（延迟渲染 Lighting Pass 使用，必须在 pCore 之前释放）
+        // Release light count constant buffer (used by deferred Lighting Pass, before pCore)
+        pLightCountBuffer.reset();
 
         // 释放深度模板
         // Release depth stencil
@@ -569,9 +576,23 @@ namespace YingLong
         if (!commandList)
             throw std::runtime_error("Failed to get command list in DX12Renderer::Draw");
 
+        // 延迟渲染 Geometry Pass 期间，强制 drawable 使用 GeometryPipelineState
+        // During deferred rendering Geometry Pass, force drawable to use GeometryPipelineState
+        if (bInGeometryPass && pCore->GetGeometryPipelineState())
+        {
+            drawable.SetOverridePipelineState(pCore->GetGeometryPipelineState());
+        }
+
         // 调用可绘制对象的绘制方法
         // Call draw method of drawable object
         drawable.Draw(commandList);
+
+        // 清除覆盖 PSO，避免影响后续渲染
+        // Clear override PSO to avoid affecting subsequent rendering
+        if (bInGeometryPass)
+        {
+            drawable.SetOverridePipelineState(nullptr);
+        }
     }
 
     /**
@@ -608,7 +629,19 @@ namespace YingLong
         {
             if (drawable)
             {
+                // 延迟渲染 Geometry Pass 期间，强制使用 GeometryPipelineState
+                // During deferred rendering Geometry Pass, force use of GeometryPipelineState
+                if (bInGeometryPass && pCore->GetGeometryPipelineState())
+                {
+                    drawable->SetOverridePipelineState(pCore->GetGeometryPipelineState());
+                }
+
                 drawable->Draw(commandList);
+
+                if (bInGeometryPass)
+                {
+                    drawable->SetOverridePipelineState(nullptr);
+                }
             }
         }
     }
@@ -824,6 +857,11 @@ namespace YingLong
                 pSceneDepthStencil->Shutdown();
                 pSceneDepthStencil.reset();
             }
+            if (pGBuffer)
+            {
+                pGBuffer->Shutdown();
+                pGBuffer.reset();
+            }
 
             pSceneRenderTarget = std::make_unique<RenderTargetDX12>();
             pSceneRenderTarget->Initialize(
@@ -837,6 +875,14 @@ namespace YingLong
             pSceneDepthStencil = std::make_unique<DepthStencilDX12>();
             pSceneDepthStencil->Initialize(*pCore, PendingSceneWidth, PendingSceneHeight);
 
+            // 仅在延迟渲染启用时创建 G-Buffer，避免不必要的资源分配
+            // Only create G-Buffer when deferred rendering is enabled to avoid unnecessary allocation
+            if (bUseDeferredRendering)
+            {
+                pGBuffer = std::make_unique<GBuffer>();
+                pGBuffer->Initialize(*pCore, PendingSceneWidth, PendingSceneHeight);
+            }
+
             SceneWidth = PendingSceneWidth;
             SceneHeight = PendingSceneHeight;
             bNeedsSceneResize = false;
@@ -847,6 +893,7 @@ namespace YingLong
                           std::string(e.what()) + "\n").c_str());
             pSceneRenderTarget.reset();
             pSceneDepthStencil.reset();
+            pGBuffer.reset();
             SceneWidth = 0;
             SceneHeight = 0;
             bNeedsSceneResize = false;
@@ -893,6 +940,38 @@ namespace YingLong
 
         const float* color = clearColor ? clearColor : ClearColor;
 
+        // 延迟渲染路径：执行 Geometry Pass（写入 G-Buffer）
+        // Deferred rendering path: execute Geometry Pass (writes to G-Buffer)
+        if (bUseDeferredRendering &&
+            pCore->GetGeometryPipelineState() && pCore->GetGeometryPipelineState()->IsInitialized())
+        {
+            // 按需创建 G-Buffer（首次启用延迟渲染时）
+            // Lazily create G-Buffer on first deferred rendering frame
+            if (!pGBuffer && SceneWidth > 0 && SceneHeight > 0)
+            {
+                try
+                {
+                    pGBuffer = std::make_unique<GBuffer>();
+                    pGBuffer->Initialize(*pCore, SceneWidth, SceneHeight);
+                    DX12LogSuccess("[DX12Renderer] G-Buffer created lazily for deferred rendering\n");
+                }
+                catch (const std::exception& e)
+                {
+                    DX12LogError(("[DX12Renderer] Failed to create G-Buffer lazily: " +
+                                  std::string(e.what()) + "\n").c_str());
+                    pGBuffer.reset();
+                }
+            }
+
+            if (pGBuffer && pGBuffer->IsInitialized())
+            {
+                BeginGeometryPass(color);
+                return;
+            }
+        }
+
+        // 前向渲染路径（默认）
+        // Forward rendering path (default)
         ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
         if (!commandList)
             return;
@@ -954,6 +1033,14 @@ namespace YingLong
         if (!commandList)
             return;
 
+        // 延迟渲染路径：结束 Geometry Pass，执行 Lighting Pass
+        // Deferred rendering path: end Geometry Pass, execute Lighting Pass
+        if (bInGeometryPass)
+        {
+            EndGeometryPass();
+            ExecuteLightingPass();
+        }
+
         pSceneRenderTarget->TransitionTo(
             commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
         pSceneDepthStencil->TransitionTo(
@@ -1003,5 +1090,262 @@ namespace YingLong
         if (pSceneRenderTarget && pSceneRenderTarget->HasShaderResourceView())
             return pSceneRenderTarget->GetGPU_SRVHandle();
         return D3D12_GPU_DESCRIPTOR_HANDLE{};
+    }
+
+    // ============================================================================
+    // 延迟渲染实现 / Deferred Rendering Implementation
+    // ============================================================================
+
+    /**
+     * @brief 设置光源计数数据（用于延迟渲染 Lighting Pass）
+     *
+     * 上传光源计数和相机位置到内部常量缓冲区。在延迟渲染 Lighting Pass 中
+     * 该缓冲区绑定到根参数 0（b0 寄存器），供 LightingPassPixelShader 读取。
+     *
+     * Uploads light counts and camera position to an internal constant buffer.
+     * During the deferred rendering Lighting Pass, this buffer is bound to root
+     * parameter 0 (b0 register) for LightingPassPixelShader to read.
+     *
+     * @param data 光源计数常量缓冲区数据 / Light count constant buffer data
+     */
+    void DX12Renderer::SetLightCountData(const DX12LightCountCB& data)
+    {
+        if (!pCore)
+            return;
+
+        // 惰性创建常量缓冲区（首次调用时）
+        // Lazily create the constant buffer on first call
+        if (!pLightCountBuffer)
+        {
+            try
+            {
+                pLightCountBuffer = std::make_unique<ConstantBufferDX12<DX12LightCountCB>>(
+                    *pCore, 0, data);  // 根参数 0：b0 / Root param 0: b0
+                DX12Log("[DX12Renderer] Light count constant buffer created for deferred rendering\n");
+            }
+            catch (const std::exception& e)
+            {
+                DX12LogError(("[DX12Renderer] Failed to create light count buffer: " +
+                              std::string(e.what()) + "\n").c_str());
+                return;
+            }
+        }
+        else
+        {
+            pLightCountBuffer->Update(data);
+        }
+    }
+
+    /**
+     * @brief 开始 Geometry Pass（延迟渲染）/ Begin Geometry Pass (deferred rendering)
+     *
+     * 将渲染目标切换为 G-Buffer 的多渲染目标（MRT），清除 G-Buffer 和深度缓冲区，
+     * 绑定根签名和 Geometry Pass 管线状态，设置视口和裁剪矩形。
+     *
+     * Switches render target to the G-Buffer MRT, clears G-Buffer and depth
+     * stencil, binds root signature and Geometry Pass pipeline state, sets
+     * viewport and scissor rectangle.
+     *
+     * @param clearColor 清除颜色（仅用于 G-Buffer Albedo 通道的背景）/ Clear color
+     */
+    void DX12Renderer::BeginGeometryPass(const float clearColor[4])
+    {
+        ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
+        if (!commandList || !pGBuffer)
+            return;
+
+        UNREFERENCED_PARAMETER(clearColor);  // G-Buffer 使用各自的优化清除值
+
+        // 绑定根签名
+        // Bind root signature
+        if (pCore->GetRootSignature() && pCore->GetRootSignature()->GetRootSignature())
+        {
+            commandList->SetGraphicsRootSignature(
+                pCore->GetRootSignature()->GetRootSignature());
+        }
+
+        // 绑定 Geometry Pass 管线状态
+        // Bind Geometry Pass pipeline state
+        if (pCore->GetGeometryPipelineState() && pCore->GetGeometryPipelineState()->IsInitialized())
+        {
+            pCore->GetGeometryPipelineState()->Bind(commandList);
+        }
+
+        // 转换 G-Buffer 资源状态：从 PIXEL_SHADER_RESOURCE（或初始）到 RENDER_TARGET
+        // Transition G-Buffer resources: from PIXEL_SHADER_RESOURCE (or initial) to RENDER_TARGET
+        pGBuffer->TransitionToRTV(commandList);
+
+        // 清除 G-Buffer 各 RT 和深度缓冲区
+        // Clear all G-Buffer RTs and depth stencil
+        pGBuffer->Clear(commandList);
+
+        // 绑定 G-Buffer 为 MRT（含 DSV）
+        // Bind G-Buffer as MRT (with DSV)
+        pGBuffer->BindAsMRT(commandList);
+
+        // 设置视口和裁剪矩形为场景尺寸
+        // Set viewport and scissor rectangle to scene dimensions
+        D3D12_VIEWPORT viewport = {};
+        viewport.TopLeftX = 0.0f;
+        viewport.TopLeftY = 0.0f;
+        viewport.Width = static_cast<float>(SceneWidth);
+        viewport.Height = static_cast<float>(SceneHeight);
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.left = 0;
+        scissorRect.top = 0;
+        scissorRect.right = SceneWidth;
+        scissorRect.bottom = SceneHeight;
+        commandList->RSSetScissorRects(1, &scissorRect);
+
+        // 标记进入 Geometry Pass
+        // Mark in-geometry-pass state
+        bInGeometryPass = true;
+
+        DX12Log("[DX12Renderer] Geometry Pass begun\n");
+    }
+
+    /**
+     * @brief 结束 Geometry Pass / End Geometry Pass
+     *
+     * 仅清除 Geometry Pass 状态标志。G-Buffer 资源状态转换由
+     * ExecuteLightingPass() 完成（转换为 SRV 供 Lighting Pass 读取）。
+     *
+     * Only clears the Geometry Pass state flag. G-Buffer resource state
+     * transitions are performed by ExecuteLightingPass() (transitioning
+     * to SRV for the Lighting Pass to read).
+     */
+    void DX12Renderer::EndGeometryPass()
+    {
+        bInGeometryPass = false;
+        DX12Log("[DX12Renderer] Geometry Pass ended\n");
+    }
+
+    /**
+     * @brief 执行 Lighting Pass（延迟渲染）/ Execute Lighting Pass (deferred rendering)
+     *
+     * 读取 G-Buffer 数据并执行 PBR 光照计算，将最终光照结果写入场景渲染目标。
+     * 步骤：
+     *   1. 转换 G-Buffer RTs 从 RENDER_TARGET 到 PIXEL_SHADER_RESOURCE
+     *   2. 转换场景渲染目标到 RENDER_TARGET，清除场景 RT
+     *   3. 绑定 Lighting Pass PSO 和根签名
+     *   4. 绑定根参数：b0 LightCountCB、t0-t3 G-Buffer SRV 表、t4-t5 光源缓冲区、s0 采样器
+     *   5. 绘制全屏三角形（3 个顶点，通过 SV_VertexID 在着色器中生成）
+     *
+     * Reads G-Buffer data and performs PBR lighting calculations, writing the
+     * final lit result to the scene render target.
+     * Steps:
+     *   1. Transition G-Buffer RTs from RENDER_TARGET to PIXEL_SHADER_RESOURCE
+     *   2. Transition scene render target to RENDER_TARGET, clear scene RT
+     *   3. Bind Lighting Pass PSO and root signature
+     *   4. Bind root parameters: b0 LightCountCB, t0-t3 G-Buffer SRV table,
+     *      t4-t5 light buffers, s0 sampler
+     *   5. Draw full-screen triangle (3 vertices, generated in shader via SV_VertexID)
+     */
+    void DX12Renderer::ExecuteLightingPass()
+    {
+        ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
+        if (!commandList || !pGBuffer || !pSceneRenderTarget)
+            return;
+
+        DX12Log("[DX12Renderer] Lighting Pass begun\n");
+
+        // 步骤1：转换 G-Buffer RTs 从 RENDER_TARGET 到 PIXEL_SHADER_RESOURCE
+        // Step 1: Transition G-Buffer RTs from RENDER_TARGET to PIXEL_SHADER_RESOURCE
+        pGBuffer->TransitionToSRV(commandList);
+
+        // 步骤2：转换场景渲染目标到 RENDER_TARGET 并清除
+        // Step 2: Transition scene render target to RENDER_TARGET and clear
+        pSceneRenderTarget->TransitionTo(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+        // 清除场景渲染目标（光照结果将写入此处）
+        // Clear scene render target (lighting result will be written here)
+        float sceneClear[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+        pSceneRenderTarget->Clear(commandList, sceneClear);
+
+        // 绑定场景渲染目标（无 DSV，Lighting Pass 禁用深度测试）
+        // Bind scene render target (no DSV, Lighting Pass disables depth testing)
+        pSceneRenderTarget->Bind(commandList, nullptr);
+
+        // 设置视口和裁剪矩形
+        // Set viewport and scissor rectangle
+        D3D12_VIEWPORT viewport = {};
+        viewport.TopLeftX = 0.0f;
+        viewport.TopLeftY = 0.0f;
+        viewport.Width = static_cast<float>(SceneWidth);
+        viewport.Height = static_cast<float>(SceneHeight);
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.left = 0;
+        scissorRect.top = 0;
+        scissorRect.right = SceneWidth;
+        scissorRect.bottom = SceneHeight;
+        commandList->RSSetScissorRects(1, &scissorRect);
+
+        // 步骤3：绑定根签名和 Lighting Pass 管线状态
+        // Step 3: Bind root signature and Lighting Pass pipeline state
+        if (pCore->GetRootSignature() && pCore->GetRootSignature()->GetRootSignature())
+        {
+            commandList->SetGraphicsRootSignature(
+                pCore->GetRootSignature()->GetRootSignature());
+        }
+
+        if (pCore->GetLightingPipelineState() && pCore->GetLightingPipelineState()->IsInitialized())
+        {
+            pCore->GetLightingPipelineState()->Bind(commandList);
+        }
+
+        // 步骤4：绑定根参数
+        // Step 4: Bind root parameters
+
+        // 根参数 0：LightCountCB（b0，像素着色器）
+        // Root param 0: LightCountCB (b0, pixel shader)
+        if (pLightCountBuffer)
+        {
+            pLightCountBuffer->Bind(commandList);
+        }
+
+        // 根参数 3：G-Buffer SRV 描述符表（t0-t3，像素着色器）
+        // Root param 3: G-Buffer SRV descriptor table (t0-t3, pixel shader)
+        D3D12_GPU_DESCRIPTOR_HANDLE gbufferSRVBase = pGBuffer->GetGBufferSRVTableBase();
+        if (gbufferSRVBase.ptr != 0)
+        {
+            commandList->SetGraphicsRootDescriptorTable(3, gbufferSRVBase);
+        }
+
+        // 根参数 4：光源缓冲区描述符表（t4-t5，像素着色器）
+        // Root param 4: Light buffer descriptor table (t4-t5, pixel shader)
+        DX12DescriptorHeap* cbvSrvHeap = pCore->GetCBVSRVUAVHeap();
+        UINT pointLightSRVIndex = DX12Primitive::GetPointLightSRVIndex();
+        if (cbvSrvHeap && pointLightSRVIndex != UINT_MAX)
+        {
+            commandList->SetGraphicsRootDescriptorTable(
+                4, cbvSrvHeap->GetGPUHandle(pointLightSRVIndex));
+        }
+
+        // 根参数 5：采样器描述符表（s0，像素着色器）
+        // Root param 5: Sampler descriptor table (s0, pixel shader)
+        DX12DescriptorHeap* samplerHeap = pCore->GetSamplerHeap();
+        if (samplerHeap)
+        {
+            commandList->SetGraphicsRootDescriptorTable(5, samplerHeap->GetGPUHandle(0));
+        }
+
+        // 步骤5：设置图元拓扑并绘制全屏三角形
+        // Step 5: Set primitive topology and draw full-screen triangle
+        commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+        // 全屏三角形：3 个顶点，通过 SV_VertexID 在着色器中生成，无需顶点缓冲区
+        // Full-screen triangle: 3 vertices generated in shader via SV_VertexID,
+        // no vertex buffer required
+        commandList->DrawInstanced(3, 1, 0, 0);
+
+        DX12Log("[DX12Renderer] Lighting Pass complete\n");
     }
 }

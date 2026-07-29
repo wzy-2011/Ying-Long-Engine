@@ -84,6 +84,20 @@ namespace YingLong
         void SetPipelineState(DX12PipelineState* pso);
 
         /**
+         * @brief 设置覆盖管线状态 / Set override pipeline state
+         *
+         * 设置后将覆盖 drawable 自身的 PSO。用于延迟渲染 Geometry Pass
+         * 时强制使用 GeometryPipelineState。传入 nullptr 可清除覆盖。
+         *
+         * When set, overrides the drawable's own PSO. Used during the
+         * deferred rendering Geometry Pass to force GeometryPipelineState.
+         * Pass nullptr to clear the override.
+         *
+         * @param pso 覆盖管线状态对象指针 / Override pipeline state pointer
+         */
+        void SetOverridePipelineState(DX12PipelineState* pso) noexcept { pOverridePSO = pso; }
+
+        /**
          * @brief 绑定所有资源并绘制 / Bind all resources and draw
          *
          * 先绑定所有资源，然后执行绘制调用。
@@ -150,6 +164,7 @@ namespace YingLong
         // Pipeline state
         // 管线状态
         DX12PipelineState* pPSO;                               ///< 管线状态对象指针 / Pipeline state object pointer
+        DX12PipelineState* pOverridePSO;                        ///< 覆盖管线状态指针（延迟渲染用）/ Override PSO (for deferred rendering)
 
         // Draw parameters
         // 绘制参数

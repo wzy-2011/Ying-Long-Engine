@@ -225,6 +225,9 @@
     <ClInclude Include="CodeFile\Graphics\DX12\DepthStencilDX12.h">
       <Filter>CodeFile\Graphics\DX12</Filter>
     </ClInclude>
+    <ClInclude Include="CodeFile\Graphics\DX12\GBuffer.h">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClInclude>
     <ClInclude Include="CodeFile\Graphics\DX12\ImGuiDX12.h">
       <Filter>CodeFile\Graphics\DX12</Filter>
     </ClInclude>
@@ -436,6 +439,9 @@
       <Filter>CodeFile\Graphics\DX12</Filter>
     </ClCompile>
     <ClCompile Include="CodeFile\Graphics\DX12\DepthStencilDX12.cpp">
+      <Filter>CodeFile\Graphics\DX12</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeFile\Graphics\DX12\GBuffer.cpp">
       <Filter>CodeFile\Graphics\DX12</Filter>
     </ClCompile>
     <ClCompile Include="CodeFile\Graphics\DX12\ImGuiDX12.cpp">

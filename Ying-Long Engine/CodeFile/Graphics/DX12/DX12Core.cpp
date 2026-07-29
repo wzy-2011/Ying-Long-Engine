@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file DX12Core.cpp
  * @brief DX12 核心模块实现文件 / DX12 Core Module Implementation
  *
@@ -323,6 +323,8 @@ namespace YingLong
         UploadBuffer.reset();
         PipelineState.reset();
         LinePipelineState.reset();
+        GeometryPipelineState.reset();
+        LightingPipelineState.reset();
 
         // 释放占位纹理资源
         // Release placeholder texture resources
@@ -552,20 +554,18 @@ namespace YingLong
      */
     void DX12Core::CreateDescriptorHeaps(int width, int height)
     {
-        // RTV 堆 - 容量 = FRAME_COUNT(2) + 场景渲染目标(1) + 调整大小余量(1) = 4
+        // RTV 堆 - 容量 = FRAME_COUNT(2) + G-Buffer(4) + 场景渲染目标(1) + 调整大小余量(1) = 8
         // 预分配 FRAME_COUNT 个索引供后台缓冲区使用（索引 0, 1），
         // 这样 CreateRenderTargetViews 可直接使用 GetCPUHandle(i)，
-        // 而 SceneRenderTarget 的 CreateRTV 调用 Allocate() 会返回索引 2，
-        // 不会覆盖后台缓冲区的 RTV 描述符。
-        // RTV Heap - Capacity = FRAME_COUNT(2) + scene RT(1) + resize spare(1) = 4.
+        // 而 SceneRenderTarget 和 G-Buffer 的 CreateRTV 调用 Allocate() 不会覆盖后台缓冲区。
+        // RTV Heap - Capacity = FRAME_COUNT(2) + GBuffer(4) + scene RT(1) + resize spare(1) = 8.
         // Pre-allocate FRAME_COUNT indices for back buffers (indices 0, 1),
         // so CreateRenderTargetViews can directly use GetCPUHandle(i), and
-        // SceneRenderTarget's CreateRTV via Allocate() returns index 2,
-        // not overwriting back buffer RTV descriptors.
+        // SceneRenderTarget and G-Buffer's CreateRTV via Allocate() won't overwrite back buffer RTVs.
         RTVHeap = std::make_unique<DX12DescriptorHeap>(
             pDevice.Get(),
             D3D12_DESCRIPTOR_HEAP_TYPE_RTV,
-            FRAME_COUNT + 2,
+            FRAME_COUNT + GBUFFER_RT_COUNT + 2,
             D3D12_DESCRIPTOR_HEAP_FLAG_NONE
         );
         // 预分配 FRAME_COUNT 个索引供后台缓冲区 RTV 使用
@@ -575,17 +575,14 @@ namespace YingLong
             RTVHeap->Allocate();
         }
 
-        // DSV 堆 - 分配4个描述符用于深度模板（支持调整大小）
-        // 容量说明：主深度模板 + 场景深度模板 = 2 个，预留 2 个用于调整大小时的
-        // 临时分配（Shutdown 释放旧索引后 Initialize 分配新索引，期间不会超出容量）。
-        // DSV Heap - Allocate 4 descriptors for depth stencil (supports resize).
-        // Capacity rationale: main DS + scene DS = 2; 2 spare for resize-time
-        // allocations (Shutdown frees old index, Initialize allocates new one,
-        // never exceeding capacity).
+        // DSV 堆 - 容量 = 主深度模板(1) + 场景深度模板(1) + G-Buffer深度(1) + 调整大小余量(3) = 6
+        // G-Buffer 使用独立的 D32_FLOAT 深度模板，需要额外的 DSV 描述符。
+        // DSV Heap - Capacity = main DS(1) + scene DS(1) + GBuffer DS(1) + resize spare(3) = 6.
+        // G-Buffer uses its own D32_FLOAT depth stencil, requiring an extra DSV descriptor.
         DSVHeap = std::make_unique<DX12DescriptorHeap>(
             pDevice.Get(),
             D3D12_DESCRIPTOR_HEAP_TYPE_DSV,
-            4,
+            6,
             D3D12_DESCRIPTOR_HEAP_FLAG_NONE
         );
 
@@ -1021,6 +1018,11 @@ namespace YingLong
             DX12LogWarning("[DX12Core] Using default pipeline state\n");
             PipelineState->Initialize(*this, RootSignature.get());
         }
+
+        // 创建延迟渲染所需的 Geometry Pass 和 Lighting Pass 管线状态
+        // Create Geometry Pass and Lighting Pass pipeline states for deferred rendering
+        CreateGeometryPipelineState();
+        CreateLightingPipelineState();
     }
 
     /**
@@ -1423,5 +1425,148 @@ namespace YingLong
         }
 
         return resource;
+    }
+
+    /**
+     * @brief 创建 Geometry Pass 管线状态对象 / Create Geometry Pass pipeline state object
+     *
+     * 编译 GBuffer 顶点/像素着色器，配置 MRT (4 render targets) 管线状态。
+     * G-Buffer 布局:
+     *   RT0: Albedo(RGB) + AO(A)        - R8G8B8A8_UNORM
+     *   RT1: Normal(RGB) + Roughness(A) - R16G16B16A16_FLOAT
+     *   RT2: Position(RGB) + Metallic(A) - R16G16B16A16_FLOAT
+     *   RT3: Emissive(RGB) + Unused(A)  - R8G8B8A8_UNORM (reserved)
+     *   Depth: D32_FLOAT
+     *
+     * Compiles GBuffer vertex/pixel shaders, creates MRT (4 render targets) pipeline state.
+     */
+    void DX12Core::CreateGeometryPipelineState()
+    {
+        GeometryPipelineState = std::make_unique<DX12PipelineState>();
+
+        DX12Log("[DX12Core] Creating Geometry Pass pipeline state...\n");
+
+        try
+        {
+            // 构建着色器路径
+            // Build shader paths
+            wchar_t basePath[MAX_PATH];
+            GetCurrentDirectoryW(MAX_PATH, basePath);
+            std::wstring vsPath = std::wstring(basePath) + L"\\CodeFile\\Shader\\GBuffer\\GBufferVertexShader.hlsl";
+            std::wstring psPath = std::wstring(basePath) + L"\\CodeFile\\Shader\\GBuffer\\GBufferPixelShader.hlsl";
+
+            // 编译 GBuffer 着色器
+            // Compile GBuffer shaders
+            std::vector<uint8_t> vsBytecode = DX12ShaderCompiler::CompileVertexShader(vsPath);
+            std::vector<uint8_t> psBytecode = DX12ShaderCompiler::CompilePixelShader(psPath);
+
+            // 创建 PBR 输入布局（GBufferVSInput 与 PBR 输入布局兼容：Position, Normal, TextureCoord）
+            // Create PBR input layout (GBufferVSInput is compatible with PBR layout: Position, Normal, TextureCoord)
+            UINT elementCount = 0;
+            D3D12_INPUT_ELEMENT_DESC* elements = GeometryPipelineState->CreatePBRInputLayout(elementCount);
+
+            // 配置 MRT 渲染目标格式
+            // Configure MRT render target formats
+            DXGI_FORMAT gbufferFormats[GBUFFER_RT_COUNT] = {
+                DXGI_FORMAT_R8G8B8A8_UNORM,        ///< RT0: Albedo + AO
+                DXGI_FORMAT_R16G16B16A16_FLOAT,    ///< RT1: Normal + Roughness
+                DXGI_FORMAT_R16G16B16A16_FLOAT,    ///< RT2: Position + Metallic
+                DXGI_FORMAT_R8G8B8A8_UNORM,         ///< RT3: Emissive (reserved)
+            };
+            GeometryPipelineState->SetRenderTargetFormats(
+                gbufferFormats, GBUFFER_RT_COUNT, DXGI_FORMAT_D32_FLOAT);
+
+            // 从着色器初始化管线状态
+            // Initialize pipeline state from shaders
+            GeometryPipelineState->InitializeFromShaders(
+                *this,
+                RootSignature.get(),
+                vsBytecode,
+                psBytecode,
+                elements,
+                elementCount
+            );
+
+            delete[] elements;
+            DX12LogSuccess("[DX12Core] Geometry Pass pipeline state created successfully\n");
+        }
+        catch (const std::exception& e)
+        {
+            DX12LogError(("[DX12Core] Failed to create Geometry Pass pipeline state: " + std::string(e.what()) + "\n").c_str());
+            DX12LogWarning("[DX12Core] Geometry Pass pipeline state not available, deferred rendering disabled\n");
+        }
+    }
+
+    /**
+     * @brief 创建 Lighting Pass 管线状态对象 / Create Lighting Pass pipeline state object
+     *
+     * 编译 LightingPass 顶点/像素着色器，创建全屏三角形管线状态。
+     * - 无输入布局（使用 SV_VertexID 生成顶点）
+     * - 禁用深度测试（全屏三角形覆盖整个屏幕）
+     * - 无背面剔除
+     * - 单渲染目标输出（场景渲染目标）
+     *
+     * Compiles LightingPass vertex/pixel shaders, creates full-screen triangle pipeline state.
+     * - No input layout (uses SV_VertexID to generate vertices)
+     * - Depth test disabled (full-screen triangle covers entire screen)
+     * - No back-face culling
+     * - Single render target output (scene render target)
+     */
+    void DX12Core::CreateLightingPipelineState()
+    {
+        LightingPipelineState = std::make_unique<DX12PipelineState>();
+
+        DX12Log("[DX12Core] Creating Lighting Pass pipeline state...\n");
+
+        try
+        {
+            // 构建着色器路径
+            // Build shader paths
+            wchar_t basePath[MAX_PATH];
+            GetCurrentDirectoryW(MAX_PATH, basePath);
+            std::wstring vsPath = std::wstring(basePath) + L"\\CodeFile\\Shader\\LightingPass\\LightingPassVertexShader.hlsl";
+            std::wstring psPath = std::wstring(basePath) + L"\\CodeFile\\Shader\\LightingPass\\LightingPassPixelShader.hlsl";
+
+            // 编译 LightingPass 着色器
+            // Compile LightingPass shaders
+            std::vector<uint8_t> vsBytecode = DX12ShaderCompiler::CompileVertexShader(vsPath);
+            std::vector<uint8_t> psBytecode = DX12ShaderCompiler::CompilePixelShader(psPath);
+
+            // 配置单渲染目标格式（场景渲染目标）
+            // Configure single render target format (scene render target)
+            DXGI_FORMAT sceneFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+            LightingPipelineState->SetRenderTargetFormats(&sceneFormat, 1, DXGI_FORMAT_UNKNOWN);
+
+            // 禁用深度测试和深度写入（全屏三角形不需要深度）
+            // Disable depth test and depth write (full-screen triangle doesn't need depth)
+            D3D12_DEPTH_STENCIL_DESC dsDesc = DX12PipelineState::CreateDefaultDepthStencilState();
+            dsDesc.DepthEnable = FALSE;
+            dsDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+            LightingPipelineState->SetDepthStencilState(dsDesc);
+
+            // 无背面剔除（全屏三角形覆盖整个屏幕，避免剔除问题）
+            // No back-face culling (full-screen triangle covers entire screen, avoid culling issues)
+            D3D12_RASTERIZER_DESC rasterDesc = DX12PipelineState::CreateDefaultRasterizerState();
+            rasterDesc.CullMode = D3D12_CULL_MODE_NONE;
+            LightingPipelineState->SetRasterizerState(rasterDesc);
+
+            // 从着色器初始化管线状态（无输入布局，使用 SV_VertexID）
+            // Initialize pipeline state from shaders (no input layout, uses SV_VertexID)
+            LightingPipelineState->InitializeFromShaders(
+                *this,
+                RootSignature.get(),
+                vsBytecode,
+                psBytecode,
+                nullptr,    ///< 无输入布局 / No input layout
+                0           ///< 0 个输入元素 / 0 input elements
+            );
+
+            DX12LogSuccess("[DX12Core] Lighting Pass pipeline state created successfully\n");
+        }
+        catch (const std::exception& e)
+        {
+            DX12LogError(("[DX12Core] Failed to create Lighting Pass pipeline state: " + std::string(e.what()) + "\n").c_str());
+            DX12LogWarning("[DX12Core] Lighting Pass pipeline state not available, deferred rendering disabled\n");
+        }
     }
 }

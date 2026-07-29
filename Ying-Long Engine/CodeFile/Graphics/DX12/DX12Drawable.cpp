@@ -22,6 +22,7 @@ namespace YingLong
      */
     DX12Drawable::DX12Drawable()
         : pPSO(nullptr)                       ///< 管线状态为空 / PSO is null
+        , pOverridePSO(nullptr)               ///< 覆盖管线状态为空 / Override PSO is null
         , IndexCount(0)                       ///< 索引数量为0 / Index count is 0
         , PrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST)  ///< 默认三角形列表 / Default triangle list
         , bInitialized(false)                 ///< 未初始化 / Not initialized
@@ -41,6 +42,7 @@ namespace YingLong
         // Clear all bindable resources
         Bindables.clear();
         pPSO = nullptr;
+        pOverridePSO = nullptr;
     }
 
     /**
@@ -119,11 +121,12 @@ namespace YingLong
      */
     void DX12Drawable::Bind(ID3D12GraphicsCommandList* commandList)
     {
-        // 绑定管线状态
-        // Bind pipeline state
-        if (pPSO)
+        // 绑定管线状态（优先使用覆盖 PSO，用于延迟渲染 Geometry Pass）
+        // Bind pipeline state (override PSO takes priority, for deferred rendering Geometry Pass)
+        DX12PipelineState* activePSO = pOverridePSO ? pOverridePSO : pPSO;
+        if (activePSO)
         {
-            pPSO->Bind(commandList);
+            activePSO->Bind(commandList);
         }
 
         // 绑定所有可绑定资源

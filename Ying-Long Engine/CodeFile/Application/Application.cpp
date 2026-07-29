@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file Application.cpp
  * @brief Ying-Long Engine 应用程序实现 / Application implementation of Ying-Long Engine
  *
@@ -1064,6 +1064,13 @@ namespace YingLong
 		DX12Primitive::UpdatePointLightBuffer(pointLightList);
 		DX12Primitive::UpdateSpotLightBuffer(spotLightList);
 
+		// 将光源计数和相机位置数据推送到渲染器（延迟渲染 Lighting Pass 使用）
+		// Push light count and camera position to renderer (used by deferred Lighting Pass)
+		if (MainWindow.GetDX12Renderer())
+		{
+			MainWindow.GetDX12Renderer()->SetLightCountData(lightCountData);
+		}
+
 		// Propagate lighting to both the demo scene primitives and the
 		// ECS-driven physics placeholders (MeshRendererSystem DX12Boxes).
 		if (pDX12DemoScene)
@@ -1194,20 +1201,40 @@ namespace YingLong
 			ImGui::PopStyleVar();
 
 			// DX12 Mode UI
-			ImGui::Begin("DX12 Mode");
-			ImGui::Text("Rendering API: DirectX 12");
-			ImGui::Text("Press F5 to switch to DX11 mode");
-			ImGui::Text("Resolution: %d x %d", renderer->GetWidth(), renderer->GetHeight());
-			ImGui::Text("Point Lights: %d / %d", lightCountData.PointLightCount, (int)DX12PointLights.size());
-			ImGui::Text("Spot Lights: %d / %d", lightCountData.SpotLightCount, (int)DX12SpotLights.size());
+		ImGui::Begin("DX12 Mode");
+		ImGui::Text("Rendering API: DirectX 12");
+		ImGui::Text("Press F5 to switch to DX11 mode");
+		ImGui::Text("Resolution: %d x %d", renderer->GetWidth(), renderer->GetHeight());
+		ImGui::Text("Point Lights: %d / %d", lightCountData.PointLightCount, (int)DX12PointLights.size());
+		ImGui::Text("Spot Lights: %d / %d", lightCountData.SpotLightCount, (int)DX12SpotLights.size());
 
-			// Demo scene control
-			if (ImGui::CollapsingHeader("DX12 Demo Scene"))
+		// 延迟渲染切换
+		// Deferred rendering toggle
+		if (ImGui::CollapsingHeader("Rendering"))
+		{
+			bool bDeferred = renderer->IsDeferredRenderingEnabled();
+			if (ImGui::Checkbox("Deferred Rendering", &bDeferred))
 			{
-				ImGui::Text("This scene demonstrates DX12 rendering.");
-				ImGui::Text("3 rotating boxes are rendered.");
+				renderer->SetUseDeferredRendering(bDeferred);
 			}
-			ImGui::End();
+			ImGui::SameLine();
+			ImGui::TextDisabled("(?)");
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::SetTooltip(
+					"Deferred Rendering:\n"
+					"  ON  = Geometry Pass + Lighting Pass (G-Buffer)\n"
+					"  OFF = Traditional Forward Rendering");
+			}
+		}
+
+		// Demo scene control
+		if (ImGui::CollapsingHeader("DX12 Demo Scene"))
+		{
+			ImGui::Text("This scene demonstrates DX12 rendering.");
+			ImGui::Text("3 rotating boxes are rendered.");
+		}
+		ImGui::End();
 
 			// DX12 Lights control panel.
 			// Supports dynamic creation/removal and full per-light editing for
