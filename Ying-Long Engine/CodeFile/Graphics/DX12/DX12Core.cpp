@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Core.cpp
  * @brief DX12 核心模块实现文件 / DX12 Core Module Implementation
  *
@@ -32,6 +32,14 @@ namespace YingLong
         , Width(800)                  ///< 默认宽度800像素 / Default width 800 pixels
         , Height(600)                 ///< 默认高度600像素 / Default height 600 pixels
         , EnableDebugLayer(true)      ///< 默认启用调试层 / Debug layer enabled by default
+        , pLightIndexListData(nullptr)
+        , pLightCountPerTileData(nullptr)
+        , LightIndexListSRVIndex(UINT_MAX)
+        , LightCountSRVIndex(UINT_MAX)
+        , LightIndexListUAVIndex(UINT_MAX)
+        , LightCountUAVIndex(UINT_MAX)
+        , bLightCullingReady(false)
+        , LightCullingCBVIndex(UINT_MAX)
     {
         // 初始化帧围栏值数组
         // Initialize frame fence value array
@@ -330,6 +338,32 @@ namespace YingLong
         // Release placeholder texture resources
         placeholderTextures.clear();
         placeholderUploadResources.clear();
+
+        // 释放光源剔除资源
+        // Release light culling resources
+        if (pLightIndexListData)
+        {
+            if (pLightIndexListBuffer)
+                pLightIndexListBuffer->Unmap(0, nullptr);
+            pLightIndexListData = nullptr;
+        }
+        if (pLightCountPerTileData)
+        {
+            if (pLightCountPerTileBuffer)
+                pLightCountPerTileBuffer->Unmap(0, nullptr);
+            pLightCountPerTileData = nullptr;
+        }
+        pLightIndexListBuffer.Reset();
+        pLightCountPerTileBuffer.Reset();
+        pLightCullingConstantBuffer.Reset();
+        LightCullingPSO.Reset();
+        LightCullingRootSig.Reset();
+        LightIndexListSRVIndex = UINT_MAX;
+        LightCountSRVIndex = UINT_MAX;
+        LightIndexListUAVIndex = UINT_MAX;
+        LightCountUAVIndex = UINT_MAX;
+        LightCullingCBVIndex = UINT_MAX;
+        bLightCullingReady = false;
 
         // 清理静态图元的光源缓冲区资源
         // Clean up static primitive light buffer resources
@@ -1023,6 +1057,11 @@ namespace YingLong
         // Create Geometry Pass and Lighting Pass pipeline states for deferred rendering
         CreateGeometryPipelineState();
         CreateLightingPipelineState();
+
+        // 创建光源剔除计算管线（Tile-Based Light Culling）
+        // Create light culling compute pipeline (Tile-Based Light Culling)
+        CreateLightCullingRootSignature();
+        CreateLightCullingComputePSO();
     }
 
     /**
@@ -1568,5 +1607,341 @@ namespace YingLong
             DX12LogError(("[DX12Core] Failed to create Lighting Pass pipeline state: " + std::string(e.what()) + "\n").c_str());
             DX12LogWarning("[DX12Core] Lighting Pass pipeline state not available, deferred rendering disabled\n");
         }
+    }
+
+    void DX12Core::CreateLightCullingRootSignature()
+    {
+        DX12Log("[DX12Core] Creating light culling compute root signature...\n");
+
+        try
+        {
+            // Compute root signature: b0 (CBV), t4-t5 (SRV table), u0-u1 (UAV table)
+            std::vector<D3D12_ROOT_PARAMETER1> parameters;
+
+            // Param 0: LightCullingConstants CBV (b0)
+            D3D12_ROOT_PARAMETER1 param0 = {};
+            param0.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+            param0.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            param0.Descriptor.ShaderRegister = 0;
+            param0.Descriptor.RegisterSpace = 0;
+            parameters.push_back(param0);
+
+            // Param 1: Light buffers SRV descriptor table (t4-t5)
+            D3D12_DESCRIPTOR_RANGE1 srvRange = {};
+            srvRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+            srvRange.NumDescriptors = 2;
+            srvRange.BaseShaderRegister = 4;
+            srvRange.RegisterSpace = 0;
+            srvRange.Flags = D3D12_DESCRIPTOR_RANGE_FLAG_NONE;
+            srvRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+            D3D12_ROOT_PARAMETER1 param1 = {};
+            param1.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+            param1.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            param1.DescriptorTable.NumDescriptorRanges = 1;
+            param1.DescriptorTable.pDescriptorRanges = &srvRange;
+            parameters.push_back(param1);
+
+            // Param 2: Light culling output UAV descriptor table (u0-u1)
+            D3D12_DESCRIPTOR_RANGE1 uavRange = {};
+            uavRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
+            uavRange.NumDescriptors = 2;
+            uavRange.BaseShaderRegister = 0;
+            uavRange.RegisterSpace = 0;
+            uavRange.Flags = D3D12_DESCRIPTOR_RANGE_FLAG_NONE;
+            uavRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+            D3D12_ROOT_PARAMETER1 param2 = {};
+            param2.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+            param2.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            param2.DescriptorTable.NumDescriptorRanges = 1;
+            param2.DescriptorTable.pDescriptorRanges = &uavRange;
+            parameters.push_back(param2);
+
+            D3D12_VERSIONED_ROOT_SIGNATURE_DESC rootSigDesc = {};
+            rootSigDesc.Version = D3D_ROOT_SIGNATURE_VERSION_1_1;
+            rootSigDesc.Desc_1_1.NumParameters = static_cast<UINT>(parameters.size());
+            rootSigDesc.Desc_1_1.pParameters = parameters.data();
+            rootSigDesc.Desc_1_1.NumStaticSamplers = 0;
+            rootSigDesc.Desc_1_1.pStaticSamplers = nullptr;
+            rootSigDesc.Desc_1_1.Flags =
+                D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS |
+                D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS;
+
+            Microsoft::WRL::ComPtr<ID3DBlob> serializedRootSig;
+            Microsoft::WRL::ComPtr<ID3DBlob> errorBlob;
+
+            HRESULT hr = D3D12SerializeVersionedRootSignature(&rootSigDesc, &serializedRootSig, &errorBlob);
+            if (FAILED(hr))
+            {
+                if (errorBlob)
+                {
+                    DX12LogError(("[DX12Core] Light culling root signature serialization error: " +
+                                  std::string((const char*)errorBlob->GetBufferPointer()) + "\n").c_str());
+                }
+                throw std::runtime_error("Failed to serialize light culling root signature");
+            }
+
+            hr = pDevice->CreateRootSignature(
+                0,
+                serializedRootSig->GetBufferPointer(),
+                serializedRootSig->GetBufferSize(),
+                IID_PPV_ARGS(&LightCullingRootSig));
+            if (FAILED(hr) || !LightCullingRootSig)
+            {
+                throw std::runtime_error("Failed to create light culling root signature");
+            }
+
+            DX12LogSuccess("[DX12Core] Light culling compute root signature created successfully\n");
+        }
+        catch (const std::exception& e)
+        {
+            DX12LogError(("[DX12Core] Failed to create light culling root signature: " + std::string(e.what()) + "\n").c_str());
+            LightCullingRootSig.Reset();
+        }
+    }
+
+    void DX12Core::CreateLightCullingComputePSO()
+    {
+        DX12Log("[DX12Core] Creating light culling compute PSO...\n");
+
+        if (!LightCullingRootSig)
+        {
+            DX12LogWarning("[DX12Core] Light culling root signature not available, skipping compute PSO creation\n");
+            return;
+        }
+
+        try
+        {
+            wchar_t basePath[MAX_PATH];
+            GetCurrentDirectoryW(MAX_PATH, basePath);
+            std::wstring csPath = std::wstring(basePath) + L"\\CodeFile\\Shader\\LightCulling\\LightCullingCS.hlsl";
+
+            std::vector<uint8_t> csBytecode = DX12ShaderCompiler::CompileComputeShader(csPath);
+
+            D3D12_COMPUTE_PIPELINE_STATE_DESC computeDesc = {};
+            computeDesc.pRootSignature = LightCullingRootSig.Get();
+            computeDesc.CS.pShaderBytecode = csBytecode.data();
+            computeDesc.CS.BytecodeLength = csBytecode.size();
+            computeDesc.NodeMask = 0;
+            computeDesc.CachedPSO.pCachedBlob = nullptr;
+            computeDesc.CachedPSO.CachedBlobSizeInBytes = 0;
+            computeDesc.Flags = D3D12_PIPELINE_STATE_FLAG_NONE;
+
+            HRESULT hr = pDevice->CreateComputePipelineState(&computeDesc, IID_PPV_ARGS(&LightCullingPSO));
+            if (FAILED(hr) || !LightCullingPSO)
+            {
+                throw std::runtime_error("Failed to create light culling compute PSO");
+            }
+
+            DX12LogSuccess("[DX12Core] Light culling compute PSO created successfully\n");
+        }
+        catch (const std::exception& e)
+        {
+            DX12LogError(("[DX12Core] Failed to create light culling compute PSO: " + std::string(e.what()) + "\n").c_str());
+            LightCullingPSO.Reset();
+        }
+    }
+
+    void DX12Core::CreateLightCullingResources()
+    {
+        if (bLightCullingReady)
+            return;
+
+        if (!pDevice || !CBVSRVUAVHeap)
+            return;
+
+        DX12Log("[DX12Core] Creating light culling resources...\n");
+
+        int w = Width;
+        int h = Height;
+        if (w <= 0 || h <= 0) return;
+
+        // Calculate number of tiles
+        uint32_t tilesX = (w + TILE_SIZE_X - 1) / TILE_SIZE_X;
+        uint32_t tilesY = (h + TILE_SIZE_Y - 1) / TILE_SIZE_Y;
+        uint32_t numTiles = tilesX * tilesY;
+
+        // Buffer sizes
+        uint64_t indexListSize = (uint64_t)numTiles * MAX_LIGHTS_PER_TILE * sizeof(uint32_t);
+        uint64_t countPerTileSize = (uint64_t)numTiles * sizeof(uint32_t);
+
+        // Create LightIndexList buffer (UAV)
+        D3D12_HEAP_PROPERTIES defaultHeapProps = {};
+        defaultHeapProps.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+        D3D12_RESOURCE_DESC bufferDesc = {};
+        bufferDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        bufferDesc.Alignment = 0;
+        bufferDesc.Width = indexListSize;
+        bufferDesc.Height = 1;
+        bufferDesc.DepthOrArraySize = 1;
+        bufferDesc.MipLevels = 1;
+        bufferDesc.Format = DXGI_FORMAT_UNKNOWN;
+        bufferDesc.SampleDesc.Count = 1;
+        bufferDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        bufferDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+
+        HRESULT hr = pDevice->CreateCommittedResource(
+            &defaultHeapProps,
+            D3D12_HEAP_FLAG_NONE,
+            &bufferDesc,
+            D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+            nullptr,
+            IID_PPV_ARGS(&pLightIndexListBuffer));
+        if (FAILED(hr))
+        {
+            DX12LogError("[DX12Core] Failed to create light index list buffer\n");
+            return;
+        }
+
+        // Create LightCountPerTile buffer (UAV)
+        bufferDesc.Width = countPerTileSize;
+        hr = pDevice->CreateCommittedResource(
+            &defaultHeapProps,
+            D3D12_HEAP_FLAG_NONE,
+            &bufferDesc,
+            D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+            nullptr,
+            IID_PPV_ARGS(&pLightCountPerTileBuffer));
+        if (FAILED(hr))
+        {
+            DX12LogError("[DX12Core] Failed to create light count per tile buffer\n");
+            return;
+        }
+
+        // Allocate SRV indices (t6, t7) for pixel shader reading
+        LightIndexListSRVIndex = CBVSRVUAVHeap->Allocate();
+        LightCountSRVIndex = CBVSRVUAVHeap->Allocate();
+
+        // Create SRV for LightIndexList
+        D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+        srvDesc.Format = DXGI_FORMAT_R32_UINT;
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+        srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        srvDesc.Buffer.FirstElement = 0;
+        srvDesc.Buffer.NumElements = numTiles * MAX_LIGHTS_PER_TILE;
+        srvDesc.Buffer.StructureByteStride = 0;
+        srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+        pDevice->CreateShaderResourceView(pLightIndexListBuffer.Get(), &srvDesc,
+            CBVSRVUAVHeap->GetCPUHandle(LightIndexListSRVIndex));
+
+        // Create SRV for LightCountPerTile
+        srvDesc.Buffer.NumElements = numTiles;
+        pDevice->CreateShaderResourceView(pLightCountPerTileBuffer.Get(), &srvDesc,
+            CBVSRVUAVHeap->GetCPUHandle(LightCountSRVIndex));
+
+        // Allocate UAV indices (u0, u1) for compute shader writing
+        LightIndexListUAVIndex = CBVSRVUAVHeap->Allocate();
+        LightCountUAVIndex = CBVSRVUAVHeap->Allocate();
+
+        // Create UAV for LightIndexList
+        D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+        uavDesc.Format = DXGI_FORMAT_R32_UINT;
+        uavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+        uavDesc.Buffer.FirstElement = 0;
+        uavDesc.Buffer.NumElements = numTiles * MAX_LIGHTS_PER_TILE;
+        uavDesc.Buffer.StructureByteStride = 0;
+        uavDesc.Buffer.CounterOffsetInBytes = 0;
+        uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+        pDevice->CreateUnorderedAccessView(pLightIndexListBuffer.Get(), nullptr, &uavDesc,
+            CBVSRVUAVHeap->GetCPUHandle(LightIndexListUAVIndex));
+
+        // Create UAV for LightCountPerTile
+        uavDesc.Buffer.NumElements = numTiles;
+        pDevice->CreateUnorderedAccessView(pLightCountPerTileBuffer.Get(), nullptr, &uavDesc,
+            CBVSRVUAVHeap->GetCPUHandle(LightCountUAVIndex));
+
+        // Create light culling constant buffer (upload heap)
+        LightCullingCBVIndex = CBVSRVUAVHeap->Allocate();
+
+        D3D12_HEAP_PROPERTIES uploadHeapProps = {};
+        uploadHeapProps.Type = D3D12_HEAP_TYPE_UPLOAD;
+
+        D3D12_RESOURCE_DESC cbDesc = {};
+        cbDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        cbDesc.Width = 256; // Aligned to 256 bytes
+        cbDesc.Height = 1;
+        cbDesc.DepthOrArraySize = 1;
+        cbDesc.MipLevels = 1;
+        cbDesc.Format = DXGI_FORMAT_UNKNOWN;
+        cbDesc.SampleDesc.Count = 1;
+        cbDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        cbDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+        hr = pDevice->CreateCommittedResource(
+            &uploadHeapProps,
+            D3D12_HEAP_FLAG_NONE,
+            &cbDesc,
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(&pLightCullingConstantBuffer));
+        if (FAILED(hr))
+        {
+            DX12LogError("[DX12Core] Failed to create light culling constant buffer\n");
+            return;
+        }
+
+        // Create CBV for the constant buffer
+        D3D12_CONSTANT_BUFFER_VIEW_DESC cbvDesc = {};
+        cbvDesc.BufferLocation = pLightCullingConstantBuffer->GetGPUVirtualAddress();
+        cbvDesc.SizeInBytes = 256;
+        pDevice->CreateConstantBufferView(&cbvDesc,
+            CBVSRVUAVHeap->GetCPUHandle(LightCullingCBVIndex));
+
+        bLightCullingReady = true;
+        DX12LogSuccess("[DX12Core] Light culling resources created successfully\n");
+    }
+
+    void DX12Core::TransitionLightCullingBuffersToSRV(ID3D12GraphicsCommandList* commandList)
+    {
+        if (!commandList || !bLightCullingReady)
+            return;
+
+        D3D12_RESOURCE_BARRIER barriers[2] = {};
+
+        // Transition LightIndexList from UNORDERED_ACCESS to PIXEL_SHADER_RESOURCE
+        barriers[0].Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        barriers[0].Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        barriers[0].Transition.pResource = pLightIndexListBuffer.Get();
+        barriers[0].Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        barriers[0].Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+        barriers[0].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+        // Transition LightCountPerTile from UNORDERED_ACCESS to PIXEL_SHADER_RESOURCE
+        barriers[1].Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        barriers[1].Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        barriers[1].Transition.pResource = pLightCountPerTileBuffer.Get();
+        barriers[1].Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        barriers[1].Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+        barriers[1].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+        commandList->ResourceBarrier(2, barriers);
+    }
+
+    void DX12Core::TransitionLightCullingBuffersToUAV(ID3D12GraphicsCommandList* commandList)
+    {
+        if (!commandList || !bLightCullingReady)
+            return;
+
+        D3D12_RESOURCE_BARRIER barriers[2] = {};
+
+        // Transition LightIndexList from PIXEL_SHADER_RESOURCE to UNORDERED_ACCESS
+        barriers[0].Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        barriers[0].Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        barriers[0].Transition.pResource = pLightIndexListBuffer.Get();
+        barriers[0].Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+        barriers[0].Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        barriers[0].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+        // Transition LightCountPerTile from PIXEL_SHADER_RESOURCE to UNORDERED_ACCESS
+        barriers[1].Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        barriers[1].Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        barriers[1].Transition.pResource = pLightCountPerTileBuffer.Get();
+        barriers[1].Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+        barriers[1].Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+        barriers[1].Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+        commandList->ResourceBarrier(2, barriers);
     }
 }

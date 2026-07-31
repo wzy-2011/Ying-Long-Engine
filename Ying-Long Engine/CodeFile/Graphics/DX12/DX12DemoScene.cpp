@@ -1,4 +1,4 @@
-#include "DX12DemoScene.h"
+﻿#include "DX12DemoScene.h"
 #include <DirectXMath.h>
 #include <ImGui/imgui.h>
 #include "../../Application/Application.h"
@@ -168,6 +168,19 @@ namespace YingLong
         }
 
         // Render all wireframe cones (spot light visualization)
+        // 注意：延迟渲染 Geometry Pass 期间 DX12WireframeCone::Draw() 会自动跳过，
+        // 后续通过 RenderWireframeCones() 在前向通道中渲染。
+        // Note: during deferred rendering Geometry Pass, DX12WireframeCone::Draw()
+        // automatically skips, and they are rendered later via RenderWireframeCones().
+        for (auto& cone : WireframeCones)
+        {
+            if (cone)
+                cone->Draw(commandList);
+        }
+    }
+
+    void DX12DemoScene::RenderWireframeCones(ID3D12GraphicsCommandList* commandList)
+    {
         for (auto& cone : WireframeCones)
         {
             if (cone)
@@ -287,8 +300,12 @@ namespace YingLong
             WireframeCones.pop_back();
         }
 
-        // 同步锥体位置、方向和锥角
-        // Sync cone positions, orientations, and cone angles
+        // 确保缓存状态向量大小匹配
+        // Ensure cached state vector size matches
+        CachedConeStates.resize(enabledCount);
+
+        // 同步锥体位置、方向和锥角（仅更新发生变化的值）
+        // Sync cone positions, orientations, and cone angles (only update changed values)
         size_t coneIdx = 0;
         for (size_t i = 0; i < states.size() && coneIdx < WireframeCones.size(); ++i)
         {
@@ -296,33 +313,59 @@ namespace YingLong
                 continue;
 
             auto& cone = WireframeCones[coneIdx];
+            auto& cached = CachedConeStates[coneIdx];
             if (cone)
             {
-                // 锥体位置 = 聚光灯位置（锥体顶点在光源位置）
-                // Cone position = spot light position (cone apex at light position)
-                cone->SetPosition(states[i].Position.x, states[i].Position.y, states[i].Position.z);
+                // 锥体位置 - 仅当改变时更新
+                // Cone position - only update when changed
+                if (cached.PositionX != states[i].Position.x ||
+                    cached.PositionY != states[i].Position.y ||
+                    cached.PositionZ != states[i].Position.z)
+                {
+                    cone->SetPosition(states[i].Position.x, states[i].Position.y, states[i].Position.z);
+                    cached.PositionX = states[i].Position.x;
+                    cached.PositionY = states[i].Position.y;
+                    cached.PositionZ = states[i].Position.z;
+                }
 
-                // 方向：聚光灯的 Rotation 以度为单位，转换为弧度
-                // 锥体默认沿 +Z 方向，需要旋转到聚光灯方向
-                // Direction: spot light Rotation is in degrees, convert to radians
-                // Cone default is along +Z, need to rotate to spot light direction
+                // 方向 - 仅当改变时更新
+                // Direction - only update when changed
                 float pitchRad = states[i].Rotation.x / 360.0f * XM_2PI;
                 float yawRad   = states[i].Rotation.y / 360.0f * XM_2PI;
                 float rollRad  = states[i].Rotation.z / 360.0f * XM_2PI;
-                cone->SetRotation(pitchRad, yawRad, rollRad);
+                if (cached.RotationX != pitchRad ||
+                    cached.RotationY != yawRad ||
+                    cached.RotationZ != rollRad)
+                {
+                    cone->SetRotation(pitchRad, yawRad, rollRad);
+                    cached.RotationX = pitchRad;
+                    cached.RotationY = yawRad;
+                    cached.RotationZ = rollRad;
+                }
 
-                // 锥角：根据外锥角计算锥体高度和底面半径
-                // 锥体可视长度固定为 3.0 单位
-                // Cone angle: calculate height and radius from outer cone angle
-                // Visual cone length is fixed at 3.0 units
+                // 锥角 - 仅当改变时更新（重建几何体开销大）
+                // Cone angle - only update when changed (geometry rebuild is expensive)
                 const float visualLength = 3.0f;
                 float halfAngle = states[i].OuterConeAngle;
-                float radius = visualLength * tanf(halfAngle);
-                cone->UpdateAngle(visualLength, radius);
+                if (cached.OuterConeAngle != halfAngle)
+                {
+                    float radius = visualLength * tanf(halfAngle);
+                    cone->UpdateAngle(visualLength, radius);
+                    cached.OuterConeAngle = halfAngle;
+                }
 
-                // 锥体颜色 = 聚光灯颜色
-                // Cone color = spot light color
-                cone->SetColor(states[i].Color.x, states[i].Color.y, states[i].Color.z, 1.0f);
+                // 锥体颜色 - 仅当改变时更新
+                // Cone color - only update when changed
+                if (cached.ColorR != states[i].Color.x ||
+                    cached.ColorG != states[i].Color.y ||
+                    cached.ColorB != states[i].Color.z)
+                {
+                    cone->SetColor(states[i].Color.x, states[i].Color.y, states[i].Color.z, 1.0f);
+                    cached.ColorR = states[i].Color.x;
+                    cached.ColorG = states[i].Color.y;
+                    cached.ColorB = states[i].Color.z;
+                }
+
                 cone->SetRotationSpeed(0.0f, 0.0f, 0.0f);
             }
             coneIdx++;

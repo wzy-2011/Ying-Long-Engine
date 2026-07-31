@@ -57,6 +57,17 @@ namespace YingLong
         void Render(ID3D12GraphicsCommandList* commandList);
 
         /**
+         * @brief 渲染线框锥体（仅聚光灯可视化）/ Render wireframe cones only (spot light visualization)
+         *
+         * 用于延迟渲染模式：在 Lighting Pass 完成后，通过前向通道渲染线框锥体。
+         * Used for deferred rendering mode: renders wireframe cones via forward pass
+         * after the Lighting Pass completes.
+         *
+         * @param commandList 图形命令列表指针 / Graphics command list pointer
+         */
+        void RenderWireframeCones(ID3D12GraphicsCommandList* commandList);
+
+        /**
          * @brief 设置相机 / Set camera
          * @param camera 相机指针 / Camera pointer
          */
@@ -169,5 +180,16 @@ namespace YingLong
         // Camera matrices / 相机矩阵
         float ViewMatrix[16];        ///< 视图矩阵 / View matrix
         float ProjectionMatrix[16];  ///< 投影矩阵 / Projection matrix
+
+        // Cached cone states for dirty-check optimization
+        // 缓存的锥体状态，用于脏检查优化
+        struct CachedConeState
+        {
+            float PositionX = 0.0f, PositionY = 0.0f, PositionZ = 0.0f;
+            float RotationX = 0.0f, RotationY = 0.0f, RotationZ = 0.0f;
+            float OuterConeAngle = -1.0f;  // -1 = never updated
+            float ColorR = 0.0f, ColorG = 0.0f, ColorB = 0.0f;
+        };
+        std::vector<CachedConeState> CachedConeStates;
     };
 }

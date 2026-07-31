@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -52,6 +52,7 @@ namespace YingLong
 
         void BeginSceneRender(const float clearColor[4] = nullptr);
         void EndSceneRender();
+        void FinalizeDeferredSceneRender();
         D3D12_GPU_DESCRIPTOR_HANDLE GetSceneSRVHandle() const noexcept;
         int GetSceneWidth() const noexcept { return SceneWidth; }
         int GetSceneHeight() const noexcept { return SceneHeight; }
@@ -86,6 +87,9 @@ namespace YingLong
         // Light count constant buffer used by the deferred rendering Lighting Pass.
         // Lazily created on first SetLightCountData() call.
         std::unique_ptr<ConstantBufferDX12<DX12LightCountCB>> pLightCountBuffer;
+
+        // Light culling constant buffer for the compute shader (Tile-Based Light Culling)
+        std::unique_ptr<ConstantBufferDX12<LightCullingConstantsCB>> pLightCullingConstants;
 
         Camera* pCamera;
 

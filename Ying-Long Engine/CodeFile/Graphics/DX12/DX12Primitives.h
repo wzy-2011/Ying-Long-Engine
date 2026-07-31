@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Primitives.h
  * @brief DX12 几何图元头文件 / DX12 Geometric Primitives Header
  *
@@ -82,6 +82,24 @@ namespace YingLong
         float pad[2];
         float CameraPosition[3];
         float pad0;
+    };
+
+    /**
+     * @brief 光源剔除常量缓冲区结构 / Light Culling Constant Buffer Structure
+     *
+     * 与 LightCullingCS.hlsl 的 b0 寄存器匹配。
+     * 包含屏幕尺寸、光源数量和视图投影矩阵。
+     *
+     * Matches the b0 register of LightCullingCS.hlsl.
+     * Contains screen dimensions, light counts, and view-projection matrix.
+     */
+    struct LightCullingConstantsCB
+    {
+        uint32_t ScreenWidth;
+        uint32_t ScreenHeight;
+        uint32_t PointLightCount;
+        uint32_t SpotLightCount;
+        float ViewProjMatrix[16];  ///< 视图投影矩阵（列主序，转置后）/ View-projection matrix (column-major, transposed)
     };
 
     /**
@@ -297,6 +315,26 @@ namespace YingLong
          */
         static UINT GetSpotLightSRVIndex() { return SpotLightBuffer.GetSRVIndex(); }
 
+        /**
+         * @brief 获取点光源数量 / Get point light count
+         *
+         * 返回当前活跃的点光源数量，用于 Tile-Based Light Culling。
+         * Returns the current number of active point lights, used for Tile-Based Light Culling.
+         *
+         * @return 点光源数量 / Point light count
+         */
+        static UINT GetPointLightCount() { return s_PointLightCount; }
+
+        /**
+         * @brief 获取聚光源数量 / Get spot light count
+         *
+         * 返回当前活跃的聚光源数量，用于 Tile-Based Light Culling。
+         * Returns the current number of active spot lights, used for Tile-Based Light Culling.
+         *
+         * @return 聚光源数量 / Spot light count
+         */
+        static UINT GetSpotLightCount() { return s_SpotLightCount; }
+
     protected:
         /**
          * @brief 初始化图元 / Initialize primitive
@@ -374,6 +412,9 @@ namespace YingLong
 
         static StructuredBufferDX12<DX12PointLightData> PointLightBuffer;   ///< 点光源结构化缓冲区 / Point light structured buffer
         static StructuredBufferDX12<DX12SpotLightData> SpotLightBuffer;     ///< 聚光源结构化缓冲区 / Spot light structured buffer
+
+        static UINT s_PointLightCount;  ///< 当前点光源数量 / Current point light count
+        static UINT s_SpotLightCount;   ///< 当前聚光源数量 / Current spot light count
 
         UINT IndexCount = 0;      ///< 索引数量 / Index count
 

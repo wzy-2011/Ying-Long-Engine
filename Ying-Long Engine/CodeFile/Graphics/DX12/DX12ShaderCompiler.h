@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12ShaderCompiler.h
  * @brief DX12 着色器编译器头文件 / DX12 Shader Compiler Header
  *
@@ -158,6 +158,21 @@ namespace YingLong
         static std::vector<uint8_t> CompilePixelShader(const std::wstring& filePath)
         {
             return CompileShader(filePath, "main", "ps_5_0");
+        }
+
+        /**
+         * @brief 编译计算着色器 / Compile compute shader
+         *
+         * 使用默认入口点 "main" 和着色器模型 "cs_5_0" 编译计算着色器。
+         * Compiles a compute shader using default entry point "main" and shader model "cs_5_0".
+         *
+         * @param filePath 着色器文件路径（宽字符串）/ Shader file path (wide string)
+         * @return 编译后的计算着色器字节码 / Compiled compute shader bytecode
+         * @throws std::runtime_error 如果文件不存在或编译失败 / If file not found or compilation fails
+         */
+        static std::vector<uint8_t> CompileComputeShader(const std::wstring& filePath)
+        {
+            return CompileShader(filePath, "main", "cs_5_0");
         }
     };
 }

@@ -11,6 +11,7 @@
  */
 
 #include "DX12Primitives.h"
+#include "DX12Drawable.h"
 #include <DirectXMath.h>
 #include <cmath>
 #include <cassert>
@@ -212,10 +213,40 @@ namespace YingLong
         }
 
         // 绑定管线状态对象
+        // 优先使用全局静态覆盖 PSO（延迟渲染 Geometry Pass 时设置），
+        // 否则使用默认的前向渲染 PSO。
         // Bind pipeline state object
-        if (Core.GetPipelineState() && Core.GetPipelineState()->IsInitialized())
+        // Prefer global static override PSO (set during deferred rendering
+        // Geometry Pass), otherwise use default forward rendering PSO.
+        DX12PipelineState* overridePSO = DX12Drawable::GetStaticOverridePipelineState();
+        if (overridePSO && overridePSO->IsInitialized())
+        {
+            overridePSO->Bind(commandList);
+            static bool s_bLoggedOverridePSO = false;
+            if (!s_bLoggedOverridePSO)
+            {
+                s_bLoggedOverridePSO = true;
+                OutputDebugStringA("[DX12Primitive::Draw] Using static override PSO (Geometry Pass)\n");
+            }
+        }
+        else if (Core.GetPipelineState() && Core.GetPipelineState()->IsInitialized())
         {
             Core.GetPipelineState()->Bind(commandList);
+            static bool s_bLoggedForwardPSO = false;
+            if (!s_bLoggedForwardPSO)
+            {
+                s_bLoggedForwardPSO = true;
+                OutputDebugStringA("[DX12Primitive::Draw] Using forward rendering PSO\n");
+            }
+        }
+        else
+        {
+            static bool s_bLoggedNoPSO = false;
+            if (!s_bLoggedNoPSO)
+            {
+                s_bLoggedNoPSO = true;
+                OutputDebugStringA("[DX12Primitive::Draw] ERROR: No PSO available!\n");
+            }
         }
 
         // 绑定所有根参数（0-2：CBV）
@@ -389,6 +420,7 @@ namespace YingLong
      */
     void DX12Primitive::UpdatePointLightBuffer(const std::vector<DX12PointLightData>& data)
     {
+        s_PointLightCount = static_cast<UINT>(data.size());
         PointLightBuffer.Update(data);
     }
 
@@ -398,6 +430,7 @@ namespace YingLong
      */
     void DX12Primitive::UpdateSpotLightBuffer(const std::vector<DX12SpotLightData>& data)
     {
+        s_SpotLightCount = static_cast<UINT>(data.size());
         SpotLightBuffer.Update(data);
     }
 
@@ -423,6 +456,8 @@ namespace YingLong
     // Static member variable initialization
     StructuredBufferDX12<DX12PointLightData> DX12Primitive::PointLightBuffer;
     StructuredBufferDX12<DX12SpotLightData> DX12Primitive::SpotLightBuffer;
+    UINT DX12Primitive::s_PointLightCount = 0;
+    UINT DX12Primitive::s_SpotLightCount = 0;
 
     // =============================================================================
     // DX12Triangle
@@ -961,6 +996,15 @@ namespace YingLong
 
     void DX12WireframeCone::Draw(ID3D12GraphicsCommandList* commandList)
     {
+        // 延迟渲染 Geometry Pass 期间跳过线框对象渲染
+        // 线框锥体使用 LINELIST 拓扑，而 Geometry PSO 使用 TRIANGLELIST 拓扑。
+        // 线框对象将在延迟渲染管线结束后通过前向通道渲染。
+        // Skip wireframe rendering during deferred rendering Geometry Pass.
+        // Wireframe cones use LINELIST topology, but Geometry PSO uses TRIANGLELIST.
+        // Wireframe objects will be rendered in a forward pass after deferred pipeline.
+        if (DX12Drawable::GetStaticOverridePipelineState())
+            return;
+
         // 绑定根签名 / Bind root signature
         if (Core.GetRootSignature() && Core.GetRootSignature()->GetRootSignature())
         {

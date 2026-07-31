@@ -1,4 +1,4 @@
-static const float PI = 3.1415926535f;
+﻿static const float PI = 3.1415926535f;
 static const float2 DOUBLE_PI = PI * 2;
 
 struct PBRMaterial
@@ -218,11 +218,21 @@ float3 Lighting(PBRMaterial material, float3 normal, float3 worldPosition)
 {
     float3 Lo = float3(0.0f, 0.0f, 0.0f);
 
+    // 距离剔除阈值（平方值）：100 单位以外的光源直接跳过
+    // Distance culling threshold (squared): skip lights beyond 100 units
+    const float CULL_DISTANCE_SQ = 100.0f * 100.0f;
+
     for (int i = 0; i < PointLightCount; i++)
     {
 #ifdef DX11_RENDERER
+        float3 toLight = PointLightList[i].Position - worldPosition;
+        if (dot(toLight, toLight) > CULL_DISTANCE_SQ)
+            continue;
         Lo += PBRPointLightDirectLight(PointLightList[i], material, normal, worldPosition, CameraPosition);
 #else
+        float3 toLight = PointLightBuffer[i].Position - worldPosition;
+        if (dot(toLight, toLight) > CULL_DISTANCE_SQ)
+            continue;
         Lo += PBRPointLightDirectLight(PointLightBuffer[i], material, normal, worldPosition, CameraPosition);
 #endif
     }
@@ -230,8 +240,14 @@ float3 Lighting(PBRMaterial material, float3 normal, float3 worldPosition)
     for (int j = 0; j < SpotLightCount; j++)
     {
 #ifdef DX11_RENDERER
+        float3 toLight = SpotLightList[j].Position - worldPosition;
+        if (dot(toLight, toLight) > CULL_DISTANCE_SQ)
+            continue;
         Lo += PBRSpotLightDirectLight(SpotLightList[j], material, normal, worldPosition, CameraPosition);
 #else
+        float3 toLight = SpotLightBuffer[j].Position - worldPosition;
+        if (dot(toLight, toLight) > CULL_DISTANCE_SQ)
+            continue;
         Lo += PBRSpotLightDirectLight(SpotLightBuffer[j], material, normal, worldPosition, CameraPosition);
 #endif
     }

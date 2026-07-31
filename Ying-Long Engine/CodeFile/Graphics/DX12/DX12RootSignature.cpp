@@ -175,6 +175,24 @@ namespace YingLong
         parameters.push_back(param5);
         SamplerRegisterMapping.push_back(5);
 
+        // 参数6：Tile-Based Light Culling 光源列表描述符表 SRV (t6-t7, 像素着色器)
+        // Param 6: Tile-Based Light Culling light list descriptor table SRV (t6-t7, pixel shader)
+        D3D12_DESCRIPTOR_RANGE1 lightListRange = {};
+        lightListRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+        lightListRange.NumDescriptors = 2;
+        lightListRange.BaseShaderRegister = 6;
+        lightListRange.RegisterSpace = 0;
+        lightListRange.Flags = D3D12_DESCRIPTOR_RANGE_FLAG_NONE;
+        lightListRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+        D3D12_ROOT_PARAMETER1 param6 = {};
+        param6.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+        param6.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+        param6.DescriptorTable.NumDescriptorRanges = 1;
+        param6.DescriptorTable.pDescriptorRanges = &lightListRange;
+        parameters.push_back(param6);
+        SRVRegisterMapping.push_back(6);
+
         // 保存参数数量
         // Save parameter count
         NumParameters = static_cast<UINT>(parameters.size());

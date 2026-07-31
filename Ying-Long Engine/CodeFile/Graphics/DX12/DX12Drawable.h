@@ -98,6 +98,29 @@ namespace YingLong
         void SetOverridePipelineState(DX12PipelineState* pso) noexcept { pOverridePSO = pso; }
 
         /**
+         * @brief 设置全局静态覆盖管线状态 / Set global static override PSO
+         *
+         * 设置后所有 drawable 在 Bind() 时都会使用此 PSO（除非实例级覆盖已设置）。
+         * 用于延迟渲染 Geometry Pass，确保所有通过 DX12DemoScene::Render() 或
+         * MeshRendererSystem::RenderDX12() 直接渲染的 drawable 也使用 Geometry PSO。
+         *
+         * When set, all drawables will use this PSO during Bind() (unless an
+         * instance-level override is already set). Used for deferred rendering
+         * Geometry Pass to ensure drawables rendered directly via
+         * DX12DemoScene::Render() or MeshRendererSystem::RenderDX12() also
+         * use the Geometry PSO.
+         *
+         * @param pso 全局覆盖管线状态指针，nullptr 清除 / Global override PSO, nullptr to clear
+         */
+        static void SetStaticOverridePipelineState(DX12PipelineState* pso) noexcept { s_pStaticOverridePSO = pso; }
+
+        /**
+         * @brief 获取当前全局静态覆盖管线状态 / Get current global static override PSO
+         * @return 全局覆盖 PSO 指针 / Global override PSO pointer
+         */
+        static DX12PipelineState* GetStaticOverridePipelineState() noexcept { return s_pStaticOverridePSO; }
+
+        /**
          * @brief 绑定所有资源并绘制 / Bind all resources and draw
          *
          * 先绑定所有资源，然后执行绘制调用。
@@ -165,6 +188,7 @@ namespace YingLong
         // 管线状态
         DX12PipelineState* pPSO;                               ///< 管线状态对象指针 / Pipeline state object pointer
         DX12PipelineState* pOverridePSO;                        ///< 覆盖管线状态指针（延迟渲染用）/ Override PSO (for deferred rendering)
+        static DX12PipelineState* s_pStaticOverridePSO;        ///< 全局静态覆盖 PSO（Geometry Pass 用）/ Global static override PSO (for Geometry Pass)
 
         // Draw parameters
         // 绘制参数

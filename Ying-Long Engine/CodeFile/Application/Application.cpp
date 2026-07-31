@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file Application.cpp
  * @brief Ying-Long Engine 应用程序实现 / Application implementation of Ying-Long Engine
  *
@@ -1194,6 +1194,18 @@ namespace YingLong
 			}
 
 			renderer->EndSceneRender();
+
+			// 延迟渲染：在 Lighting Pass 之后渲染线框锥体（前向通道）
+			// Deferred rendering: render wireframe cones after Lighting Pass (forward pass)
+			if (renderer->IsDeferredRenderingEnabled() && pDX12DemoScene)
+			{
+				ID3D12GraphicsCommandList* cmdList = renderer->GetCore()->GetCommandList();
+				if (cmdList)
+				{
+					pDX12DemoScene->RenderWireframeCones(cmdList);
+				}
+				renderer->FinalizeDeferredSceneRender();
+			}
 
 			ImGui::Image((ImTextureID)renderer->GetSceneSRVHandle().ptr, ImGui::GetContentRegionAvail());
 

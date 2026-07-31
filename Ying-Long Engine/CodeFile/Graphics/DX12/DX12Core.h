@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Core.h
  * @brief DX12 核心模块头文件 / DX12 Core Module Header
  *
@@ -41,6 +41,11 @@ namespace YingLong
      * from accessing the same resource simultaneously.
      */
     constexpr UINT FRAME_COUNT = 2;
+
+    // Tile-Based Light Culling constants
+    constexpr UINT TILE_SIZE_X = 16;
+    constexpr UINT TILE_SIZE_Y = 16;
+    constexpr UINT MAX_LIGHTS_PER_TILE = 64;
 
     /**
      * @brief DX12 核心类 / DX12 Core Class
@@ -317,6 +322,97 @@ namespace YingLong
          */
         DX12UploadBuffer* GetUploadBuffer() const noexcept { return UploadBuffer.get(); }
 
+        // ========================================================================
+        // Light Culling (Tile-Based) public accessors
+        // 光源剔除（Tile-Based）公共访问器
+        // ========================================================================
+
+        /**
+         * @brief 获取光源索引列表 SRV 描述符表基址（t6）/ Get light index list SRV descriptor table base (t6)
+         * @return GPU SRV 句柄 / GPU SRV handle
+         */
+        D3D12_GPU_DESCRIPTOR_HANDLE GetLightIndexListSRVHandle() const noexcept
+        {
+            return CBVSRVUAVHeap->GetGPUHandle(LightIndexListSRVIndex);
+        }
+
+        /**
+         * @brief 获取 Tile 光源计数 SRV 描述符表基址（t7）/ Get per-tile light count SRV descriptor table base (t7)
+         * @return GPU SRV 句柄 / GPU SRV handle
+         */
+        D3D12_GPU_DESCRIPTOR_HANDLE GetLightCountSRVHandle() const noexcept
+        {
+            return CBVSRVUAVHeap->GetGPUHandle(LightCountSRVIndex);
+        }
+
+        /**
+         * @brief 获取光源索引列表 UAV 描述符索引（u0）/ Get light index list UAV descriptor index (u0)
+         * @return UAV 描述符索引 / UAV descriptor index
+         */
+        UINT GetLightIndexListUAVIndex() const noexcept { return LightIndexListUAVIndex; }
+
+        /**
+         * @brief 获取 Tile 光源计数 UAV 描述符索引（u1）/ Get per-tile light count UAV descriptor index (u1)
+         * @return UAV 描述符索引 / UAV descriptor index
+         */
+        UINT GetLightCountUAVIndex() const noexcept { return LightCountUAVIndex; }
+
+        /**
+         * @brief 获取光源剔除计算根签名 / Get light culling compute root signature
+         * @return 计算根签名指针 / Compute root signature pointer
+         */
+        ID3D12RootSignature* GetLightCullingRootSignature() const noexcept
+        {
+            return LightCullingRootSig.Get();
+        }
+
+        /**
+         * @brief 获取光源剔除计算 PSO / Get light culling compute PSO
+         * @return 计算管线状态指针 / Compute pipeline state pointer
+         */
+        ID3D12PipelineState* GetLightCullingPSO() const noexcept
+        {
+            return LightCullingPSO.Get();
+        }
+
+        /**
+         * @brief 检查光源剔除资源是否就绪 / Check if light culling resources are ready
+         * @return 是否就绪 / Whether ready
+         */
+        bool IsLightCullingReady() const noexcept { return bLightCullingReady; }
+
+        /**
+         * @brief 创建光源剔除资源 / Create light culling resources
+         *
+         * 为 Tile-Based Light Culling 创建光源索引列表和 Tile 光源计数缓冲区。
+         * Creates light index list and per-tile light count buffers for tile-based light culling.
+         */
+        void CreateLightCullingResources();
+
+        /**
+         * @brief 过渡光源剔除缓冲区到 SRV 状态 / Transition light culling buffers to SRV state
+         *
+         * 在计算着色器写入完成后调用，将缓冲区从 UAV 状态过渡到
+         * PIXEL_SHADER_RESOURCE 状态，供像素着色器读取。
+         * Called after compute shader writes are complete to transition buffers
+         * from UAV state to PIXEL_SHADER_RESOURCE state for pixel shader reading.
+         *
+         * @param commandList 命令列表 / Command list
+         */
+        void TransitionLightCullingBuffersToSRV(ID3D12GraphicsCommandList* commandList);
+
+        /**
+         * @brief 过渡光源剔除缓冲区到 UAV 状态 / Transition light culling buffers to UAV state
+         *
+         * 在计算着色器调度前调用，将缓冲区从 SRV 状态过渡回
+         * UNORDERED_ACCESS 状态，供计算着色器写入。
+         * Called before compute shader dispatch to transition buffers
+         * from SRV state back to UNORDERED_ACCESS state for compute shader writing.
+         *
+         * @param commandList 命令列表 / Command list
+         */
+        void TransitionLightCullingBuffersToUAV(ID3D12GraphicsCommandList* commandList);
+
     private:
         /**
          * @brief 创建 D3D12 设备 / Create D3D12 device
@@ -468,6 +564,34 @@ namespace YingLong
         void CreateLightingPipelineState();
 
         /**
+         * @brief 创建光源剔除计算根签名 / Create light culling compute root signature
+         *
+         * 创建仅用于计算着色器的根签名，包含 CBV、SRV 描述符表和 UAV 描述符表。
+         * Creates a compute-only root signature with CBV, SRV descriptor table, and UAV descriptor table.
+         */
+        void CreateLightCullingRootSignature();
+
+        /**
+         * @brief 创建光源剔除计算管线状态 / Create light culling compute pipeline state
+         *
+         * 编译 LightCullingCS.hlsl 并创建计算管线状态对象。
+         * Compiles LightCullingCS.hlsl and creates the compute pipeline state object.
+         */
+        void CreateLightCullingComputePSO();
+
+        /**
+         * @brief 获取光源索引列表 CPU 可写指针 / Get light index list CPU-writable pointer
+         * @return 数据指针 / Data pointer
+         */
+        uint32_t* GetLightIndexListData() noexcept { return pLightIndexListData; }
+
+        /**
+         * @brief 获取 Tile 光源计数 CPU 可写指针 / Get per-tile light count CPU-writable pointer
+         * @return 数据指针 / Data pointer
+         */
+        uint32_t* GetLightCountPerTileData() noexcept { return pLightCountPerTileData; }
+
+        /**
          * @brief 释放渲染目标视图 / Release render target views
          *
          * 释放所有渲染目标资源引用。
@@ -506,6 +630,25 @@ namespace YingLong
         std::unique_ptr<DX12PipelineState> LinePipelineState;  ///< 线管线状态对象（线拓扑）/ Line pipeline state object (line topology)
         std::unique_ptr<DX12PipelineState> GeometryPipelineState;  ///< Geometry Pass 管线状态（延迟渲染）/ Geometry Pass pipeline state (deferred)
         std::unique_ptr<DX12PipelineState> LightingPipelineState;  ///< Lighting Pass 管线状态（延迟渲染）/ Lighting Pass pipeline state (deferred)
+
+        // Light culling resources (Tile-Based) / 光源剔除资源（Tile-Based）
+        Microsoft::WRL::ComPtr<::ID3D12Resource> pLightIndexListBuffer;  ///< 光源索引列表缓冲区 / Light index list buffer
+        Microsoft::WRL::ComPtr<::ID3D12Resource> pLightCountPerTileBuffer;  ///< Tile 光源计数缓冲区 / Per-tile light count buffer
+        uint32_t* pLightIndexListData;   ///< 光源索引列表 CPU 映射指针 / Light index list CPU mapped pointer
+        uint32_t* pLightCountPerTileData; ///< Tile 光源计数 CPU 映射指针 / Per-tile light count CPU mapped pointer
+        UINT LightIndexListSRVIndex;     ///< 光源索引列表 SRV 索引 (t6) / Light index list SRV index (t6)
+        UINT LightCountSRVIndex;         ///< Tile 光源计数 SRV 索引 (t7) / Per-tile light count SRV index (t7)
+        UINT LightIndexListUAVIndex;     ///< 光源索引列表 UAV 索引 (u0) / Light index list UAV index (u0)
+        UINT LightCountUAVIndex;         ///< Tile 光源计数 UAV 索引 (u1) / Per-tile light count UAV index (u1)
+        bool bLightCullingReady;          ///< 光源剔除资源是否就绪 / Whether light culling resources are ready
+
+        // Light culling compute pipeline / 光源剔除计算管线
+        Microsoft::WRL::ComPtr<::ID3D12RootSignature> LightCullingRootSig;  ///< 光源剔除计算根签名 / Light culling compute root signature
+        Microsoft::WRL::ComPtr<::ID3D12PipelineState> LightCullingPSO;     ///< 光源剔除计算管线状态 / Light culling compute pipeline state
+
+        // Light culling upload buffer / 光源剔除常量上传缓冲区
+        Microsoft::WRL::ComPtr<::ID3D12Resource> pLightCullingConstantBuffer;  ///< 光源剔除常量缓冲区 / Light culling constant buffer
+        UINT LightCullingCBVIndex;  ///< 光源剔除常量缓冲区 CBV 索引 / Light culling constant buffer CBV index
 
         // Upload buffer for resource uploads / 资源上传缓冲区
         std::unique_ptr<DX12UploadBuffer> UploadBuffer;    ///< 上传缓冲区对象 / Upload buffer object

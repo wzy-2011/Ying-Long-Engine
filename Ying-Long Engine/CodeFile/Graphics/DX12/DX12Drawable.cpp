@@ -14,6 +14,8 @@
 
 namespace YingLong
 {
+    // Static member initialization
+    DX12PipelineState* DX12Drawable::s_pStaticOverridePSO = nullptr;
     /**
      * @brief 构造函数实现 / Constructor implementation
      *
@@ -121,9 +123,9 @@ namespace YingLong
      */
     void DX12Drawable::Bind(ID3D12GraphicsCommandList* commandList)
     {
-        // 绑定管线状态（优先使用覆盖 PSO，用于延迟渲染 Geometry Pass）
-        // Bind pipeline state (override PSO takes priority, for deferred rendering Geometry Pass)
-        DX12PipelineState* activePSO = pOverridePSO ? pOverridePSO : pPSO;
+        // 绑定管线状态（优先级：实例覆盖 > 全局静态覆盖 > 自身 PSO）
+        // Bind pipeline state (priority: instance override > global static override > own PSO)
+        DX12PipelineState* activePSO = pOverridePSO ? pOverridePSO : (s_pStaticOverridePSO ? s_pStaticOverridePSO : pPSO);
         if (activePSO)
         {
             activePSO->Bind(commandList);

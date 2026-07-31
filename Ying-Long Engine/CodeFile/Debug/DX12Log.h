@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file DX12Log.h
  * @brief DX12 日志系统 / DX12 Logging System
  *

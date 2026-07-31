@@ -60,6 +60,34 @@ namespace YingLong
 
         bInitialized = true;
         DX12LogSuccess("[GBuffer] G-Buffer initialized successfully\n");
+
+        // 诊断日志：验证 SRV 描述符表是否连续
+        // Diagnostic: verify SRV descriptor table contiguity
+        {
+            DX12Log(("[GBuffer] SRV heap indices: " +
+                     std::to_string(RenderTargets[0]->GetSRVHeapIndex()) + ", " +
+                     std::to_string(RenderTargets[1]->GetSRVHeapIndex()) + ", " +
+                     std::to_string(RenderTargets[2]->GetSRVHeapIndex()) + ", " +
+                     std::to_string(RenderTargets[3]->GetSRVHeapIndex()) + "\n").c_str());
+
+            bool bContiguous = true;
+            for (UINT i = 1; i < GBUFFER_RT_COUNT; ++i)
+            {
+                if (RenderTargets[i]->GetSRVHeapIndex() != RenderTargets[i - 1]->GetSRVHeapIndex() + 1)
+                {
+                    bContiguous = false;
+                    break;
+                }
+            }
+            if (!bContiguous)
+            {
+                DX12LogError("[GBuffer] WARNING: G-Buffer SRV descriptors are NOT contiguous! Lighting Pass will read wrong data!\n");
+            }
+            else
+            {
+                DX12Log("[GBuffer] G-Buffer SRV descriptors are contiguous (OK)\n");
+            }
+        }
     }
 
     void GBuffer::Shutdown()

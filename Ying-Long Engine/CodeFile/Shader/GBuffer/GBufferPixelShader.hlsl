@@ -101,6 +101,17 @@ GBufferPSOutput main(GBufferPSInput input)
     }
     normal = normalize(normal);
 
+    // Unlit 模式：直接输出 Albedo 到 Emissive 通道，标记 alpha=1
+    // Unlit mode: write Albedo to Emissive channel, mark alpha=1
+    if (Unlit)
+    {
+        output.AlbedoAO = float4(0.0f, 0.0f, 0.0f, 0.0f);
+        output.NormalRoughness = float4(0.0f, 0.0f, 1.0f, 0.0f); // 有效法线以避免 Lighting Pass 跳过后台像素
+        output.PositionMetallic = float4(0.0f, 0.0f, 0.0f, 0.0f);
+        output.EmissiveUnused = float4(albedo, 1.0f); // alpha=1 标记为 Unlit
+        return output;
+    }
+
     // Pack into G-Buffer
     output.AlbedoAO = float4(albedo, ao);
     output.NormalRoughness = float4(normal, roughness);

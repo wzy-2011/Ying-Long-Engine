@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12PipelineState.cpp
  * @brief DX12 管线状态对象实现文件 / DX12 Pipeline State Implementation
  *
@@ -33,14 +33,17 @@ namespace YingLong
         , bUseCustomRTVFormats(false)
         , IsCustomPSO(false)                                       ///< 非自定义 PSO / Not custom PSO
     {
-        // 清零所有状态结构体
-        // Zero out all state structures
+        // 初始化描述和布局为零
+        // Initialize desc and layout to zero
         ZeroMemory(&PSODesc, sizeof(D3D12_GRAPHICS_PIPELINE_STATE_DESC));
         ZeroMemory(&InputLayout, sizeof(D3D12_INPUT_LAYOUT_DESC));
-        ZeroMemory(&RasterizerState, sizeof(D3D12_RASTERIZER_DESC));
-        ZeroMemory(&BlendState, sizeof(D3D12_BLEND_DESC));
-        ZeroMemory(&DepthStencilState, sizeof(D3D12_DEPTH_STENCIL_DESC));
         ZeroMemory(RTVFormatsArr, sizeof(RTVFormatsArr));
+
+        // 设置默认渲染状态（而非清零，避免无效状态）
+        // Set default render states (instead of zeroing, to avoid invalid states)
+        RasterizerState = CreateDefaultRasterizerState();
+        BlendState = CreateDefaultBlendState();
+        DepthStencilState = CreateDefaultDepthStencilState();
     }
 
     /**
@@ -164,11 +167,10 @@ namespace YingLong
             InputLayout.NumElements = inputLayoutSize;
         }
 
-        // 设置默认状态
-        // Set default states
-        RasterizerState = CreateDefaultRasterizerState();
-        BlendState = CreateDefaultBlendState();
-        DepthStencilState = CreateDefaultDepthStencilState();
+        // 不重置光栅化/混合/深度状态，保留构造函数设置的默认值或调用者通过
+        // SetRasterizerState/SetBlendState/SetDepthStencilState 设置的自定义值
+        // Do NOT reset rasterizer/blend/depth states - preserve defaults from constructor
+        // or custom values set by caller via SetRasterizerState/SetBlendState/SetDepthStencilState
 
         // 创建 PSO 对象
         // Create PSO object

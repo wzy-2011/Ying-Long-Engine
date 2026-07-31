@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file DX12Renderer.cpp
  * @brief DX12 渲染器实现文件 / DX12 Renderer Implementation
  *
@@ -288,6 +288,10 @@ namespace YingLong
         // 释放光源计数常量缓冲区（延迟渲染 Lighting Pass 使用，必须在 pCore 之前释放）
         // Release light count constant buffer (used by deferred Lighting Pass, before pCore)
         pLightCountBuffer.reset();
+
+        // 释放光源剔除常量缓冲区
+        // Release light culling constant buffer
+        pLightCullingConstants.reset();
 
         // 释放深度模板
         // Release depth stencil
@@ -879,13 +883,27 @@ namespace YingLong
             // Only create G-Buffer when deferred rendering is enabled to avoid unnecessary allocation
             if (bUseDeferredRendering)
             {
-                pGBuffer = std::make_unique<GBuffer>();
-                pGBuffer->Initialize(*pCore, PendingSceneWidth, PendingSceneHeight);
+                try
+                {
+                    pGBuffer = std::make_unique<GBuffer>();
+                    pGBuffer->Initialize(*pCore, PendingSceneWidth, PendingSceneHeight);
+                    DX12LogSuccess("[DX12Renderer::ExecuteSceneResize] G-Buffer created\n");
+                }
+                catch (const std::exception& e)
+                {
+                    // GBuffer 创建失败不影响场景 RT 和 DS 的创建
+                    // GBuffer creation failure does not affect scene RT and DS creation
+                    DX12LogError(("[DX12Renderer::ExecuteSceneResize] G-Buffer creation failed: " +
+                                  std::string(e.what()) + "\n").c_str());
+                    pGBuffer.reset();
+                }
             }
 
             SceneWidth = PendingSceneWidth;
             SceneHeight = PendingSceneHeight;
             bNeedsSceneResize = false;
+            DX12Log(("[DX12Renderer::ExecuteSceneResize] Scene resized to " +
+                     std::to_string(SceneWidth) + "x" + std::to_string(SceneHeight) + "\n").c_str());
         }
         catch (const std::exception& e)
         {
@@ -916,6 +934,25 @@ namespace YingLong
     {
         if (!bInitialized || !pCore)
             return;
+
+        // 诊断日志：记录 BeginSceneRender 入口状态
+        // Diagnostic: log BeginSceneRender entry state
+        {
+            static int s_frameCounter = 0;
+            if (s_frameCounter < 5)
+            {
+                s_frameCounter++;
+                DX12Log(("[DX12Renderer::BeginSceneRender] Frame " + std::to_string(s_frameCounter) +
+                         ": deferred=" + std::to_string(bUseDeferredRendering) +
+                         " GBuffer=" + std::to_string(pGBuffer != nullptr) +
+                         " GBufInit=" + std::to_string(pGBuffer ? pGBuffer->IsInitialized() : false) +
+                         " SceneW=" + std::to_string(SceneWidth) +
+                         " SceneH=" + std::to_string(SceneHeight) +
+                         " GeoPSO=" + std::to_string(pCore->GetGeometryPipelineState() != nullptr) +
+                         " GeoPSOInit=" + std::to_string(pCore->GetGeometryPipelineState() ? pCore->GetGeometryPipelineState()->IsInitialized() : false) +
+                         "\n").c_str());
+            }
+        }
 
         if (!pSceneRenderTarget || !pSceneDepthStencil ||
             !pSceneRenderTarget->GetResource() || !pSceneDepthStencil->GetResource())
@@ -949,6 +986,7 @@ namespace YingLong
             // Lazily create G-Buffer on first deferred rendering frame
             if (!pGBuffer && SceneWidth > 0 && SceneHeight > 0)
             {
+                DX12Log("[DX12Renderer] Attempting lazy G-Buffer creation...\n");
                 try
                 {
                     pGBuffer = std::make_unique<GBuffer>();
@@ -967,6 +1005,17 @@ namespace YingLong
             {
                 BeginGeometryPass(color);
                 return;
+            }
+            else
+            {
+                // GBuffer 不可用，回退到前向渲染
+                // GBuffer not available, fall back to forward rendering
+                static bool s_bLoggedGBufferFallback = false;
+                if (!s_bLoggedGBufferFallback)
+                {
+                    s_bLoggedGBufferFallback = true;
+                    DX12LogWarning("[DX12Renderer] Deferred rendering enabled but GBuffer not available, falling back to forward rendering\n");
+                }
             }
         }
 
@@ -1033,13 +1082,94 @@ namespace YingLong
         if (!commandList)
             return;
 
+        // 保存延迟渲染状态（EndGeometryPass 会清除 bInGeometryPass）
+        // Save deferred rendering state (EndGeometryPass clears bInGeometryPass)
+        bool bWasDeferred = bInGeometryPass;
+
         // 延迟渲染路径：结束 Geometry Pass，执行 Lighting Pass
         // Deferred rendering path: end Geometry Pass, execute Lighting Pass
         if (bInGeometryPass)
         {
+            // 诊断日志：验证延迟渲染路径是否被调用
+            // Diagnostic: verify deferred rendering path is invoked
+            {
+                static bool s_bLoggedOnce = false;
+                if (!s_bLoggedOnce)
+                {
+                    s_bLoggedOnce = true;
+                    DX12Log("[DX12Renderer::EndSceneRender] Deferred path active: ending Geometry Pass, executing Lighting Pass\n");
+                }
+            }
             EndGeometryPass();
             ExecuteLightingPass();
         }
+
+        // 延迟渲染路径：保持 scene RT 在 RENDER_TARGET 状态，
+        // 以便后续渲染线框对象（前向通道）。
+        // 调用者需在渲染完线框对象后调用 FinalizeDeferredSceneRender()。
+        // Deferred rendering path: keep scene RT in RENDER_TARGET state
+        // for rendering wireframe objects (forward pass).
+        // Caller must call FinalizeDeferredSceneRender() after wireframe rendering.
+        if (bWasDeferred)
+        {
+            return;
+        }
+
+        // 前向渲染路径：转换到 SRV 并设置后备缓冲区
+        // Forward rendering path: transition to SRV and set up back buffer
+        pSceneRenderTarget->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+        pSceneDepthStencil->TransitionTo(
+            commandList, D3D12_RESOURCE_STATE_COMMON);
+
+        UINT backBufferIndex = pCore->GetCurrentBackBufferIndex();
+        RenderTargetDX12* rt = pRenderTargets[backBufferIndex].get();
+        if (rt)
+        {
+            rt->TransitionTo(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+            if (pDepthStencil)
+            {
+                pDepthStencil->TransitionTo(
+                    commandList, D3D12_RESOURCE_STATE_DEPTH_WRITE);
+                auto dsvHandle = pDepthStencil->GetDSVHandle();
+                rt->Bind(commandList, &dsvHandle);
+            }
+            else
+            {
+                rt->Bind(commandList, nullptr);
+            }
+        }
+
+        D3D12_VIEWPORT viewport = {};
+        viewport.Width = static_cast<float>(Width);
+        viewport.Height = static_cast<float>(Height);
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.right = Width;
+        scissorRect.bottom = Height;
+        commandList->RSSetScissorRects(1, &scissorRect);
+    }
+
+    /**
+     * @brief 完成延迟渲染场景（过渡到 SRV 并设置后备缓冲区）
+     *        Finalize deferred scene rendering (transition to SRV and set up back buffer)
+     *
+     * 在延迟渲染的 Lighting Pass 和线框前向通道完成后调用。
+     * 将场景渲染目标过渡到 PIXEL_SHADER_RESOURCE 状态供 ImGui 显示。
+     * Called after the deferred rendering Lighting Pass and wireframe forward pass.
+     * Transitions the scene render target to PIXEL_SHADER_RESOURCE for ImGui display.
+     */
+    void DX12Renderer::FinalizeDeferredSceneRender()
+    {
+        if (!bInitialized || !pCore || !pSceneRenderTarget)
+            return;
+
+        ID3D12GraphicsCommandList* commandList = pCore->GetCommandList();
+        if (!commandList)
+            return;
 
         pSceneRenderTarget->TransitionTo(
             commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
@@ -1171,6 +1301,12 @@ namespace YingLong
             pCore->GetGeometryPipelineState()->Bind(commandList);
         }
 
+        // 设置全局静态覆盖 PSO，确保所有 drawable（包括通过 DemoScene 和
+        // MeshRendererSystem 直接渲染的）都使用 Geometry Pass PSO
+        // Set global static override PSO to ensure all drawables (including
+        // those rendered directly via DemoScene and MeshRendererSystem) use Geometry Pass PSO
+        DX12Drawable::SetStaticOverridePipelineState(pCore->GetGeometryPipelineState());
+
         // 转换 G-Buffer 资源状态：从 PIXEL_SHADER_RESOURCE（或初始）到 RENDER_TARGET
         // Transition G-Buffer resources: from PIXEL_SHADER_RESOURCE (or initial) to RENDER_TARGET
         pGBuffer->TransitionToRTV(commandList);
@@ -1205,7 +1341,16 @@ namespace YingLong
         // Mark in-geometry-pass state
         bInGeometryPass = true;
 
-        DX12Log("[DX12Renderer] Geometry Pass begun\n");
+        static bool s_bLoggedOnce = false;
+        if (!s_bLoggedOnce)
+        {
+            s_bLoggedOnce = true;
+            DX12Log(("[DX12Renderer] Deferred Geometry Pass active, G-Buffer size=" +
+                     std::to_string(SceneWidth) + "x" + std::to_string(SceneHeight) + "\n").c_str());
+            D3D12_GPU_DESCRIPTOR_HANDLE base = pGBuffer->GetGBufferSRVTableBase();
+            DX12Log(("[DX12Renderer] G-Buffer SRV table base GPU handle = 0x" +
+                     std::to_string(base.ptr) + "\n").c_str());
+        }
     }
 
     /**
@@ -1221,7 +1366,9 @@ namespace YingLong
     void DX12Renderer::EndGeometryPass()
     {
         bInGeometryPass = false;
-        DX12Log("[DX12Renderer] Geometry Pass ended\n");
+        // 清除全局静态覆盖 PSO，恢复前向渲染 PSO
+        // Clear global static override PSO, restore forward rendering PSO
+        DX12Drawable::SetStaticOverridePipelineState(nullptr);
     }
 
     /**
@@ -1251,7 +1398,111 @@ namespace YingLong
         if (!commandList || !pGBuffer || !pSceneRenderTarget)
             return;
 
-        DX12Log("[DX12Renderer] Lighting Pass begun\n");
+        // 诊断日志：验证 Lighting Pass 是否被调用
+        // Diagnostic log: verify Lighting Pass is being called
+        {
+            static bool s_bLoggedOnce = false;
+            if (!s_bLoggedOnce)
+            {
+                s_bLoggedOnce = true;
+                DX12Log("[DX12Renderer] ExecuteLightingPass called (first time)\n");
+            }
+        }
+
+        // ========================================================================
+        // Tile-Based Light Culling (Compute Shader)
+        // 基于 Tile 的光源剔除（计算着色器）
+        // ========================================================================
+        if (pCore->GetLightCullingRootSignature() && pCore->GetLightCullingPSO())
+        {
+            // 惰性创建光源剔除资源
+            // Lazily create light culling resources
+            if (!pCore->IsLightCullingReady())
+            {
+                pCore->CreateLightCullingResources();
+            }
+
+            if (pCore->IsLightCullingReady())
+            {
+                // 更新光源剔除常量缓冲区
+                // Update light culling constant buffer
+                UINT pointLightCount = DX12Primitive::GetPointLightCount();
+                UINT spotLightCount = DX12Primitive::GetSpotLightCount();
+
+                if (pCamera)
+                {
+                    LightCullingConstantsCB cullingData = {};
+                    cullingData.ScreenWidth = SceneWidth;
+                    cullingData.ScreenHeight = SceneHeight;
+                    cullingData.PointLightCount = pointLightCount;
+                    cullingData.SpotLightCount = spotLightCount;
+
+                    DirectX::XMMATRIX viewMatrix = pCamera->GetMatrix();
+                    DirectX::XMMATRIX projMatrix = pCamera->GetProjection();
+                    DirectX::XMMATRIX viewProj = DirectX::XMMatrixMultiply(viewMatrix, projMatrix);
+                    DirectX::XMMATRIX viewProjT = DirectX::XMMatrixTranspose(viewProj);
+                    DirectX::XMStoreFloat4x4(
+                        reinterpret_cast<DirectX::XMFLOAT4X4*>(cullingData.ViewProjMatrix),
+                        viewProjT);
+
+                    if (!pLightCullingConstants)
+                    {
+                        pLightCullingConstants = std::make_unique<ConstantBufferDX12<LightCullingConstantsCB>>(
+                            *pCore, 0, cullingData);
+                    }
+                    else
+                    {
+                        pLightCullingConstants->Update(cullingData);
+                    }
+                }
+
+                // Bind compute root signature and PSO
+                commandList->SetComputeRootSignature(pCore->GetLightCullingRootSignature());
+                commandList->SetPipelineState(pCore->GetLightCullingPSO());
+
+                // Bind CBV (b0): LightCullingConstants
+                if (pLightCullingConstants)
+                {
+                    commandList->SetComputeRootConstantBufferView(
+                        0, pLightCullingConstants->GetGPUAddress());
+                }
+
+                // Bind SRV descriptor table (t4-t5): PointLight + SpotLight buffers
+                DX12DescriptorHeap* cbvSrvHeap = pCore->GetCBVSRVUAVHeap();
+                UINT pointLightSRVIndex = DX12Primitive::GetPointLightSRVIndex();
+                if (cbvSrvHeap && pointLightSRVIndex != UINT_MAX)
+                {
+                    commandList->SetComputeRootDescriptorTable(
+                        1, cbvSrvHeap->GetGPUHandle(pointLightSRVIndex));
+                }
+
+                // Bind UAV descriptor table (u0-u1): LightIndexList + LightCountPerTile
+                UINT uavIndex = pCore->GetLightIndexListUAVIndex();
+                if (cbvSrvHeap && uavIndex != UINT_MAX)
+                {
+                    commandList->SetComputeRootDescriptorTable(
+                        2, cbvSrvHeap->GetGPUHandle(uavIndex));
+                }
+
+                // Transition buffers from SRV (previous frame) to UAV for compute shader writes
+                pCore->TransitionLightCullingBuffersToUAV(commandList);
+
+                // Dispatch compute shader
+                UINT tilesX = (SceneWidth + TILE_SIZE_X - 1) / TILE_SIZE_X;
+                UINT tilesY = (SceneHeight + TILE_SIZE_Y - 1) / TILE_SIZE_Y;
+                commandList->Dispatch(tilesX, tilesY, 1);
+
+                // UAV barrier: ensure compute shader writes are visible to pixel shader
+                D3D12_RESOURCE_BARRIER uavBarrier = {};
+                uavBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+                uavBarrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+                uavBarrier.UAV.pResource = nullptr; // nullptr means all UAVs
+                commandList->ResourceBarrier(1, &uavBarrier);
+
+                // Transition buffers from UAV to SRV for pixel shader reading
+                pCore->TransitionLightCullingBuffersToSRV(commandList);
+            }
+        }
 
         // 步骤1：转换 G-Buffer RTs 从 RENDER_TARGET 到 PIXEL_SHADER_RESOURCE
         // Step 1: Transition G-Buffer RTs from RENDER_TARGET to PIXEL_SHADER_RESOURCE
@@ -1337,6 +1588,17 @@ namespace YingLong
             commandList->SetGraphicsRootDescriptorTable(5, samplerHeap->GetGPUHandle(0));
         }
 
+        // 根参数 6：Tile 光源列表 SRV 描述符表（t6-t7，像素着色器）
+        // Root param 6: Tile light list SRV descriptor table (t6-t7, pixel shader)
+        if (cbvSrvHeap && pCore->IsLightCullingReady())
+        {
+            D3D12_GPU_DESCRIPTOR_HANDLE lightListHandle = pCore->GetLightIndexListSRVHandle();
+            if (lightListHandle.ptr != 0)
+            {
+                commandList->SetGraphicsRootDescriptorTable(6, lightListHandle);
+            }
+        }
+
         // 步骤5：设置图元拓扑并绘制全屏三角形
         // Step 5: Set primitive topology and draw full-screen triangle
         commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -1345,7 +1607,5 @@ namespace YingLong
         // Full-screen triangle: 3 vertices generated in shader via SV_VertexID,
         // no vertex buffer required
         commandList->DrawInstanced(3, 1, 0, 0);
-
-        DX12Log("[DX12Renderer] Lighting Pass complete\n");
     }
 }

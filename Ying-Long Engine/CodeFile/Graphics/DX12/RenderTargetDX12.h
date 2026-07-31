@@ -199,6 +199,9 @@ namespace YingLong
          */
         bool IsInitialized() const noexcept { return pResource != nullptr; }
 
+        /// Get SRV heap index for diagnostic purposes
+        UINT GetSRVHeapIndex() const noexcept { return SRVHeapIndex; }
+
         /**
          * @brief 解析 MSAA 到非 MSAA 纹理 / Resolve MSAA to non-MSAA texture
          * @param commandList 图形命令列表指针 / Graphics command list pointer
