@@ -921,12 +921,13 @@ namespace YingLong
         apex.Position[2] = 0.0f;
         vertices.push_back(apex);
 
-        // 顶点 1..Segments：底面边缘顶点（沿 -X 方向）/ Vertices 1..Segments: Base rim (along -X)
+        // 顶点 1..Segments：底面边缘顶点（沿 +X 方向，与 CreateGeometry 一致）
+        // Vertices 1..Segments: Base rim (along +X, consistent with CreateGeometry)
         for (UINT i = 0; i < Segments; ++i)
         {
             float angle = static_cast<float>(i) * XM_2PI / Segments;
             DX12Vertex rimVertex = {};
-            rimVertex.Position[0] = -ConeHeight;
+            rimVertex.Position[0] = ConeHeight;
             rimVertex.Position[1] = ConeRadius * cosf(angle);
             rimVertex.Position[2] = ConeRadius * sinf(angle);
             vertices.push_back(rimVertex);
@@ -1068,6 +1069,29 @@ namespace YingLong
 
         // 执行绘制调用（索引绘制，1个实例）
         // Execute draw call (indexed draw, 1 instance)
+        commandList->DrawIndexedInstanced(IndexCount, 1, 0, 0, 0);
+    }
+
+    void DX12WireframeCone::DrawSimple(ID3D12GraphicsCommandList* commandList)
+    {
+        // 更新变换缓冲区（仅更新，不绑定其他状态）
+        // Update transform buffer (only update, don't bind other state)
+        UpdateTransformBuffer();
+
+        // 绑定根参数 2：TransformCB（b2，顶点着色器）
+        // Bind root param 2: TransformCB (b2, vertex shader)
+        if (pTransformBuffer)
+            pTransformBuffer->Bind(commandList);
+
+        // 绑定顶点和索引缓冲区（仅首次需要，后续调用会被 D3D12 驱动忽略）
+        // Bind vertex and index buffers (only needed on first call, D3D12 driver ignores subsequent duplicates)
+        if (pVertexBuffer)
+            pVertexBuffer->Bind(commandList);
+        if (pIndexBuffer)
+            pIndexBuffer->Bind(commandList);
+
+        // 执行绘制调用
+        // Execute draw call
         commandList->DrawIndexedInstanced(IndexCount, 1, 0, 0, 0);
     }
 }

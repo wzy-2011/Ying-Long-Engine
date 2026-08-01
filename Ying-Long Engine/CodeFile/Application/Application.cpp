@@ -1306,6 +1306,38 @@ namespace YingLong
 					DX12SpotLights.pop_back();
 				}
 				ImGui::EndDisabled();
+				ImGui::SameLine();
+				if (ImGui::Button("+50 Spot Lights"))
+				{
+					// 在场景中均匀分布 50 个聚光灯，方便性能调试
+					// Spread 50 spotlights evenly in the scene for performance debugging
+					int gridSize = 8; // 8x8 grid = 64 slots, we use 50
+					float spacing = 10.0f;
+					float startX = -(gridSize - 1) * spacing * 0.5f;
+					float startY = -(gridSize - 1) * spacing * 0.5f;
+					int added = 0;
+					for (int row = 0; row < gridSize && added < 50; row++)
+					{
+						for (int col = 0; col < gridSize && added < 50; col++)
+						{
+							DX12SpotLightState sl;
+							sl.Position = DirectX::XMFLOAT3(
+								startX + col * spacing,
+								5.0f,
+								startY + row * spacing);
+							// 根据行列生成不同颜色 / Generate varied colors from row/col
+							sl.Color = DirectX::XMFLOAT3(
+								(float)((row * 31 + col * 17 + 50) % 100) / 100.0f,
+								(float)((row * 19 + col * 37 + 30) % 100) / 100.0f,
+								(float)((row * 13 + col * 23 + 70) % 100) / 100.0f);
+							// 向下照射 / Pointing downward
+							sl.Rotation = DirectX::XMFLOAT3(-90.0f, 0.0f, 0.0f);
+							sl.Intensity = 2000.0f;
+							DX12SpotLights.push_back(sl);
+							added++;
+						}
+					}
+				}
 				ImGui::Separator();
 
 				for (size_t i = 0; i < DX12SpotLights.size(); i++)

@@ -602,6 +602,21 @@ private:
          */
         void Draw(ID3D12GraphicsCommandList* commandList);
 
+        /**
+         * @brief 简化绘制（用于批量渲染）/ Simplified draw for batch rendering
+         *
+         * 仅更新变换缓冲区并执行绘制调用，不设置根签名、PSO、顶点/索引缓冲区等公共状态。
+         * 调用者必须在循环前预先设置公共状态，以大幅减少 CPU 开销。
+         *
+         * Only updates the transform buffer and executes the draw call, without
+         * setting common state (root signature, PSO, vertex/index buffers).
+         * The caller must pre-set common state before the loop to significantly
+         * reduce CPU overhead.
+         *
+         * @param commandList 图形命令列表指针 / Graphics command list pointer
+         */
+        void DrawSimple(ID3D12GraphicsCommandList* commandList);
+
     protected:
         /**
          * @brief 创建锥体线框几何体 / Create cone wireframe geometry

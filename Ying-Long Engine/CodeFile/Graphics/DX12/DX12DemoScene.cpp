@@ -1,4 +1,4 @@
-﻿#include "DX12DemoScene.h"
+#include "DX12DemoScene.h"
 #include <DirectXMath.h>
 #include <ImGui/imgui.h>
 #include "../../Application/Application.h"
@@ -181,10 +181,42 @@ namespace YingLong
 
     void DX12DemoScene::RenderWireframeCones(ID3D12GraphicsCommandList* commandList)
     {
-        for (auto& cone : WireframeCones)
+        if (WireframeCones.empty())
+            return;
+
+        // 批量渲染优化：公共状态只设置一次，每个锥体仅更新变换并绘制
+        // Batch rendering optimization: set common state once, each cone only updates transform and draws
+        auto& firstCone = WireframeCones[0];
+        if (!firstCone)
+            return;
+
+        // 绑定根签名（所有锥体共享）/ Bind root signature (shared by all cones)
+        if (Core.GetRootSignature() && Core.GetRootSignature()->GetRootSignature())
         {
-            if (cone)
-                cone->Draw(commandList);
+            commandList->SetGraphicsRootSignature(Core.GetRootSignature()->GetRootSignature());
+        }
+
+        // 绑定线管线状态（所有锥体共享）/ Bind line PSO (shared by all cones)
+        if (Core.GetLinePipelineState() && Core.GetLinePipelineState()->IsInitialized())
+        {
+            Core.GetLinePipelineState()->Bind(commandList);
+        }
+        else
+        {
+            return;
+        }
+
+        // 设置图元拓扑（所有锥体共享）/ Set primitive topology (shared by all cones)
+        commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+
+        // 使用第一个锥体的顶点/索引缓冲区（所有锥体几何相同）/ Use first cone's VB/IB (all cones share same geometry)
+        firstCone->DrawSimple(commandList); // 这会设置 VB/IB
+
+        // 后续锥体：仅更新变换并绘制 / Subsequent cones: only update transform and draw
+        for (size_t i = 1; i < WireframeCones.size(); i++)
+        {
+            if (WireframeCones[i])
+                WireframeCones[i]->DrawSimple(commandList);
         }
     }
 
