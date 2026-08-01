@@ -1,4 +1,4 @@
-﻿static const float PI = 3.1415926535f;
+static const float PI = 3.1415926535f;
 static const float2 DOUBLE_PI = PI * 2;
 
 struct PBRMaterial

@@ -873,6 +873,7 @@ namespace YingLong
 			// Create demo scene
 			pDX12DemoScene = new DX12DemoScene(*core);
 			pDX12DemoScene->SetCamera(&MainWindow.camera);
+			renderer->SetCamera(&MainWindow.camera);
 			DX12LogSuccess("[Application::InitializeDX12DemoScene] Demo scene created\n");
 
 			// Add some boxes
