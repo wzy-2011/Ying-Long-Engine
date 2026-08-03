@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file Application.cpp
  * @brief Ying-Long Engine 应用程序实现 / Application implementation of Ying-Long Engine
  *
@@ -621,13 +621,13 @@ namespace YingLong
 
 		// ===== Simulation 面板：控制演示盒子的旋转速度 =====
 		// ===== Simulation panel: controls rotation speed of demo boxes =====
-		ImGui::Begin("Simulation");
-		ImGui::DragFloat("Delta Time", &dt, 0.1f, 0.00001f);
-		if (ImGui::Button("Defaut"))
+		ImGui::Begin("模拟");
+		ImGui::DragFloat("时间步长", &dt, 0.1f, 0.00001f);
+		if (ImGui::Button("默认"))
 		{
 			dt = 10.0f;
 		}
-		if (ImGui::Button("Stop"))
+		if (ImGui::Button("暂停"))
 		{
 			dt = 0.0f;
 		}
@@ -636,7 +636,7 @@ namespace YingLong
 		// ===== Scene 视口面板：显示 3D 场景渲染结果 =====
 		// ===== Scene viewport panel: displays 3D scene render result =====
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-		ImGui::Begin("Scene");
+		ImGui::Begin("场景");
 
 		// 计算鼠标相对于 Scene 面板内的坐标（用于拾取）
 		// Calculate mouse coordinates relative to the Scene panel (for picking)
@@ -1144,8 +1144,7 @@ namespace YingLong
 
 			// ===== Scene viewport panel: displays 3D scene render result =====
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-			ImGui::Begin("Scene");
-
+			ImGui::Begin("场景");
 			ImVec2 CurrentScenePanelSize = ImGui::GetContentRegionAvail();
 			static ImVec2 LastScenePanelSize = CurrentScenePanelSize;
 			static bool IsFirst = true;
@@ -1214,19 +1213,19 @@ namespace YingLong
 			ImGui::PopStyleVar();
 
 			// DX12 Mode UI
-		ImGui::Begin("DX12 Mode");
-		ImGui::Text("Rendering API: DirectX 12");
-		ImGui::Text("Press F5 to switch to DX11 mode");
-		ImGui::Text("Resolution: %d x %d", renderer->GetWidth(), renderer->GetHeight());
-		ImGui::Text("Point Lights: %d / %d", lightCountData.PointLightCount, (int)DX12PointLights.size());
-		ImGui::Text("Spot Lights: %d / %d", lightCountData.SpotLightCount, (int)DX12SpotLights.size());
+		ImGui::Begin("DX12 模式");
+		ImGui::Text("渲染API: DirectX 12");
+		ImGui::Text("按 F5 切换到 DX11 模式");
+		ImGui::Text("分辨率: %d x %d", renderer->GetWidth(), renderer->GetHeight());
+		ImGui::Text("点光源: %d / %d", lightCountData.PointLightCount, (int)DX12PointLights.size());
+		ImGui::Text("聚光灯: %d / %d", lightCountData.SpotLightCount, (int)DX12SpotLights.size());
 
 		// 延迟渲染切换
 		// Deferred rendering toggle
-		if (ImGui::CollapsingHeader("Rendering"))
+		if (ImGui::CollapsingHeader("渲染"))
 		{
 			bool bDeferred = renderer->IsDeferredRenderingEnabled();
-			if (ImGui::Checkbox("Deferred Rendering", &bDeferred))
+			if (ImGui::Checkbox("延迟渲染", &bDeferred))
 			{
 				renderer->SetUseDeferredRendering(bDeferred);
 			}
@@ -1235,36 +1234,36 @@ namespace YingLong
 			if (ImGui::IsItemHovered())
 			{
 				ImGui::SetTooltip(
-					"Deferred Rendering:\n"
-					"  ON  = Geometry Pass + Lighting Pass (G-Buffer)\n"
-					"  OFF = Traditional Forward Rendering");
+					"延迟渲染:\n"
+					"  开启 = 几何通道 + 光照通道 (G-Buffer)\n"
+					"  关闭 = 传统前向渲染");
 			}
 		}
 
 		// Demo scene control
-		if (ImGui::CollapsingHeader("DX12 Demo Scene"))
+		if (ImGui::CollapsingHeader("DX12 演示场景"))
 		{
-			ImGui::Text("This scene demonstrates DX12 rendering.");
-			ImGui::Text("3 rotating boxes are rendered.");
+			ImGui::Text("此场景演示 DX12 渲染。");
+			ImGui::Text("渲染了 3 个旋转盒子。");
 		}
 		ImGui::End();
 
 			// DX12 Lights control panel.
 			// Supports dynamic creation/removal and full per-light editing for
 			// both PointLight and SpotLight types.
-			ImGui::Begin("DX12 Lights");
+			ImGui::Begin("DX12 光源");
 
 			// ---- Point Lights ----
-			if (ImGui::CollapsingHeader("Point Lights", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader("点光源", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Text("Count: %d", (int)DX12PointLights.size());
-				if (ImGui::Button("Add Point Light"))
+				ImGui::Text("数量: %d", (int)DX12PointLights.size());
+				if (ImGui::Button("添加点光源"))
 				{
 					DX12PointLights.push_back(DX12PointLightState{});
 				}
 				ImGui::SameLine();
 				ImGui::BeginDisabled(DX12PointLights.empty());
-				if (ImGui::Button("Remove Last##Point"))
+				if (ImGui::Button("移除最后一个##Point"))
 				{
 					DX12PointLights.pop_back();
 				}
@@ -1275,16 +1274,16 @@ namespace YingLong
 				{
 					auto& pl = DX12PointLights[i];
 					ImGui::PushID(static_cast<int>(i));
-					if (ImGui::TreeNode((void*)(intptr_t)i, "PointLight %d", (int)i))
+					if (ImGui::TreeNode((void*)(intptr_t)i, "点光源 %d", (int)i))
 					{
-						ImGui::Checkbox("Enabled", &pl.Enabled);
+						ImGui::Checkbox("启用", &pl.Enabled);
 						float pos[3] = { pl.Position.x, pl.Position.y, pl.Position.z };
-						if (ImGui::DragFloat3("Position", pos, 0.1f))
+						if (ImGui::DragFloat3("位置", pos, 0.1f))
 							pl.Position = { pos[0], pos[1], pos[2] };
 						float col[3] = { pl.Color.x, pl.Color.y, pl.Color.z };
-						if (ImGui::DragFloat3("Color", col, 0.01f, 0.0f, 1.0f))
+						if (ImGui::DragFloat3("颜色", col, 0.01f, 0.0f, 1.0f))
 							pl.Color = { col[0], col[1], col[2] };
-						ImGui::DragFloat("Intensity", &pl.Intensity, 10.0f, 0.0f, 100000.0f);
+						ImGui::DragFloat("强度", &pl.Intensity, 10.0f, 0.0f, 100000.0f);
 						ImGui::TreePop();
 					}
 					ImGui::PopID();
@@ -1292,22 +1291,22 @@ namespace YingLong
 			}
 
 			// ---- Spot Lights ----
-			if (ImGui::CollapsingHeader("Spot Lights", ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader("聚光灯", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Text("Count: %d", (int)DX12SpotLights.size());
-				if (ImGui::Button("Add Spot Light"))
+				ImGui::Text("数量: %d", (int)DX12SpotLights.size());
+				if (ImGui::Button("添加聚光灯"))
 				{
 					DX12SpotLights.push_back(DX12SpotLightState{});
 				}
 				ImGui::SameLine();
 				ImGui::BeginDisabled(DX12SpotLights.empty());
-				if (ImGui::Button("Remove Last##Spot"))
+				if (ImGui::Button("移除最后一个##Spot"))
 				{
 					DX12SpotLights.pop_back();
 				}
 				ImGui::EndDisabled();
 				ImGui::SameLine();
-				if (ImGui::Button("+50 Spot Lights"))
+				if (ImGui::Button("+50 聚光灯"))
 				{
 					// 在场景中均匀分布 50 个聚光灯，方便性能调试
 					// Spread 50 spotlights evenly in the scene for performance debugging
@@ -1344,29 +1343,29 @@ namespace YingLong
 				{
 					auto& sl = DX12SpotLights[i];
 					ImGui::PushID(static_cast<int>(i + 1000));
-					if (ImGui::TreeNode((void*)(intptr_t)(i + 1000), "SpotLight %d", (int)i))
+					if (ImGui::TreeNode((void*)(intptr_t)(i + 1000), "聚光灯 %d", (int)i))
 					{
-						ImGui::Checkbox("Enabled", &sl.Enabled);
+						ImGui::Checkbox("启用", &sl.Enabled);
 						float pos[3] = { sl.Position.x, sl.Position.y, sl.Position.z };
-						if (ImGui::DragFloat3("Position", pos, 0.1f))
+						if (ImGui::DragFloat3("位置", pos, 0.1f))
 							sl.Position = { pos[0], pos[1], pos[2] };
 						float col[3] = { sl.Color.x, sl.Color.y, sl.Color.z };
-						if (ImGui::DragFloat3("Color", col, 0.01f, 0.0f, 1.0f))
+						if (ImGui::DragFloat3("颜色", col, 0.01f, 0.0f, 1.0f))
 							sl.Color = { col[0], col[1], col[2] };
-						ImGui::DragFloat("Intensity", &sl.Intensity, 100.0f, 0.0f, 1000000.0f);
+						ImGui::DragFloat("强度", &sl.Intensity, 100.0f, 0.0f, 1000000.0f);
 						float rot[3] = { sl.Rotation.x, sl.Rotation.y, sl.Rotation.z };
-						if (ImGui::DragFloat3("Rotation (deg)", rot, 1.0f, -360.0f, 360.0f))
+						if (ImGui::DragFloat3("旋转 (度)", rot, 1.0f, -360.0f, 360.0f))
 							sl.Rotation = { rot[0], rot[1], rot[2] };
 						// Edit cone angles in degrees for intuitiveness.
 						float outerDeg = sl.OuterConeAngle * 180.0f / XM_PI;
 						float innerDeg = sl.InnerConeAngle * 180.0f / XM_PI;
-						if (ImGui::SliderFloat("Outer Angle", &outerDeg, 1.0f, 179.0f, "%.1f deg"))
+						if (ImGui::SliderFloat("外锥角", &outerDeg, 1.0f, 179.0f, "%.1f deg"))
 						{
 							sl.OuterConeAngle = outerDeg * XM_PI / 180.0f;
 							if (sl.InnerConeAngle > sl.OuterConeAngle)
 								sl.InnerConeAngle = sl.OuterConeAngle;
 						}
-						if (ImGui::SliderFloat("Inner Angle", &innerDeg, 0.0f, outerDeg, "%.1f deg"))
+						if (ImGui::SliderFloat("内锥角", &innerDeg, 0.0f, outerDeg, "%.1f deg"))
 						{
 							sl.InnerConeAngle = innerDeg * XM_PI / 180.0f;
 						}
@@ -1379,7 +1378,7 @@ namespace YingLong
 			ImGui::End();
 
 			// Camera control
-			MainWindow.camera.SpawnControlWindow("DX12 Camera");
+			MainWindow.camera.SpawnControlWindow("DX12 摄像机");
 
 			// Demo scene control panel
 			if (pDX12DemoScene)

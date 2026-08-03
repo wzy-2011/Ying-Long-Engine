@@ -1078,8 +1078,12 @@ namespace YingLong
         // Update transform buffer (only update, don't bind other state)
         UpdateTransformBuffer();
 
-        // 绑定根参数 2：TransformCB（b2，顶点着色器）
-        // Bind root param 2: TransformCB (b2, vertex shader)
+        // 绑定材质和变换缓冲区（每个锥体独立，必须逐锥体绑定）
+        // Bind material and transform CBs (per-cone, must be bound for each cone)
+        if (pLightCountBuffer)
+            pLightCountBuffer->Bind(commandList);
+        if (pMaterialBuffer)
+            pMaterialBuffer->Bind(commandList);
         if (pTransformBuffer)
             pTransformBuffer->Bind(commandList);
 

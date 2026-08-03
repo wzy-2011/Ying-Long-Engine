@@ -1,5 +1,305 @@
-[23:04:34.769] [DX12Renderer] Shutting down...
-[23:04:34.770] [ImGuiDX12] Restored DX11 renderer multi-viewport callbacks
-[23:04:34.772] [DX12Core] Shutting down...
-[23:04:34.775] [DX12Core] Shutdown complete
-[23:04:34.775] [DX12Renderer] Shutdown complete
+[20:12:20.597] [Window::InitializeDX12] === Starting DX12 Window Initialization ===
+[20:12:20.598] [Window::InitializeDX12] Window handle: 0x266838, dimensions: 1750 x 900
+[20:12:20.598] [Window::InitializeDX12] DX12Renderer instance created
+[20:12:20.599] [DX12Renderer] === Starting Renderer Initialization ===
+[20:12:20.600] [DX12Renderer] Window dimensions: 1750 x 900
+[20:12:20.600] [DX12Renderer] Step 1: Creating DX12Core...
+[20:12:20.601] [DX12Core] === Starting DX12 Initialization ===
+[20:12:20.602] [DX12Core] Step 0: Enabling debug layer...
+[20:12:20.609] [DX12Core] Debug layer enabled successfully
+[20:12:20.610] [DX12Core] Step 1: Creating device...
+[20:12:20.610] [DX12Core] Creating device...
+[20:12:20.660] [DX12Core] Device created successfully
+[20:12:20.661] [DX12Core] Device created successfully
+[20:12:20.662] [DX12Core] Step 2: Creating command queue...
+[20:12:20.663] [DX12Core] Creating command queue...
+[20:12:20.686] [DX12Core] Command queue created successfully
+[20:12:20.687] [DX12Core] Command queue created successfully
+[20:12:20.687] [DX12Core] Step 3: Creating swap chain...
+[20:12:20.688] [DX12Core] Creating swap chain...
+[20:12:20.695] [DX12Core] Swap chain created successfully
+[20:12:20.695] [DX12Core] Swap chain created successfully
+[20:12:20.696] [DX12Core] Step 4: Creating descriptor heaps...
+[20:12:20.699] [DX12Core] Descriptor heaps created successfully
+[20:12:20.700] [DX12Core] Step 5: Creating command allocators...
+[20:12:20.700] [DX12Core] Command allocators created successfully
+[20:12:20.701] [DX12Core] Step 6: Creating command list...
+[20:12:20.701] [DX12Core] Creating command list...
+[20:12:20.702] [DX12Core] Command list created successfully
+[20:12:20.703] [DX12Core] Command list created successfully
+[20:12:20.703] [DX12Core] Step 6.5: Initializing placeholder textures...
+[20:12:20.704] [DX12Core] Placeholder textures initialized successfully
+[20:12:20.704] [DX12Core] Step 7: Creating render target views...
+[20:12:20.705] [DX12Core] Creating render target views...
+[20:12:20.705] [DX12Core] Render target views created successfully
+[20:12:20.706] [DX12Core] Render target views created successfully
+[20:12:20.706] [DX12Core] Step 8: Depth stencil managed by DX12Renderer, skipping internal creation
+[20:12:20.707] [DX12Core] Step 9: Creating fence...
+[20:12:20.707] [DX12Core] Creating fence...
+[20:12:20.708] [DX12Core] Fence created successfully
+[20:12:20.708] [DX12Core] Fence created successfully
+[20:12:20.709] [DX12Core] Step 10: Creating root signature...
+[20:12:20.709] [DX12Core] Creating root signature...
+[20:12:20.709] [DX12Core] Root signature created successfully
+[20:12:20.710] [DX12Core] Root signature created successfully
+[20:12:20.711] [DX12Core] Step 11: Creating upload buffer...
+[20:12:20.712] [DX12Core] Creating upload buffer...
+[20:12:20.714] [DX12Core] Upload buffer created successfully
+[20:12:20.714] [DX12Core] Upload buffer created successfully
+[20:12:20.715] [DX12Core] Step 12: Creating pipeline state...
+[20:12:20.715] [DX12Core] Creating pipeline state (VS=E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\PBRVertexShader.hlsl)
+[20:12:20.716] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\PBRVertexShader.hlsl
+[20:12:20.720] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.721] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\PBRPixelShader.hlsl
+[20:12:20.751] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.751] [DX12Core] Initializing PSO from shaders
+[20:12:20.752] [DX12PipelineState] Creating PSO
+[20:12:20.763] [DX12PipelineState] PSO created successfully
+[20:12:20.764] [DX12Core] Pipeline state created successfully
+[20:12:20.765] [DX12Core] Creating line pipeline state...
+[20:12:20.765] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\PBRVertexShader.hlsl
+[20:12:20.769] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.770] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\PBRPixelShader.hlsl
+[20:12:20.800] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.801] [DX12PipelineState] Creating PSO
+[20:12:20.810] [DX12PipelineState] PSO created successfully
+[20:12:20.811] [DX12Core] Line pipeline state created successfully
+[20:12:20.812] [DX12Core] Creating Geometry Pass pipeline state...
+[20:12:20.812] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\GBuffer\GBufferVertexShader.hlsl
+[20:12:20.816] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.817] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\GBuffer\GBufferPixelShader.hlsl
+[20:12:20.824] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.825] [DX12PipelineState] Creating PSO
+[20:12:20.830] [DX12PipelineState] PSO created successfully
+[20:12:20.831] [DX12Core] Geometry Pass pipeline state created successfully
+[20:12:20.832] [DX12Core] Creating Lighting Pass pipeline state...
+[20:12:20.832] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\LightingPass\LightingPassVertexShader.hlsl
+[20:12:20.836] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.837] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\LightingPass\LightingPassPixelShader.hlsl
+[20:12:20.864] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.865] [DX12PipelineState] Creating PSO
+[20:12:20.873] [DX12PipelineState] PSO created successfully
+[20:12:20.873] [DX12Core] Lighting Pass pipeline state created successfully
+[20:12:20.874] [DX12Core] Creating light culling compute root signature...
+[20:12:20.875] [DX12Core] Light culling compute root signature created successfully
+[20:12:20.875] [DX12Core] Creating light culling compute PSO...
+[20:12:20.875] [DX12ShaderCompiler] Compiling shader: E:\Projects\Ying-Long-Engine\Ying-Long Engine\CodeFile\Shader\LightCulling\LightCullingCS.hlsl
+[20:12:20.888] [DX12ShaderCompiler] Shader compiled successfully
+[20:12:20.892] [DX12Core] Light culling compute PSO created successfully
+[20:12:20.893] [DX12Core] Pipeline state created successfully
+[20:12:20.893] [DX12Core] === DX12 Initialization Complete ===
+[20:12:20.894] [DX12Renderer] DX12Core initialized successfully
+[20:12:20.894] [DX12Renderer] Step 2: Creating render targets for both back buffers...
+[20:12:20.895] [DX12Renderer] Render targets initialized successfully
+[20:12:20.895] [DX12Renderer] Step 3: Creating depth stencil...
+[20:12:20.897] [DX12Renderer] Depth stencil initialized successfully
+[20:12:20.897] [DX12Renderer] Step 4: Initializing ImGui...
+[20:12:20.898] ==================================================
+[20:12:20.899] [ImGuiDX12] Initialize ENTERED
+[20:12:20.899] ==================================================
+[20:12:20.900] [ImGuiDX12] BackendPlatformUserData = 2132641876112
+[20:12:20.900] [ImGuiDX12] ImGui Win32 backend already initialized, skipping context creation
+[20:12:20.901] [ImGuiDX12] Saving + nulling DX11 renderer multi-viewport callbacks
+[20:12:20.901] ==================================================
+[20:12:20.902] [ImGuiDX12] CreateResources ENTERED
+[20:12:20.903] ==================================================
+[20:12:20.903] [ImGuiDX12] Got D3D12 device
+[20:12:20.904] [ImGuiDX12] Got SRV heap
+[20:12:21.613] [ImGuiDX12] Font texture data OK: 4096x4096
+[20:12:21.616] [ImGuiDX12] Font texture created
+[20:12:21.617] [ImGuiDX12] Creating upload buffer...
+[20:12:21.654] [ImGuiDX12] Upload buffer created
+[20:12:21.660] [ImGuiDX12] Command allocator created
+[20:12:21.662] [ImGuiDX12] Command list created
+[20:12:21.666] [ImGuiDX12] Font texture uploaded to GPU
+[20:12:21.668] [ImGuiDX12] Font SRV created
+[20:12:21.668] [ImGuiDX12] About to call ImGui_ImplDX12_Init...
+[20:12:21.672] [ImGuiDX12] ImGui_ImplDX12_Init OK
+[20:12:21.673] [ImGuiDX12] BlendState config:
+[20:12:21.673]   SrcBlend       = SRC_ALPHA
+[20:12:21.674]   DestBlend      = INV_SRC_ALPHA
+[20:12:21.674]   SrcBlendAlpha  = ONE
+[20:12:21.675]   DestBlendAlpha = INV_SRC_ALPHA
+[20:12:21.675]   DepthEnable    = FALSE
+[20:12:21.676]   RTVFormat       = R8G8B8A8_UNORM
+[20:12:21.678] [ImGuiDX12] PSO created successfully
+[20:12:21.679] [ImGuiDX12] Initialize DONE (reuse context)
+[20:12:21.680] [DX12Renderer] ImGui initialized successfully
+[20:12:21.680] [DX12Renderer] === Renderer Initialization Complete ===
+[20:12:21.681] [Window::InitializeDX12] DX12Renderer initialized successfully
+[20:12:21.681] [Window::InitializeDX12] === DX12 Window Initialization Complete ===
+[20:12:21.682] [Application::InitializeDX12DemoScene] === Initializing Demo Scene ===
+[20:12:21.683] [Application::InitializeDX12DemoScene] Creating DX12DemoScene...
+[20:12:21.684] [Application::InitializeDX12DemoScene] Demo scene created
+[20:12:21.684] [Application::InitializeDX12DemoScene] Creating 3 boxes...
+[20:12:21.699] [Application::InitializeDX12DemoScene] Boxes created successfully
+[20:12:21.700] [Application::InitializeDX12DemoScene] Lights initialized
+[20:12:21.705] [Application::InitializeDX12DemoScene] Dynamic light buffers initialized
+[20:12:21.705] [Application::InitializeDX12DemoScene] === Demo Scene Initialized ===
+[20:12:21.756] [DX12Renderer] Light count constant buffer created for deferred rendering
+[20:12:21.772] [DX12Core] Resize: 1750x900
+[20:12:21.775] [DX12Core] Creating render target views...
+[20:12:21.776] [DX12Core] Render target views created successfully
+[20:12:21.777] [DX12Core] Resize complete
+[20:12:21.781] [DX12Renderer::BeginSceneRender] Frame 1: deferred=0 GBuffer=0 GBufInit=0 SceneW=0 SceneH=0 GeoPSO=1 GeoPSOInit=1
+[20:12:21.785] [DX12Renderer::ExecuteSceneResize] Scene resized to 1371x862
+[20:12:21.799] [ImGuiDX12] VB CREATE[frame=0]: size=5080 bytes
+[20:12:21.800] [ImGuiDX12] IB CREATE[frame=0]: size=2012 bytes
+[20:12:21.898] [DX12Renderer::BeginSceneRender] Frame 2: deferred=0 GBuffer=0 GBufInit=0 SceneW=1371 SceneH=862 GeoPSO=1 GeoPSOInit=1
+[20:12:21.900] [ImGuiDX12] VB CREATE[frame=1]: size=30560 bytes
+[20:12:21.901] [ImGuiDX12] IB CREATE[frame=1]: size=7034 bytes
+[20:12:21.904] [DX12Renderer::BeginSceneRender] Frame 3: deferred=0 GBuffer=0 GBufInit=0 SceneW=1371 SceneH=862 GeoPSO=1 GeoPSOInit=1
+[20:12:21.905] [ImGuiDX12] VB REBUILD[frame=0]: old=5080 bytes, new=29440 bytes (need=24440)
+[20:12:21.906] [ImGuiDX12] IB REBUILD[frame=0]: old=2012 bytes, new=6602 bytes (need=4602)
+[20:12:21.909] [DX12Renderer::BeginSceneRender] Frame 4: deferred=0 GBuffer=0 GBufInit=0 SceneW=1371 SceneH=862 GeoPSO=1 GeoPSOInit=1
+[20:12:21.912] [DX12Renderer::BeginSceneRender] Frame 5: deferred=0 GBuffer=0 GBufInit=0 SceneW=1371 SceneH=862 GeoPSO=1 GeoPSOInit=1
+[20:12:25.700] [DX12Renderer::ExecuteSceneResize] Scene resized to 1370x862
+[20:12:25.705] [DX12Renderer::ExecuteSceneResize] Scene resized to 1369x862
+[20:12:25.712] [DX12Renderer::ExecuteSceneResize] Scene resized to 1367x862
+[20:12:25.719] [DX12Renderer::ExecuteSceneResize] Scene resized to 1366x862
+[20:12:25.726] [DX12Renderer::ExecuteSceneResize] Scene resized to 1364x862
+[20:12:25.733] [DX12Renderer::ExecuteSceneResize] Scene resized to 1361x862
+[20:12:25.740] [DX12Renderer::ExecuteSceneResize] Scene resized to 1359x862
+[20:12:25.747] [DX12Renderer::ExecuteSceneResize] Scene resized to 1356x862
+[20:12:25.762] [DX12Renderer::ExecuteSceneResize] Scene resized to 1353x862
+[20:12:25.768] [DX12Renderer::ExecuteSceneResize] Scene resized to 1350x862
+[20:12:25.775] [DX12Renderer::ExecuteSceneResize] Scene resized to 1348x862
+[20:12:25.782] [DX12Renderer::ExecuteSceneResize] Scene resized to 1345x862
+[20:12:25.788] [DX12Renderer::ExecuteSceneResize] Scene resized to 1343x862
+[20:12:25.795] [DX12Renderer::ExecuteSceneResize] Scene resized to 1341x862
+[20:12:25.809] [DX12Renderer::ExecuteSceneResize] Scene resized to 1339x862
+[20:12:25.816] [DX12Renderer::ExecuteSceneResize] Scene resized to 1336x862
+[20:12:25.823] [DX12Renderer::ExecuteSceneResize] Scene resized to 1334x862
+[20:12:25.830] [DX12Renderer::ExecuteSceneResize] Scene resized to 1332x862
+[20:12:25.837] [DX12Renderer::ExecuteSceneResize] Scene resized to 1329x862
+[20:12:25.844] [DX12Renderer::ExecuteSceneResize] Scene resized to 1326x862
+[20:12:25.860] [DX12Renderer::ExecuteSceneResize] Scene resized to 1323x862
+[20:12:25.867] [DX12Renderer::ExecuteSceneResize] Scene resized to 1320x862
+[20:12:25.875] [DX12Renderer::ExecuteSceneResize] Scene resized to 1317x862
+[20:12:25.881] [DX12Renderer::ExecuteSceneResize] Scene resized to 1314x862
+[20:12:25.887] [DX12Renderer::ExecuteSceneResize] Scene resized to 1312x862
+[20:12:25.893] [DX12Renderer::ExecuteSceneResize] Scene resized to 1309x862
+[20:12:25.900] [DX12Renderer::ExecuteSceneResize] Scene resized to 1307x862
+[20:12:25.914] [DX12Renderer::ExecuteSceneResize] Scene resized to 1306x862
+[20:12:25.921] [DX12Renderer::ExecuteSceneResize] Scene resized to 1305x862
+[20:12:25.928] [DX12Renderer::ExecuteSceneResize] Scene resized to 1304x862
+[20:12:25.941] [DX12Renderer::ExecuteSceneResize] Scene resized to 1303x862
+[20:12:25.969] [DX12Renderer::ExecuteSceneResize] Scene resized to 1302x862
+[20:12:26.019] [DX12Renderer::ExecuteSceneResize] Scene resized to 1301x862
+[20:12:26.047] [DX12Renderer::ExecuteSceneResize] Scene resized to 1300x862
+[20:12:26.061] [DX12Renderer::ExecuteSceneResize] Scene resized to 1299x862
+[20:12:26.074] [DX12Renderer::ExecuteSceneResize] Scene resized to 1298x862
+[20:12:26.108] [DX12Renderer::ExecuteSceneResize] Scene resized to 1297x862
+[20:12:26.122] [DX12Renderer::ExecuteSceneResize] Scene resized to 1295x862
+[20:12:26.136] [DX12Renderer::ExecuteSceneResize] Scene resized to 1293x862
+[20:12:26.150] [DX12Renderer::ExecuteSceneResize] Scene resized to 1288x862
+[20:12:26.163] [DX12Renderer::ExecuteSceneResize] Scene resized to 1283x862
+[20:12:26.177] [DX12Renderer::ExecuteSceneResize] Scene resized to 1280x862
+[20:12:26.185] [DX12Renderer::ExecuteSceneResize] Scene resized to 1277x862
+[20:12:26.191] [DX12Renderer::ExecuteSceneResize] Scene resized to 1273x862
+[20:12:26.198] [DX12Renderer::ExecuteSceneResize] Scene resized to 1269x862
+[20:12:26.205] [DX12Renderer::ExecuteSceneResize] Scene resized to 1265x862
+[20:12:26.213] [DX12Renderer::ExecuteSceneResize] Scene resized to 1260x862
+[20:12:26.226] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862
+[20:12:26.233] [DX12Renderer::ExecuteSceneResize] Scene resized to 1253x862
+[20:12:26.240] [DX12Renderer::ExecuteSceneResize] Scene resized to 1250x862
+[20:12:26.247] [DX12Renderer::ExecuteSceneResize] Scene resized to 1247x862
+[20:12:26.254] [DX12Renderer::ExecuteSceneResize] Scene resized to 1244x862
+[20:12:26.261] [DX12Renderer::ExecuteSceneResize] Scene resized to 1242x862
+[20:12:26.267] [DX12Renderer::ExecuteSceneResize] Scene resized to 1240x862
+[20:12:26.275] [DX12Renderer::ExecuteSceneResize] Scene resized to 1238x862
+[20:12:26.289] [DX12Renderer::ExecuteSceneResize] Scene resized to 1236x862
+[20:12:26.296] [DX12Renderer::ExecuteSceneResize] Scene resized to 1234x862
+[20:12:26.302] [DX12Renderer::ExecuteSceneResize] Scene resized to 1231x862
+[20:12:26.309] [DX12Renderer::ExecuteSceneResize] Scene resized to 1229x862
+[20:12:26.316] [DX12Renderer::ExecuteSceneResize] Scene resized to 1227x862
+[20:12:26.323] [DX12Renderer::ExecuteSceneResize] Scene resized to 1224x862
+[20:12:26.337] [DX12Renderer::ExecuteSceneResize] Scene resized to 1222x862
+[20:12:26.344] [DX12Renderer::ExecuteSceneResize] Scene resized to 1221x862
+[20:12:26.351] [DX12Renderer::ExecuteSceneResize] Scene resized to 1219x862
+[20:12:26.358] [DX12Renderer::ExecuteSceneResize] Scene resized to 1217x862
+[20:12:26.365] [DX12Renderer::ExecuteSceneResize] Scene resized to 1215x862
+[20:12:26.372] [DX12Renderer::ExecuteSceneResize] Scene resized to 1212x862
+[20:12:26.386] [DX12Renderer::ExecuteSceneResize] Scene resized to 1209x862
+[20:12:26.392] [DX12Renderer::ExecuteSceneResize] Scene resized to 1207x862
+[20:12:26.400] [DX12Renderer::ExecuteSceneResize] Scene resized to 1204x862
+[20:12:26.407] [DX12Renderer::ExecuteSceneResize] Scene resized to 1201x862
+[20:12:26.414] [DX12Renderer::ExecuteSceneResize] Scene resized to 1199x862
+[20:12:26.420] [DX12Renderer::ExecuteSceneResize] Scene resized to 1197x862
+[20:12:26.427] [DX12Renderer::ExecuteSceneResize] Scene resized to 1196x862
+[20:12:26.441] [DX12Renderer::ExecuteSceneResize] Scene resized to 1195x862
+[20:12:26.629] [DX12Renderer::ExecuteSceneResize] Scene resized to 1196x862
+[20:12:26.643] [DX12Renderer::ExecuteSceneResize] Scene resized to 1199x862
+[20:12:26.664] [DX12Renderer::ExecuteSceneResize] Scene resized to 1200x862
+[20:12:26.677] [DX12Renderer::ExecuteSceneResize] Scene resized to 1205x862
+[20:12:26.692] [DX12Renderer::ExecuteSceneResize] Scene resized to 1209x862
+[20:12:26.705] [DX12Renderer::ExecuteSceneResize] Scene resized to 1211x862
+[20:12:26.712] [DX12Renderer::ExecuteSceneResize] Scene resized to 1213x862
+[20:12:26.719] [DX12Renderer::ExecuteSceneResize] Scene resized to 1215x862
+[20:12:26.726] [DX12Renderer::ExecuteSceneResize] Scene resized to 1217x862
+[20:12:26.733] [DX12Renderer::ExecuteSceneResize] Scene resized to 1218x862
+[20:12:26.740] [DX12Renderer::ExecuteSceneResize] Scene resized to 1220x862
+[20:12:26.754] [DX12Renderer::ExecuteSceneResize] Scene resized to 1222x862
+[20:12:26.761] [DX12Renderer::ExecuteSceneResize] Scene resized to 1224x862
+[20:12:26.768] [DX12Renderer::ExecuteSceneResize] Scene resized to 1227x862
+[20:12:26.775] [DX12Renderer::ExecuteSceneResize] Scene resized to 1231x862
+[20:12:26.781] [DX12Renderer::ExecuteSceneResize] Scene resized to 1235x862
+[20:12:26.789] [DX12Renderer::ExecuteSceneResize] Scene resized to 1240x862
+[20:12:26.796] [DX12Renderer::ExecuteSceneResize] Scene resized to 1243x862
+[20:12:26.809] [DX12Renderer::ExecuteSceneResize] Scene resized to 1246x862
+[20:12:26.816] [DX12Renderer::ExecuteSceneResize] Scene resized to 1248x862
+[20:12:26.823] [DX12Renderer::ExecuteSceneResize] Scene resized to 1249x862
+[20:12:26.830] [DX12Renderer::ExecuteSceneResize] Scene resized to 1250x862
+[20:12:27.831] [ImGuiDX12] VB REBUILD[frame=0]: old=29440 bytes, new=38720 bytes (need=33720)
+[20:12:27.833] [ImGuiDX12] IB REBUILD[frame=0]: old=6602 bytes, new=9830 bytes (need=7830)
+[20:12:27.837] [ImGuiDX12] VB REBUILD[frame=1]: old=30560 bytes, new=38720 bytes (need=33720)
+[20:12:27.838] [ImGuiDX12] IB REBUILD[frame=1]: old=7034 bytes, new=9830 bytes (need=7830)
+[20:12:29.240] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862
+[20:12:34.774] [DX12Core] Resize: 1920x1009
+[20:12:34.777] [DX12Core] Creating render target views...
+[20:12:34.778] [DX12Core] Render target views created successfully
+[20:12:34.779] [DX12Core] Resize complete
+[20:12:34.848] [DX12Renderer::ExecuteSceneResize] Scene resized to 1427x971
+[20:13:16.965] [DX12Core] Resize: 1920x1009
+[20:13:16.969] [DX12Core] Creating render target views...
+[20:13:16.970] [DX12Core] Render target views created successfully
+[20:13:16.970] [DX12Core] Resize complete
+[20:13:17.040] [DX12Renderer::ExecuteSceneResize] Scene resized to 1413x971
+[20:13:17.045] [DX12Renderer::ExecuteSceneResize] Scene resized to 1427x971
+[20:13:45.435] [DX12Core] Resize: 1750x900
+[20:13:45.437] [DX12Core] Creating render target views...
+[20:13:45.438] [DX12Core] Render target views created successfully
+[20:13:45.439] [DX12Core] Resize complete
+[20:13:45.511] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862
+[20:13:46.511] [DX12Core] Resize: 1920x1009
+[20:13:46.514] [DX12Core] Creating render target views...
+[20:13:46.515] [DX12Core] Render target views created successfully
+[20:13:46.516] [DX12Core] Resize complete
+[20:13:46.587] [DX12Renderer::ExecuteSceneResize] Scene resized to 1427x971
+[20:13:47.538] [ImGuiDX12] VB REBUILD[frame=0]: old=38720 bytes, new=45840 bytes (need=40840)
+[20:13:47.730] [ImGuiDX12] VB REBUILD[frame=1]: old=38720 bytes, new=46640 bytes (need=41640)
+[20:13:49.242] [DX12Core] Resize: 1750x900
+[20:13:49.245] [DX12Core] Creating render target views...
+[20:13:49.246] [DX12Core] Render target views created successfully
+[20:13:49.246] [DX12Core] Resize complete
+[20:13:49.316] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862
+[20:13:50.745] [DX12Core] Resize: 1920x1009
+[20:13:50.748] [DX12Core] Creating render target views...
+[20:13:50.749] [DX12Core] Render target views created successfully
+[20:13:50.749] [DX12Core] Resize complete
+[20:13:50.821] [DX12Renderer::ExecuteSceneResize] Scene resized to 1427x971
+[20:14:05.539] [DX12Core] Resize: 1750x900
+[20:14:05.543] [DX12Core] Creating render target views...
+[20:14:05.544] [DX12Core] Render target views created successfully
+[20:14:05.545] [DX12Core] Resize complete
+[20:14:05.617] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862
+[20:14:06.272] [DX12Core] Resize: 1920x1009
+[20:14:06.275] [DX12Core] Creating render target views...
+[20:14:06.276] [DX12Core] Render target views created successfully
+[20:14:06.277] [DX12Core] Resize complete
+[20:14:06.349] [DX12Renderer::ExecuteSceneResize] Scene resized to 1427x971
+[20:14:06.796] [DX12Core] Resize: 1750x900
+[20:14:06.799] [DX12Core] Creating render target views...
+[20:14:06.800] [DX12Core] Render target views created successfully
+[20:14:06.801] [DX12Core] Resize complete
+[20:14:06.873] [DX12Renderer::ExecuteSceneResize] Scene resized to 1257x862

@@ -1,4 +1,4 @@
-#include "DX12DemoScene.h"
+﻿#include "DX12DemoScene.h"
 #include <DirectXMath.h>
 #include <ImGui/imgui.h>
 #include "../../Application/Application.h"
@@ -222,28 +222,28 @@ namespace YingLong
 
     void DX12DemoScene::SpawnControlWindow()
     {
-        ImGui::Begin("Rotation Control");
+        ImGui::Begin("旋转控制");
 
         for (size_t i = 0; i < Triangles.size(); i++)
         {
-            if (ImGui::TreeNode((void*)(intptr_t)i, "Triangle %d", (int)i))
+            if (ImGui::TreeNode((void*)(intptr_t)i, "三角形 %d", (int)i))
             {
                 float* speed = Triangles[i]->GetRotationSpeed();
-                ImGui::SliderFloat("Pitch Speed", &speed[0], -2.0f, 2.0f);
-                ImGui::SliderFloat("Yaw Speed", &speed[1], -2.0f, 2.0f);
-                ImGui::SliderFloat("Roll Speed", &speed[2], -2.0f, 2.0f);
+                ImGui::SliderFloat("俯仰速度", &speed[0], -2.0f, 2.0f);
+                ImGui::SliderFloat("偏航速度", &speed[1], -2.0f, 2.0f);
+                ImGui::SliderFloat("翻滚速度", &speed[2], -2.0f, 2.0f);
                 ImGui::TreePop();
             }
         }
 
         for (size_t i = 0; i < Boxes.size(); i++)
         {
-            if (ImGui::TreeNode((void*)(intptr_t)(i + 100), "Box %d", (int)i))
+            if (ImGui::TreeNode((void*)(intptr_t)(i + 100), "盒子 %d", (int)i))
             {
                 float* speed = Boxes[i]->GetRotationSpeed();
-                ImGui::SliderFloat("Pitch Speed", &speed[0], -2.0f, 2.0f);
-                ImGui::SliderFloat("Yaw Speed", &speed[1], -2.0f, 2.0f);
-                ImGui::SliderFloat("Roll Speed", &speed[2], -2.0f, 2.0f);
+                ImGui::SliderFloat("俯仰速度", &speed[0], -2.0f, 2.0f);
+                ImGui::SliderFloat("偏航速度", &speed[1], -2.0f, 2.0f);
+                ImGui::SliderFloat("翻滚速度", &speed[2], -2.0f, 2.0f);
                 ImGui::TreePop();
             }
         }

@@ -3903,6 +3903,47 @@ ImGuiContext::ImGuiContext(ImFontAtlas* shared_font_atlas)
     Font = NULL;
     FontSize = FontBaseSize = FontScale = CurrentDpiScale = 0.0f;
     IO.Fonts = shared_font_atlas ? shared_font_atlas : IM_NEW(ImFontAtlas)();
+
+    // Auto-load Chinese font for Chinese UI text support.
+    // Try to load SimHei or Microsoft YaHei from system fonts, merge into default font.
+    // Uses Windows API directly to ensure reliable file access.
+    if (FontAtlasOwnedByContext)
+    {
+        IO.Fonts->AddFontDefault();
+        static const wchar_t* chineseFontPaths[] = {
+            L"C:\\Windows\\Fonts\\simhei.ttf",  // SimHei (regular TTF, try first)
+            L"C:\\Windows\\Fonts\\msyh.ttc",   // Microsoft YaHei (TTC)
+        };
+        for (int i = 0; i < IM_ARRAYSIZE(chineseFontPaths); i++)
+        {
+            HANDLE hFile = CreateFileW(chineseFontPaths[i], GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+            if (hFile != INVALID_HANDLE_VALUE)
+            {
+                DWORD fileSize = GetFileSize(hFile, NULL);
+                if (fileSize > 0 && fileSize < 50 * 1024 * 1024) // Sanity check: max 50MB
+                {
+                    void* fontData = IM_ALLOC(fileSize);
+                    DWORD bytesRead = 0;
+                    if (ReadFile(hFile, fontData, fileSize, &bytesRead, NULL) && bytesRead == fileSize)
+                    {
+                        CloseHandle(hFile);
+                        ImFontConfig chineseCfg;
+                        chineseCfg.MergeMode = true;
+                        chineseCfg.FontDataOwnedByAtlas = true;
+                        // Use full CJK Unified Ideographs block (0x4E00-0x9FFF)
+                        // to cover all common Chinese characters including "render".
+                        static ImWchar chineseRanges[] = { 0x4E00, 0x9FFF, 0 };
+                        IO.Fonts->AddFontFromMemoryTTF(fontData, (int)fileSize, 16.0f, &chineseCfg,
+                            chineseRanges);
+                        break; // Successfully loaded a Chinese font
+                    }
+                    IM_FREE(fontData);
+                }
+                CloseHandle(hFile);
+            }
+        }
+    }
+
     Time = 0.0f;
     FrameCount = 0;
     FrameCountEnded = FrameCountPlatformEnded = FrameCountRendered = -1;
