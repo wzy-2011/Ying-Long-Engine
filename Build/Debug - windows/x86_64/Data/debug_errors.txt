@@ -1,8 +1,0 @@
-[20:12:21.905] [ImGuiDX12] VB REBUILD[frame=0]: old=5080 bytes, new=29440 bytes (need=24440)
-[20:12:21.906] [ImGuiDX12] IB REBUILD[frame=0]: old=2012 bytes, new=6602 bytes (need=4602)
-[20:12:27.831] [ImGuiDX12] VB REBUILD[frame=0]: old=29440 bytes, new=38720 bytes (need=33720)
-[20:12:27.833] [ImGuiDX12] IB REBUILD[frame=0]: old=6602 bytes, new=9830 bytes (need=7830)
-[20:12:27.837] [ImGuiDX12] VB REBUILD[frame=1]: old=30560 bytes, new=38720 bytes (need=33720)
-[20:12:27.838] [ImGuiDX12] IB REBUILD[frame=1]: old=7034 bytes, new=9830 bytes (need=7830)
-[20:13:47.538] [ImGuiDX12] VB REBUILD[frame=0]: old=38720 bytes, new=45840 bytes (need=40840)
-[20:13:47.730] [ImGuiDX12] VB REBUILD[frame=1]: old=38720 bytes, new=46640 bytes (need=41640)

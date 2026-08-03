@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file PhysicsSystem.cpp
  * @brief 物理系统实现 / Physics system implementation
  *
@@ -362,7 +362,7 @@ namespace YingLong
 
     void PhysicsSystem::RenderImGuiEditor(Scene& scene)
     {
-        if (!ImGui::Begin("Physics Editor"))
+        if (!ImGui::Begin("物理编辑器"))
         {
             ImGui::End();
             return;
@@ -372,7 +372,7 @@ namespace YingLong
 
         // 实体列表面板
         // Entity list panel
-        if (ImGui::CollapsingHeader("Entities", ImGuiTreeNodeFlags_DefaultOpen))
+        if (ImGui::CollapsingHeader("实体", ImGuiTreeNodeFlags_DefaultOpen))
         {
             auto view = reg.view<TransformComponent, RigidbodyComponent>();
             for (auto e : view)
@@ -390,30 +390,30 @@ namespace YingLong
                 }
                 else
                 {
-                    snprintf(label, sizeof(label), "Entity %u##%u", (unsigned)e, (unsigned)e);
+                    snprintf(label, sizeof(label), "实体 %u##%u", (unsigned)e, (unsigned)e);
                 }
 
                 if (ImGui::TreeNode(label))
                 {
                     // Transform 面板
                     // Transform panel
-                    if (ImGui::TreeNode("Transform"))
+                    if (ImGui::TreeNode("变换"))
                     {
-                        ImGui::DragFloat3("Position", &tr.Position.x, 0.1f);
-                        ImGui::DragFloat3("Rotation", &tr.Rotation.x, 0.05f);
-                        ImGui::DragFloat3("Scale", &tr.Scale.x, 0.1f);
+                        ImGui::DragFloat3("位置", &tr.Position.x, 0.1f);
+                        ImGui::DragFloat3("旋转", &tr.Rotation.x, 0.05f);
+                        ImGui::DragFloat3("缩放", &tr.Scale.x, 0.1f);
                         ImGui::TreePop();
                     }
 
                     // Rigidbody 面板
                     // Rigidbody panel
-                    if (ImGui::TreeNode("Rigidbody"))
+                    if (ImGui::TreeNode("刚体"))
                     {
-                        bool massChanged = ImGui::DragFloat("Mass", &rb.Mass, 0.1f, 0.0f, 1000.0f);
-                        bool gravityChanged = ImGui::Checkbox("Use Gravity", &rb.UseGravity);
-                        bool kinematicChanged = ImGui::Checkbox("Is Kinematic", &rb.IsKinematic);
-                        bool dampingChanged = ImGui::DragFloat("Linear Damping", &rb.LinearDamping, 0.01f, 0.0f, 5.0f);
-                        dampingChanged |= ImGui::DragFloat("Angular Damping", &rb.AngularDamping, 0.01f, 0.0f, 5.0f);
+                        bool massChanged = ImGui::DragFloat("质量", &rb.Mass, 0.1f, 0.0f, 1000.0f);
+                        bool gravityChanged = ImGui::Checkbox("使用重力", &rb.UseGravity);
+                        bool kinematicChanged = ImGui::Checkbox("是否为运动学", &rb.IsKinematic);
+                        bool dampingChanged = ImGui::DragFloat("线性阻尼", &rb.LinearDamping, 0.01f, 0.0f, 5.0f);
+                        dampingChanged |= ImGui::DragFloat("角阻尼", &rb.AngularDamping, 0.01f, 0.0f, 5.0f);
 
                         // 实时应用到 PxActor
                         // Apply live to PxActor
@@ -444,11 +444,11 @@ namespace YingLong
 
                         // 状态显示
                         // Status display
-                        ImGui::Text("Status: %s", rb.Actor ? (rb.Mass > 0.0f ? "Dynamic" : "Static") : "No Actor");
+                        ImGui::Text("状态: %s", rb.Actor ? (rb.Mass > 0.0f ? "动态" : "静态") : "无Actor");
                         if (rb.Actor)
                         {
                             PxTransform pose = rb.Actor->getGlobalPose();
-                            ImGui::Text("Pose: (%.2f, %.2f, %.2f)", pose.p.x, pose.p.y, pose.p.z);
+                            ImGui::Text("姿态: (%.2f, %.2f, %.2f)", pose.p.x, pose.p.y, pose.p.z);
                         }
                         ImGui::TreePop();
                     }
@@ -457,37 +457,37 @@ namespace YingLong
                     // Collider panel
                     if (auto* col = reg.try_get<ColliderComponent>(e))
                     {
-                        if (ImGui::TreeNode("Collider"))
+                        if (ImGui::TreeNode("碰撞体"))
                         {
-                            const char* shapes[] = { "Box", "Sphere", "Capsule" };
+                            const char* shapes[] = { "盒体", "球体", "胶囊体" };
                             int shapeIdx = static_cast<int>(col->Shape);
-                            ImGui::Combo("Shape", &shapeIdx, shapes, 3);
+                            ImGui::Combo("形状", &shapeIdx, shapes, 3);
                             if (shapeIdx != static_cast<int>(col->Shape))
                             {
-                                ImGui::TextDisabled("  (geometry change needs entity rebuild)");
+                                ImGui::TextDisabled("  (几何体更改需重建实体)");
                             }
 
                             // 根据形状显示不同的参数
                             // Show different parameters based on shape
                             if (col->Shape == ColliderShape::Box)
                             {
-                                ImGui::DragFloat3("Half Extents", &col->HalfExtents.x, 0.05f, 0.01f);
+                                ImGui::DragFloat3("半边长", &col->HalfExtents.x, 0.05f, 0.01f);
                             }
                             else if (col->Shape == ColliderShape::Sphere)
                             {
-                                ImGui::DragFloat("Radius", &col->Radius, 0.05f, 0.01f);
+                                ImGui::DragFloat("半径", &col->Radius, 0.05f, 0.01f);
                             }
                             else if (col->Shape == ColliderShape::Capsule)
                             {
-                                ImGui::DragFloat("Radius", &col->Radius, 0.05f, 0.01f);
-                                ImGui::DragFloat("Half Height", &col->HalfHeight, 0.05f, 0.01f);
+                                ImGui::DragFloat("半径", &col->Radius, 0.05f, 0.01f);
+                                ImGui::DragFloat("半高", &col->HalfHeight, 0.05f, 0.01f);
                             }
 
                             // 材质参数
                             // Material parameters
-                            bool fricChanged = ImGui::DragFloat("Static Friction", &col->StaticFriction, 0.05f, 0.0f, 5.0f);
-                            fricChanged |= ImGui::DragFloat("Dynamic Friction", &col->DynamicFriction, 0.05f, 0.0f, 5.0f);
-                            bool restChanged = ImGui::DragFloat("Restitution", &col->Restitution, 0.05f, 0.0f, 1.0f);
+                            bool fricChanged = ImGui::DragFloat("静摩擦", &col->StaticFriction, 0.05f, 0.0f, 5.0f);
+                            fricChanged |= ImGui::DragFloat("动摩擦", &col->DynamicFriction, 0.05f, 0.0f, 5.0f);
+                            bool restChanged = ImGui::DragFloat("弹性", &col->Restitution, 0.05f, 0.0f, 1.0f);
 
                             // 通过 PxMaterial 实时应用摩擦/弹性
                             // Apply friction/restitution live via PxMaterial
@@ -519,17 +519,17 @@ namespace YingLong
 
         // 创建新物理实体面板
         // Create new physics entity panel
-        if (ImGui::CollapsingHeader("Create Entity"))
+        if (ImGui::CollapsingHeader("创建实体"))
         {
             static char name[64] = "PhysicsBox";
-            ImGui::InputText("Name", name, sizeof(name));
+            ImGui::InputText("名称", name, sizeof(name));
 
             static float posX = 0.0f, posY = 5.0f, posZ = 0.0f;
-            ImGui::DragFloat3("Initial Position", &posX, 0.1f);
+            ImGui::DragFloat3("初始位置", &posX, 0.1f);
 
             // 添加动态物理盒按钮
             // Add dynamic physics box button
-            if (ImGui::Button("Add Physics Box"))
+            if (ImGui::Button("添加物理盒体"))
             {
                 auto e = scene.CreateEntity(name);
                 scene.AddComponent<TransformComponent>(e, XMFLOAT3{ posX, posY, posZ });
@@ -541,7 +541,7 @@ namespace YingLong
             ImGui::SameLine();
             // 添加静态盒子按钮
             // Add static box button
-            if (ImGui::Button("Add Static Box"))
+            if (ImGui::Button("添加静态盒体"))
             {
                 auto e = scene.CreateEntity(name);
                 scene.AddComponent<TransformComponent>(e, XMFLOAT3{ posX, posY, posZ });
@@ -555,7 +555,7 @@ namespace YingLong
 
         // 射线检测调试面板
         // Raycast debug panel
-        if (ImGui::CollapsingHeader("Raycast"))
+        if (ImGui::CollapsingHeader("射线检测"))
         {
             static float origin[3] = { 0.0f, 0.0f, -20.0f };
             static float dir[3] = { 0.0f, 0.0f, 1.0f };
@@ -567,14 +567,14 @@ namespace YingLong
             if (Camera* cam = scene.GetMainCamera())
             {
                 XMFLOAT3 camPos = cam->GetPosition();
-                if (ImGui::Button("Use Camera Position"))
+                if (ImGui::Button("使用相机位置"))
                 {
                     origin[0] = camPos.x;
                     origin[1] = camPos.y;
                     origin[2] = camPos.z;
                 }
                 ImGui::SameLine();
-                if (ImGui::Button("Use Camera Forward"))
+                if (ImGui::Button("使用相机朝向"))
                 {
                     XMVECTOR fwd = cam->GetForwardVector();
                     XMFLOAT3 fwdF;
@@ -585,13 +585,13 @@ namespace YingLong
                 }
             }
 
-            ImGui::DragFloat3("Origin", origin, 0.1f);
-            ImGui::DragFloat3("Direction", dir, 0.05f);
-            ImGui::DragFloat("Max Distance", &maxDist, 1.0f, 0.1f, 10000.0f);
+            ImGui::DragFloat3("起点", origin, 0.1f);
+            ImGui::DragFloat3("方向", dir, 0.05f);
+            ImGui::DragFloat("最大距离", &maxDist, 1.0f, 0.1f, 10000.0f);
 
             // 发射射线按钮
             // Cast ray button
-            if (ImGui::Button("Cast Ray"))
+            if (ImGui::Button("发射射线"))
             {
                 PhysicsScene* ps = scene.GetPhysicsScene();
                 if (ps && ps->IsValid())
@@ -608,12 +608,12 @@ namespace YingLong
             // Display raycast result
             if (lastHit.Hit)
             {
-                ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "HIT");
-                ImGui::Text("Position: (%.2f, %.2f, %.2f)",
+                ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "命中");
+                ImGui::Text("位置: (%.2f, %.2f, %.2f)",
                             lastHit.Position.x, lastHit.Position.y, lastHit.Position.z);
-                ImGui::Text("Normal:   (%.2f, %.2f, %.2f)",
+                ImGui::Text("法线:   (%.2f, %.2f, %.2f)",
                             lastHit.Normal.x, lastHit.Normal.y, lastHit.Normal.z);
-                ImGui::Text("Distance:  %.2f", lastHit.Distance);
+                ImGui::Text("距离:  %.2f", lastHit.Distance);
 
                 // 查找拥有此 actor 的实体
                 // Find the entity that owns this actor
@@ -637,12 +637,12 @@ namespace YingLong
                             break;
                         }
                     }
-                    ImGui::Text("Entity:    %s", entityName);
+                    ImGui::Text("实体:    %s", entityName);
                 }
             }
             else
             {
-                ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "NO HIT (or not cast yet)");
+                ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "未命中 (或尚未发射)");
             }
         }
 

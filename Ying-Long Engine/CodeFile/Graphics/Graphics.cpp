@@ -168,9 +168,9 @@ namespace YingLong
 
 	void Graphics::ColorEditor() noexcept
 	{
-		ImGui::Begin("Color Editor");
-		ImGui::ColorEdit4("Background Color", this->color, 1.0f);
-		if (ImGui::Button("Default"))
+		ImGui::Begin("颜色编辑器");
+		ImGui::ColorEdit4("背景颜色", this->color, 1.0f);
+		if (ImGui::Button("默认"))
 		{
 			this->color[0] = 0.2f;
 			this->color[1] = 0.2f;

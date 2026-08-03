@@ -33,7 +33,7 @@ int	main()
 	{
 		// 创建 Application 单例并启动主循环
 		// Create Application singleton and start main loop
-		YingLong::Application::Instance = std::make_unique<YingLong::Application>(L"Ying-Long Engine");
+		YingLong::Application::Instance = std::make_unique<YingLong::Application>(L"应龙引擎");
 		return YingLong::Application::Instance->Go();
 	}
 	catch (const YingLong::Exception& e)

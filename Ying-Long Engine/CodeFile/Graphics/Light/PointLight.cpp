@@ -1,4 +1,4 @@
-﻿#include "PointLight.h"
+#include "PointLight.h"
 #include "LightManager.h"
 
 namespace YingLong
@@ -21,7 +21,7 @@ namespace YingLong
 				this->LightData.Position.x,
 				this->LightData.Position.y,
 				this->LightData.Position.z };
-			if (ImGui::DragFloat3("Position", position, 0.1f))
+			if (ImGui::DragFloat3("位置", position, 0.1f))
 			{
 				this->LightData.Position = { position[0], position[1], position[2] };
 			}
@@ -29,13 +29,13 @@ namespace YingLong
 				this->LightData.Color.x,
 				this->LightData.Color.y,
 				this->LightData.Color.z };
-			if (ImGui::DragFloat3("Color", color, 0.01f, 0.0f, 1.0f))
+			if (ImGui::DragFloat3("颜色", color, 0.01f, 0.0f, 1.0f))
 			{
 				this->LightData.Color = { color[0], color[1], color[2] };
 			}
-			ImGui::DragFloat("Intensity", &this->LightData.Intensity, 10.0f, 0.0f, 100000.0f);
+			ImGui::DragFloat("强度", &this->LightData.Intensity, 10.0f, 0.0f, 100000.0f);
 
-			if (ImGui::Button("Default")) { Reset(); }
+			if (ImGui::Button("默认")) { Reset(); }
 		}
 		ImGui::End();
 	}

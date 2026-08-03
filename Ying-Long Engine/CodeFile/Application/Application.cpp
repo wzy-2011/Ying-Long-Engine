@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file Application.cpp
  * @brief Ying-Long Engine 应用程序实现 / Application implementation of Ying-Long Engine
  *
@@ -45,9 +45,9 @@ namespace YingLong
 	 */
 	Application::Application(std::wstring windowTitle)
 	:
-	SplashWindow(1000, 800, L"Ying-Long Engine Loading", true),
+	SplashWindow(1000, 800, L"应龙引擎 加载中", true),
 	MainWindow(1750, 900, windowTitle.c_str()),
-	bUseDX12(true),
+	bUseDX12(false),
 	pDX12DemoScene(nullptr)
 	{
 		// 标记初始化是否完成，用于主线程等待
@@ -524,7 +524,7 @@ namespace YingLong
 		WindowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		WindowFlags |= ImGuiWindowFlags_NoBackground;
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-		ImGui::Begin("Ying-Long Engine Editor", NULL, WindowFlags);
+		ImGui::Begin("应龙引擎编辑器", NULL, WindowFlags);
 		ImGui::PopStyleVar();
 		ImGui::PopStyleVar(2);
 		ImGuiID dockspace_id = ImGui::GetID("Ying-Long Engine Editor Dockspace");
@@ -1132,7 +1132,7 @@ namespace YingLong
 				dockFlags |= ImGuiWindowFlags_NoBackground;
 
 				ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-				ImGui::Begin("Ying-Long Engine Editor", nullptr, dockFlags);
+				ImGui::Begin("应龙引擎编辑器", nullptr, dockFlags);
 				ImGui::PopStyleVar();
 				ImGui::PopStyleVar(2);
 
@@ -1359,13 +1359,13 @@ namespace YingLong
 						// Edit cone angles in degrees for intuitiveness.
 						float outerDeg = sl.OuterConeAngle * 180.0f / XM_PI;
 						float innerDeg = sl.InnerConeAngle * 180.0f / XM_PI;
-						if (ImGui::SliderFloat("外锥角", &outerDeg, 1.0f, 179.0f, "%.1f deg"))
+						if (ImGui::SliderFloat("外锥角", &outerDeg, 1.0f, 179.0f, "%.1f 度"))
 						{
 							sl.OuterConeAngle = outerDeg * XM_PI / 180.0f;
 							if (sl.InnerConeAngle > sl.OuterConeAngle)
 								sl.InnerConeAngle = sl.OuterConeAngle;
 						}
-						if (ImGui::SliderFloat("内锥角", &innerDeg, 0.0f, outerDeg, "%.1f deg"))
+						if (ImGui::SliderFloat("内锥角", &innerDeg, 0.0f, outerDeg, "%.1f 度"))
 						{
 							sl.InnerConeAngle = innerDeg * XM_PI / 180.0f;
 						}

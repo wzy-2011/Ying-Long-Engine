@@ -28,17 +28,17 @@ namespace YingLong
 	void Camera::SpawnControlWindow(const char* CameraName) noexcept
 	{
 		ImGui::Begin(CameraName);
-		ImGui::Text("Position");
-		ImGui::DragFloat("PositionX", &this->Position.x, 0.1f);
-		ImGui::DragFloat("PositionY", &this->Position.y, 0.1f);
-		ImGui::DragFloat("PositionZ", &this->Position.z, 0.1f);
+		ImGui::Text("位置");
+		ImGui::DragFloat("位置X", &this->Position.x, 0.1f);
+		ImGui::DragFloat("位置Y", &this->Position.y, 0.1f);
+		ImGui::DragFloat("位置Z", &this->Position.z, 0.1f);
 
-		ImGui::Text("Rotation");
-		ImGui::SliderFloat("RotationX", &this->Rotation.x, -360.0f, 360.0f);
-		ImGui::SliderFloat("RotationY", &this->Rotation.y, -360.0f, 360.0f);
-		ImGui::SliderFloat("RotationZ", &this->Rotation.z, -360.0f, 360.0f);
+		ImGui::Text("旋转");
+		ImGui::SliderFloat("旋转X", &this->Rotation.x, -360.0f, 360.0f);
+		ImGui::SliderFloat("旋转Y", &this->Rotation.y, -360.0f, 360.0f);
+		ImGui::SliderFloat("旋转Z", &this->Rotation.z, -360.0f, 360.0f);
 
-		if (ImGui::Button("Default"))
+		if (ImGui::Button("默认"))
 		{
 			Reset();
 		}

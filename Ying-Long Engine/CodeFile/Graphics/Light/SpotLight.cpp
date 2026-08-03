@@ -22,7 +22,7 @@ namespace YingLong
 			this->LightData.Position.y,
 			this->LightData.Position.z
 		};
-		if (ImGui::DragFloat3("Position", position, 0.1f))
+		if (ImGui::DragFloat3("位置", position, 0.1f))
 		{
 			this->LightData.Position = { position[0], position[1], position[2] };
 		}
@@ -32,7 +32,7 @@ namespace YingLong
 			this->LightData.Color.y,
 			this->LightData.Color.z
 		};
-		if (ImGui::DragFloat3("Color", color, 0.01f, 0.0f, 1.0f))
+		if (ImGui::DragFloat3("颜色", color, 0.01f, 0.0f, 1.0f))
 		{
 			this->LightData.Color = { color[0], color[1], color[2] };
 		}
@@ -42,27 +42,27 @@ namespace YingLong
 			this->LightData.Rotation.y,
 			this->LightData.Rotation.z
 		};
-		if (ImGui::DragFloat3("Rotation (deg)", rotation, 1.0f, -360.0f, 360.0f))
+		if (ImGui::DragFloat3("旋转 (度)", rotation, 1.0f, -360.0f, 360.0f))
 		{
 			this->LightData.Rotation = { rotation[0], rotation[1], rotation[2] };
 		}
 
-		ImGui::DragFloat("Intensity", &this->LightData.Intensity, 100.0f, 0.0f, 1000000.0f);
+		ImGui::DragFloat("强度", &this->LightData.Intensity, 100.0f, 0.0f, 1000000.0f);
 
 		float outerDeg = this->LightData.OuterConeAngle * 180.0f / XM_PI;
 		float innerDeg = this->LightData.InnerConeAngle * 180.0f / XM_PI;
-		if (ImGui::SliderFloat("Outer Angle", &outerDeg, 1.0f, 179.0f, "%.1f deg"))
+		if (ImGui::SliderFloat("外角", &outerDeg, 1.0f, 179.0f, "%.1f 度"))
 		{
 			this->LightData.OuterConeAngle = outerDeg * XM_PI / 180.0f;
 			if (this->LightData.InnerConeAngle > this->LightData.OuterConeAngle)
 				this->LightData.InnerConeAngle = this->LightData.OuterConeAngle;
 		}
-		if (ImGui::SliderFloat("Inner Angle", &innerDeg, 0.0f, outerDeg, "%.1f deg"))
+		if (ImGui::SliderFloat("内角", &innerDeg, 0.0f, outerDeg, "%.1f 度"))
 		{
 			this->LightData.InnerConeAngle = innerDeg * XM_PI / 180.0f;
 		}
 
-		if (ImGui::Button("Default")) { this->Reset(); }
+		if (ImGui::Button("默认")) { this->Reset(); }
 
 		ImGui::End();
 	}

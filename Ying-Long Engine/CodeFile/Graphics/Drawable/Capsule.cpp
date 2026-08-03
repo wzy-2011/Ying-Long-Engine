@@ -174,29 +174,29 @@ namespace YingLong
 
 		// 位置控制
 		// Position control
-		ImGui::Text("Position");
-		if (ImGui::DragFloat3("Position", position, 0.1f))
+		ImGui::Text("位置");
+		if (ImGui::DragFloat3("位置", position, 0.1f))
 		{
 			this->Position = { position[0], position[1], position[2] };
 		}
 
 		// 旋转控制
 		// Rotation control
-		ImGui::Text("Rotation");
-		if (ImGui::DragFloat3("Rotation", rotation, 1.0f))
+		ImGui::Text("旋转");
+		if (ImGui::DragFloat3("旋转", rotation, 1.0f))
 		{
 			this->Rotation = { rotation[0], rotation[1], rotation[2] };
 		}
 
 		// 半径控制
 		// Radius control
-		ImGui::Text("Radius");
-		ImGui::DragFloat("Radius", &this->radius, 0.08f);
+		ImGui::Text("半径");
+		ImGui::DragFloat("半径", &this->radius, 0.08f);
 
 		// 半高控制
 		// Half height control
-		ImGui::Text("HalfHeight");
-		ImGui::DragFloat("HalfHeight", &this->HalfHeight, 0.08f);
+		ImGui::Text("半高");
+		ImGui::DragFloat("半高", &this->HalfHeight, 0.08f);
 
 		// 结束 ImGui 窗口
 		// End ImGui window

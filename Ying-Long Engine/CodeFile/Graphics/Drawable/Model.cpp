@@ -1,4 +1,4 @@
-﻿/** @file Model.cpp
+/** @file Model.cpp
  *  @brief 模型类实现 - Model class implementation
  *
  *  包含 Model 类的成员函数实现。
@@ -74,28 +74,28 @@ namespace YingLong
 
 		// 位置控制
 		// Position control
-		ImGui::Text("Position");
-		ImGui::DragFloat("PositionX", &this->Position.x, 0.1f);
-		ImGui::DragFloat("PositionY", &this->Position.y, 0.1f);
-		ImGui::DragFloat("PositionZ", &this->Position.z, 0.1f);
+		ImGui::Text("位置");
+		ImGui::DragFloat("位置X", &this->Position.x, 0.1f);
+		ImGui::DragFloat("位置Y", &this->Position.y, 0.1f);
+		ImGui::DragFloat("位置Z", &this->Position.z, 0.1f);
 
 		// 旋转控制
 		// Rotation control
-		ImGui::Text("Rotation");
-		ImGui::DragFloat("RotationX", &this->Rotation.x, 0.1f);
-		ImGui::DragFloat("RotationY", &this->Rotation.y, 0.1f);
-		ImGui::DragFloat("RotationZ", &this->Rotation.z, 0.1f);
+		ImGui::Text("旋转");
+		ImGui::DragFloat("旋转X", &this->Rotation.x, 0.1f);
+		ImGui::DragFloat("旋转Y", &this->Rotation.y, 0.1f);
+		ImGui::DragFloat("旋转Z", &this->Rotation.z, 0.1f);
 
 		// 缩放控制
 		// Scale control
-		ImGui::Text("Scale");
-		ImGui::SliderFloat("ScaleX", &this->Scale.x, -10.0f, +10.0f);
-		ImGui::SliderFloat("ScaleY", &this->Scale.y, -10.0f, +10.0f);
-		ImGui::SliderFloat("ScaleZ", &this->Scale.z, -10.0f, +10.0f);
+		ImGui::Text("缩放");
+		ImGui::SliderFloat("缩放X", &this->Scale.x, -10.0f, +10.0f);
+		ImGui::SliderFloat("缩放Y", &this->Scale.y, -10.0f, +10.0f);
+		ImGui::SliderFloat("缩放Z", &this->Scale.z, -10.0f, +10.0f);
 
 		// 重置按钮
 		// Reset button
-		if (ImGui::Button("Defaut")) { this->Reset(); }
+		if (ImGui::Button("默认")) { this->Reset(); }
 
 		// 结束 ImGui 窗口
 		// End ImGui window
