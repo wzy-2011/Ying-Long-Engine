@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file PhysicsScene.h
  * @brief 物理场景 / Physics scene
  *
@@ -32,6 +32,51 @@ namespace YingLong
 		XMFLOAT3 Normal = { 0.0f, 0.0f, 0.0f };           ///< 命中点法线 / Hit normal
 		float Distance = 0.0f;                              ///< 命中距离 / Hit distance
 		PxRigidActor* Actor = nullptr;                     ///< 命中的刚体 Actor / Hit rigid actor
+	};
+
+	/**
+	 * @brief 原始碰撞事件 / Raw collision event
+	 *
+	 * 由 PhysicsCollisionCallback 产生，存储 PxActor 指针。
+	 * PhysicsSystem 负责将 PxActor* 解析为 entt::entity。
+	 *
+	 * Produced by PhysicsCollisionCallback, stores PxActor pointers.
+	 * PhysicsSystem resolves PxActor* to entt::entity.
+	 */
+	struct RawCollisionEvent
+	{
+		PxActor* ActorA = nullptr;                         ///< 碰撞方 A / Collision party A
+		PxActor* ActorB = nullptr;                         ///< 碰撞方 B / Collision party B
+		XMFLOAT3 ContactPoint = { 0, 0, 0 };              ///< 接触点 / Contact point
+		XMFLOAT3 ContactNormal = { 0, 0, 0 };             ///< 接触法线 / Contact normal
+		float ContactDistance = 0.0f;                      ///< 接触距离 / Contact distance
+		bool IsTrigger = false;                            ///< 是否为触发器事件 / Whether this is a trigger event
+	};
+
+	/**
+	 * @brief 碰撞回调类 / Collision callback class
+	 *
+	 * 实现 PxSimulationEventCallback，收集每帧的碰撞和触发器事件。
+	 * PhysicsSystem 在帧末查询并清空事件队列。
+	 *
+	 * Implements PxSimulationEventCallback, collecting per-frame contact
+	 * and trigger events. PhysicsSystem drains the event queue at end of frame.
+	 */
+	class PhysicsCollisionCallback : public PxSimulationEventCallback
+	{
+	public:
+		void onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) override;
+		void onTrigger(PxTriggerPair* pairs, PxU32 count) override;
+		void onConstraintBreak(PxConstraintInfo* constraints, PxU32 count) override {}
+		void onWake(PxActor** actors, PxU32 count) override {}
+		void onSleep(PxActor** actors, PxU32 count) override {}
+		void onAdvance(const PxRigidBody* const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count) override {}
+
+		/// 取出并清空事件队列 / Drain and clear the event queue
+		std::vector<RawCollisionEvent> GetAndClearEvents();
+
+	private:
+		std::vector<RawCollisionEvent> m_Events;
 	};
 
 	/**
@@ -152,6 +197,16 @@ namespace YingLong
 		RaycastHit Raycast(const XMFLOAT3& origin, const XMFLOAT3& unitDir, float maxDist);
 
 		/**
+		 * @brief 获取碰撞回调对象 / Get collision callback object
+		 *
+		 * PhysicsSystem 通过此方法访问碰撞事件队列。
+		 * PhysicsSystem accesses the collision event queue through this method.
+		 *
+		 * @return PhysicsCollisionCallback* 碰撞回调指针 / Collision callback pointer
+		 */
+		PhysicsCollisionCallback* GetCollisionCallback() noexcept { return &m_CollisionCallback; }
+
+		/**
 		 * @brief 析构函数 / Destructor
 		 */
 		~PhysicsScene();
@@ -159,5 +214,6 @@ namespace YingLong
 	private:
 		PxScene* PhysicsSceneObject = nullptr;         ///< PhysX 场景对象 / PhysX scene object
 		PxDefaultCpuDispatcher* pCpuDispatcher = nullptr;  ///< CPU 调度器 / CPU dispatcher
+		PhysicsCollisionCallback m_CollisionCallback;       ///< 碰撞回调 / Collision callback
 	};
 }

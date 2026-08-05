@@ -167,9 +167,9 @@ namespace YingLong
         // 2. Step the simulation.
         ps->Step(DeltaTime);
 
-        // 3. 将结果位姿回写到非运动学动态刚体。
+        // 3. 将结果位姿和速度回写到非运动学动态刚体。
         //    静态刚体（Mass==0）和运动学刚体不由物理驱动。
-        // 3. Write back the resulting pose for non-kinematic dynamic bodies.
+        // 3. Write back the resulting pose and velocities for non-kinematic dynamic bodies.
         //    Static bodies (Mass==0) and kinematic bodies are not driven by physics.
         for (auto e : view)
         {
@@ -178,6 +178,7 @@ namespace YingLong
             if (rb.Actor && rb.Mass > 0.0f && !rb.IsKinematic)
             {
                 WriteBackToTransform(static_cast<PxRigidDynamic&>(*rb.Actor), tr);
+                SyncVelocities(static_cast<PxRigidDynamic&>(*rb.Actor), rb);
             }
         }
     }
@@ -239,6 +240,14 @@ namespace YingLong
             DX12LogError("[PhysicsSystem] Failed to create PxShape\n");
             material->release();
             return;
+        }
+
+        // 如果是触发器，设置 TRIGGER_SHAPE 标志并清除 SIMULATION_SHAPE
+        // If this is a trigger, set TRIGGER_SHAPE flag and clear SIMULATION_SHAPE
+        if (col.IsTrigger)
+        {
+            shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+            shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
         }
 
         // createShape 增加材质的引用计数；释放我们的初始引用，
@@ -339,6 +348,131 @@ namespace YingLong
         // Scale is not driven by physics.
     }
 
+    void PhysicsSystem::SyncVelocities(const PxRigidDynamic& actor, RigidbodyComponent& rb) const
+    {
+        PxVec3 linVel = actor.getLinearVelocity();
+        PxVec3 angVel = actor.getAngularVelocity();
+        rb.LinearVelocity = XMFLOAT3(linVel.x, linVel.y, linVel.z);
+        rb.AngularVelocity = XMFLOAT3(angVel.x, angVel.y, angVel.z);
+    }
+
+    entt::entity PhysicsSystem::FindEntityByActor(entt::registry& reg, PxActor* actor) const
+    {
+        if (!actor)
+            return entt::null;
+        auto view = reg.view<RigidbodyComponent>();
+        for (auto e : view)
+        {
+            auto& rb = reg.get<RigidbodyComponent>(e);
+            if (rb.Actor == actor)
+                return e;
+        }
+        return entt::null;
+    }
+
+    // === 力 / 冲量 / 速度 API ===
+
+    void PhysicsSystem::ApplyForce(Scene& scene, entt::entity e, const XMFLOAT3& force)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f && !rb.IsKinematic)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->addForce(PxVec3(force.x, force.y, force.z), PxForceMode::eFORCE);
+        }
+    }
+
+    void PhysicsSystem::ApplyImpulse(Scene& scene, entt::entity e, const XMFLOAT3& impulse)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f && !rb.IsKinematic)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->addForce(PxVec3(impulse.x, impulse.y, impulse.z), PxForceMode::eIMPULSE);
+        }
+    }
+
+    void PhysicsSystem::ApplyTorque(Scene& scene, entt::entity e, const XMFLOAT3& torque)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f && !rb.IsKinematic)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->addTorque(PxVec3(torque.x, torque.y, torque.z), PxForceMode::eFORCE);
+        }
+    }
+
+    void PhysicsSystem::ApplyAngularImpulse(Scene& scene, entt::entity e, const XMFLOAT3& impulse)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f && !rb.IsKinematic)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->addTorque(PxVec3(impulse.x, impulse.y, impulse.z), PxForceMode::eIMPULSE);
+        }
+    }
+
+    void PhysicsSystem::SetLinearVelocity(Scene& scene, entt::entity e, const XMFLOAT3& vel)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->setLinearVelocity(PxVec3(vel.x, vel.y, vel.z));
+        }
+    }
+
+    void PhysicsSystem::SetAngularVelocity(Scene& scene, entt::entity e, const XMFLOAT3& vel)
+    {
+        auto& reg = scene.GetRegistry();
+        if (!reg.all_of<RigidbodyComponent>(e)) return;
+        auto& rb = reg.get<RigidbodyComponent>(e);
+        if (rb.Actor && rb.Mass > 0.0f)
+        {
+            PxRigidDynamic* dyn = static_cast<PxRigidDynamic*>(rb.Actor);
+            dyn->setAngularVelocity(PxVec3(vel.x, vel.y, vel.z));
+        }
+    }
+
+    // === 碰撞事件 API ===
+
+    std::vector<PhysicsSystem::CollisionEvent> PhysicsSystem::GetAndClearCollisionEvents()
+    {
+        std::vector<CollisionEvent> resolved;
+        if (!m_scene)
+            return resolved;
+
+        PhysicsScene* ps = m_scene->GetPhysicsScene();
+        if (!ps || !ps->IsValid())
+            return resolved;
+
+        auto rawEvents = ps->GetCollisionCallback()->GetAndClearEvents();
+        auto& reg = m_scene->GetRegistry();
+
+        for (const auto& raw : rawEvents)
+        {
+            CollisionEvent evt;
+            evt.EntityA = FindEntityByActor(reg, raw.ActorA);
+            evt.EntityB = FindEntityByActor(reg, raw.ActorB);
+            evt.ContactPoint = raw.ContactPoint;
+            evt.ContactNormal = raw.ContactNormal;
+            evt.ContactDistance = raw.ContactDistance;
+            evt.IsTrigger = raw.IsTrigger;
+            resolved.push_back(evt);
+        }
+        return resolved;
+    }
+
     void PhysicsSystem::OnRigidbodyDestroyed(entt::registry& r, entt::entity e)
     {
         auto* rb = r.try_get<RigidbodyComponent>(e);
@@ -415,6 +549,46 @@ namespace YingLong
                         bool dampingChanged = ImGui::DragFloat("线性阻尼", &rb.LinearDamping, 0.01f, 0.0f, 5.0f);
                         dampingChanged |= ImGui::DragFloat("角阻尼", &rb.AngularDamping, 0.01f, 0.0f, 5.0f);
 
+                        // 速度显示（只读，由物理引擎每帧同步）
+                        // Velocity display (read-only, synced from physics engine each frame)
+                        ImGui::Separator();
+                        ImGui::Text("线速度: (%.2f, %.2f, %.2f)", rb.LinearVelocity.x, rb.LinearVelocity.y, rb.LinearVelocity.z);
+                        ImGui::Text("角速度: (%.2f, %.2f, %.2f)", rb.AngularVelocity.x, rb.AngularVelocity.y, rb.AngularVelocity.z);
+                        float linSpeed = sqrtf(rb.LinearVelocity.x * rb.LinearVelocity.x + rb.LinearVelocity.y * rb.LinearVelocity.y + rb.LinearVelocity.z * rb.LinearVelocity.z);
+                        float angSpeed = sqrtf(rb.AngularVelocity.x * rb.AngularVelocity.x + rb.AngularVelocity.y * rb.AngularVelocity.y + rb.AngularVelocity.z * rb.AngularVelocity.z);
+                        ImGui::Text("线速度大小: %.2f  角速度大小: %.2f", linSpeed, angSpeed);
+
+                        // 力 / 冲量施加
+                        // Force / Impulse application
+                        if (rb.Mass > 0.0f && !rb.IsKinematic && rb.Actor)
+                        {
+                            ImGui::Separator();
+                            static float forceInput[3] = { 0, 0, 0 };
+                            static float impulseInput[3] = { 0, 0, 0 };
+                            ImGui::DragFloat3("力##Force", forceInput, 1.0f);
+                            ImGui::SameLine();
+                            if (ImGui::Button("施加力##ApplyForce"))
+                            {
+                                ApplyForce(scene, e, XMFLOAT3(forceInput[0], forceInput[1], forceInput[2]));
+                            }
+                            ImGui::DragFloat3("冲量##Impulse", impulseInput, 1.0f);
+                            ImGui::SameLine();
+                            if (ImGui::Button("施加冲量##ApplyImpulse"))
+                            {
+                                ApplyImpulse(scene, e, XMFLOAT3(impulseInput[0], impulseInput[1], impulseInput[2]));
+                            }
+                            if (ImGui::Button("向上弹跳 (冲量)##BounceUp"))
+                            {
+                                ApplyImpulse(scene, e, XMFLOAT3(0.0f, 10.0f, 0.0f));
+                            }
+                            ImGui::SameLine();
+                            if (ImGui::Button("停止运动##Stop"))
+                            {
+                                SetLinearVelocity(scene, e, XMFLOAT3(0, 0, 0));
+                                SetAngularVelocity(scene, e, XMFLOAT3(0, 0, 0));
+                            }
+                        }
+
                         // 实时应用到 PxActor
                         // Apply live to PxActor
                         if (rb.Actor)
@@ -465,6 +639,20 @@ namespace YingLong
                             if (shapeIdx != static_cast<int>(col->Shape))
                             {
                                 ImGui::TextDisabled("  (几何体更改需重建实体)");
+                            }
+
+                            // 触发器开关（可实时切换）
+                            // Trigger toggle (can be toggled at runtime)
+                            bool triggerChanged = ImGui::Checkbox("触发器", &col->IsTrigger);
+                            if (triggerChanged && rb.Actor)
+                            {
+                                PxShape* shapesArr[1];
+                                PxU32 count = rb.Actor->getShapes(shapesArr, 1);
+                                if (count > 0 && shapesArr[0])
+                                {
+                                    shapesArr[0]->setFlag(PxShapeFlag::eSIMULATION_SHAPE, !col->IsTrigger);
+                                    shapesArr[0]->setFlag(PxShapeFlag::eTRIGGER_SHAPE, col->IsTrigger);
+                                }
                             }
 
                             // 根据形状显示不同的参数
@@ -643,6 +831,57 @@ namespace YingLong
             else
             {
                 ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "未命中 (或尚未发射)");
+            }
+        }
+
+        // 碰撞事件日志面板
+        // Collision event log panel
+        if (ImGui::CollapsingHeader("碰撞事件"))
+        {
+            // 每帧获取并显示碰撞事件
+            // Get and display collision events each frame
+            auto events = GetAndClearCollisionEvents();
+
+            ImGui::Text("本帧事件数: %d", (int)events.size());
+            ImGui::Separator();
+
+            // 保留最近 20 条事件用于显示
+            // Keep last 20 events for display
+            static std::vector<CollisionEvent> eventHistory;
+            for (const auto& evt : events)
+            {
+                eventHistory.push_back(evt);
+            }
+            if (eventHistory.size() > 20)
+            {
+                eventHistory.erase(eventHistory.begin(), eventHistory.begin() + (eventHistory.size() - 20));
+            }
+
+            // 显示事件历史
+            // Display event history
+            for (int i = (int)eventHistory.size() - 1; i >= 0; i--)
+            {
+                const auto& evt = eventHistory[i];
+                auto* tagA = reg.try_get<TagComponent>(evt.EntityA);
+                auto* tagB = reg.try_get<TagComponent>(evt.EntityB);
+                const char* nameA = tagA ? tagA->Name.c_str() : "<无名>";
+                const char* nameB = tagB ? tagB->Name.c_str() : "<无名>";
+
+                if (evt.IsTrigger)
+                {
+                    ImGui::TextColored(ImVec4(0.4f, 0.8f, 1.0f, 1.0f), "[触发器] %s <-> %s", nameA, nameB);
+                }
+                else
+                {
+                    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.4f, 1.0f), "[碰撞] %s <-> %s", nameA, nameB);
+                    ImGui::Text("  接触点: (%.2f, %.2f, %.2f)", evt.ContactPoint.x, evt.ContactPoint.y, evt.ContactPoint.z);
+                    ImGui::Text("  法线: (%.2f, %.2f, %.2f)  距离: %.3f", evt.ContactNormal.x, evt.ContactNormal.y, evt.ContactNormal.z, evt.ContactDistance);
+                }
+            }
+
+            if (ImGui::Button("清空事件历史"))
+            {
+                eventHistory.clear();
             }
         }
 

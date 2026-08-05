@@ -13,6 +13,7 @@
 #include "DX12Renderer.h"
 #include "DX12Primitives.h"
 #include "../../Debug/DX12Log.h"
+#include <cstring>
 #include <stdexcept>
 
 namespace YingLong
@@ -288,10 +289,6 @@ namespace YingLong
         // 释放光源计数常量缓冲区（延迟渲染 Lighting Pass 使用，必须在 pCore 之前释放）
         // Release light count constant buffer (used by deferred Lighting Pass, before pCore)
         pLightCountBuffer.reset();
-
-        // 释放光源剔除常量缓冲区
-        // Release light culling constant buffer
-        pLightCullingConstants.reset();
 
         // 释放深度模板
         // Release depth stencil
@@ -1047,21 +1044,7 @@ namespace YingLong
         auto dsvHandle = pSceneDepthStencil->GetDSVHandle();
         pSceneRenderTarget->Bind(commandList, &dsvHandle);
 
-        D3D12_VIEWPORT viewport = {};
-        viewport.TopLeftX = 0.0f;
-        viewport.TopLeftY = 0.0f;
-        viewport.Width = static_cast<float>(SceneWidth);
-        viewport.Height = static_cast<float>(SceneHeight);
-        viewport.MinDepth = 0.0f;
-        viewport.MaxDepth = 1.0f;
-        commandList->RSSetViewports(1, &viewport);
-
-        D3D12_RECT scissorRect = {};
-        scissorRect.left = 0;
-        scissorRect.top = 0;
-        scissorRect.right = SceneWidth;
-        scissorRect.bottom = SceneHeight;
-        commandList->RSSetScissorRects(1, &scissorRect);
+        SetViewportAndScissor(commandList, SceneWidth, SceneHeight);
     }
 
     /**
@@ -1117,40 +1100,7 @@ namespace YingLong
 
         // 前向渲染路径：转换到 SRV 并设置后备缓冲区
         // Forward rendering path: transition to SRV and set up back buffer
-        pSceneRenderTarget->TransitionTo(
-            commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
-        pSceneDepthStencil->TransitionTo(
-            commandList, D3D12_RESOURCE_STATE_COMMON);
-
-        UINT backBufferIndex = pCore->GetCurrentBackBufferIndex();
-        RenderTargetDX12* rt = pRenderTargets[backBufferIndex].get();
-        if (rt)
-        {
-            rt->TransitionTo(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
-
-            if (pDepthStencil)
-            {
-                pDepthStencil->TransitionTo(
-                    commandList, D3D12_RESOURCE_STATE_DEPTH_WRITE);
-                auto dsvHandle = pDepthStencil->GetDSVHandle();
-                rt->Bind(commandList, &dsvHandle);
-            }
-            else
-            {
-                rt->Bind(commandList, nullptr);
-            }
-        }
-
-        D3D12_VIEWPORT viewport = {};
-        viewport.Width = static_cast<float>(Width);
-        viewport.Height = static_cast<float>(Height);
-        viewport.MaxDepth = 1.0f;
-        commandList->RSSetViewports(1, &viewport);
-
-        D3D12_RECT scissorRect = {};
-        scissorRect.right = Width;
-        scissorRect.bottom = Height;
-        commandList->RSSetScissorRects(1, &scissorRect);
+        RestoreBackBufferAndViewport(commandList);
     }
 
     /**
@@ -1171,11 +1121,58 @@ namespace YingLong
         if (!commandList)
             return;
 
+        RestoreBackBufferAndViewport(commandList);
+    }
+
+    /**
+     * @brief 获取场景纹理的 GPU SRV 句柄 / Get GPU SRV handle for scene texture
+     *
+     * 返回场景渲染目标的 GPU 端 SRV 句柄，供 ImGui::Image 使用。
+     * Returns the GPU-side SRV handle of the scene render target for ImGui::Image.
+     *
+     * @return GPU SRV 描述符句柄 / GPU SRV descriptor handle
+     */
+    D3D12_GPU_DESCRIPTOR_HANDLE DX12Renderer::GetSceneSRVHandle() const noexcept
+    {
+        if (pSceneRenderTarget && pSceneRenderTarget->HasShaderResourceView())
+            return pSceneRenderTarget->GetGPU_SRVHandle();
+        return D3D12_GPU_DESCRIPTOR_HANDLE{};
+    }
+
+    // ============================================================================
+    // 共享辅助方法 / Shared Helper Methods
+    // ============================================================================
+
+    void DX12Renderer::SetViewportAndScissor(ID3D12GraphicsCommandList* commandList, int width, int height)
+    {
+        D3D12_VIEWPORT viewport = {};
+        viewport.TopLeftX = 0.0f;
+        viewport.TopLeftY = 0.0f;
+        viewport.Width = static_cast<float>(width);
+        viewport.Height = static_cast<float>(height);
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
+        commandList->RSSetViewports(1, &viewport);
+
+        D3D12_RECT scissorRect = {};
+        scissorRect.left = 0;
+        scissorRect.top = 0;
+        scissorRect.right = width;
+        scissorRect.bottom = height;
+        commandList->RSSetScissorRects(1, &scissorRect);
+    }
+
+    void DX12Renderer::RestoreBackBufferAndViewport(ID3D12GraphicsCommandList* commandList)
+    {
+        // 将场景渲染目标过渡到 SRV 供 ImGui 显示
+        // Transition scene render target to SRV for ImGui display
         pSceneRenderTarget->TransitionTo(
             commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
         pSceneDepthStencil->TransitionTo(
             commandList, D3D12_RESOURCE_STATE_COMMON);
 
+        // 设置交换链后台缓冲区为渲染目标
+        // Set swap chain back buffer as render target
         UINT backBufferIndex = pCore->GetCurrentBackBufferIndex();
         RenderTargetDX12* rt = pRenderTargets[backBufferIndex].get();
         if (rt)
@@ -1195,31 +1192,9 @@ namespace YingLong
             }
         }
 
-        D3D12_VIEWPORT viewport = {};
-        viewport.Width = static_cast<float>(Width);
-        viewport.Height = static_cast<float>(Height);
-        viewport.MaxDepth = 1.0f;
-        commandList->RSSetViewports(1, &viewport);
-
-        D3D12_RECT scissorRect = {};
-        scissorRect.right = Width;
-        scissorRect.bottom = Height;
-        commandList->RSSetScissorRects(1, &scissorRect);
-    }
-
-    /**
-     * @brief 获取场景纹理的 GPU SRV 句柄 / Get GPU SRV handle for scene texture
-     *
-     * 返回场景渲染目标的 GPU 端 SRV 句柄，供 ImGui::Image 使用。
-     * Returns the GPU-side SRV handle of the scene render target for ImGui::Image.
-     *
-     * @return GPU SRV 描述符句柄 / GPU SRV descriptor handle
-     */
-    D3D12_GPU_DESCRIPTOR_HANDLE DX12Renderer::GetSceneSRVHandle() const noexcept
-    {
-        if (pSceneRenderTarget && pSceneRenderTarget->HasShaderResourceView())
-            return pSceneRenderTarget->GetGPU_SRVHandle();
-        return D3D12_GPU_DESCRIPTOR_HANDLE{};
+        // 恢复视口和裁剪矩形为窗口尺寸
+        // Restore viewport and scissor to window dimensions
+        SetViewportAndScissor(commandList, Width, Height);
     }
 
     // ============================================================================
@@ -1321,21 +1296,7 @@ namespace YingLong
 
         // 设置视口和裁剪矩形为场景尺寸
         // Set viewport and scissor rectangle to scene dimensions
-        D3D12_VIEWPORT viewport = {};
-        viewport.TopLeftX = 0.0f;
-        viewport.TopLeftY = 0.0f;
-        viewport.Width = static_cast<float>(SceneWidth);
-        viewport.Height = static_cast<float>(SceneHeight);
-        viewport.MinDepth = 0.0f;
-        viewport.MaxDepth = 1.0f;
-        commandList->RSSetViewports(1, &viewport);
-
-        D3D12_RECT scissorRect = {};
-        scissorRect.left = 0;
-        scissorRect.top = 0;
-        scissorRect.right = SceneWidth;
-        scissorRect.bottom = SceneHeight;
-        commandList->RSSetScissorRects(1, &scissorRect);
+        SetViewportAndScissor(commandList, SceneWidth, SceneHeight);
 
         // 标记进入 Geometry Pass
         // Mark in-geometry-pass state
@@ -1410,10 +1371,11 @@ namespace YingLong
         }
 
         // ========================================================================
-        // Tile-Based Light Culling (Compute Shader)
-        // 基于 Tile 的光源剔除（计算着色器）
+        // Tile-Based Light Culling (Compute Shader) — delegated to DX12LightCullingManager
+        // 基于 Tile 的光源剔除（计算着色器）— 委托给 DX12LightCullingManager
         // ========================================================================
-        if (pCore->GetLightCullingRootSignature() && pCore->GetLightCullingPSO())
+        auto* lightCulling = pCore->GetLightCullingManager();
+        if (lightCulling && lightCulling->GetRootSignature() && lightCulling->GetPSO())
         {
             // 惰性创建光源剔除资源
             // Lazily create light culling resources
@@ -1424,8 +1386,8 @@ namespace YingLong
 
             if (pCore->IsLightCullingReady())
             {
-                // 更新光源剔除常量缓冲区
-                // Update light culling constant buffer
+                // 更新光源剔除常量缓冲区（通过管理器写入）
+                // Update light culling constant buffer via manager
                 UINT pointLightCount = DX12Primitive::GetPointLightCount();
                 UINT spotLightCount = DX12Primitive::GetSpotLightCount();
 
@@ -1445,26 +1407,22 @@ namespace YingLong
                         reinterpret_cast<DirectX::XMFLOAT4X4*>(cullingData.ViewProjMatrix),
                         viewProjT);
 
-                    if (!pLightCullingConstants)
+                    uint8_t* cbPtr = lightCulling->GetConstantBufferCPU();
+                    if (cbPtr)
                     {
-                        pLightCullingConstants = std::make_unique<ConstantBufferDX12<LightCullingConstantsCB>>(
-                            *pCore, 0, cullingData);
-                    }
-                    else
-                    {
-                        pLightCullingConstants->Update(cullingData);
+                        memcpy(cbPtr, &cullingData, sizeof(LightCullingConstantsCB));
                     }
                 }
 
-                // Bind compute root signature and PSO
-                commandList->SetComputeRootSignature(pCore->GetLightCullingRootSignature());
-                commandList->SetPipelineState(pCore->GetLightCullingPSO());
+                // Bind compute root signature and PSO (via manager)
+                commandList->SetComputeRootSignature(lightCulling->GetRootSignature());
+                commandList->SetPipelineState(lightCulling->GetPSO());
 
-                // Bind CBV (b0): LightCullingConstants
-                if (pLightCullingConstants)
+                // Bind CBV (b0): LightCullingConstants (via manager)
+                D3D12_GPU_VIRTUAL_ADDRESS cbGPU = lightCulling->GetConstantBufferGPU();
+                if (cbGPU != 0)
                 {
-                    commandList->SetComputeRootConstantBufferView(
-                        0, pLightCullingConstants->GetGPUAddress());
+                    commandList->SetComputeRootConstantBufferView(0, cbGPU);
                 }
 
                 // Bind SRV descriptor table (t4-t5): PointLight + SpotLight buffers
@@ -1476,8 +1434,8 @@ namespace YingLong
                         1, cbvSrvHeap->GetGPUHandle(pointLightSRVIndex));
                 }
 
-                // Bind UAV descriptor table (u0-u1): LightIndexList + LightCountPerTile
-                UINT uavIndex = pCore->GetLightIndexListUAVIndex();
+                // Bind UAV descriptor table (u0-u1): LightIndexList + LightCountPerTile (via manager)
+                UINT uavIndex = lightCulling->GetLightIndexListUAVIndex();
                 if (cbvSrvHeap && uavIndex != UINT_MAX)
                 {
                     commandList->SetComputeRootDescriptorTable(
@@ -1485,7 +1443,7 @@ namespace YingLong
                 }
 
                 // Transition buffers from SRV (previous frame) to UAV for compute shader writes
-                pCore->TransitionLightCullingBuffersToUAV(commandList);
+                lightCulling->TransitionToUAV(commandList);
 
                 // Dispatch compute shader
                 UINT tilesX = (SceneWidth + TILE_SIZE_X - 1) / TILE_SIZE_X;
@@ -1500,7 +1458,7 @@ namespace YingLong
                 commandList->ResourceBarrier(1, &uavBarrier);
 
                 // Transition buffers from UAV to SRV for pixel shader reading
-                pCore->TransitionLightCullingBuffersToSRV(commandList);
+                lightCulling->TransitionToSRV(commandList);
             }
         }
 
@@ -1523,21 +1481,7 @@ namespace YingLong
 
         // 设置视口和裁剪矩形
         // Set viewport and scissor rectangle
-        D3D12_VIEWPORT viewport = {};
-        viewport.TopLeftX = 0.0f;
-        viewport.TopLeftY = 0.0f;
-        viewport.Width = static_cast<float>(SceneWidth);
-        viewport.Height = static_cast<float>(SceneHeight);
-        viewport.MinDepth = 0.0f;
-        viewport.MaxDepth = 1.0f;
-        commandList->RSSetViewports(1, &viewport);
-
-        D3D12_RECT scissorRect = {};
-        scissorRect.left = 0;
-        scissorRect.top = 0;
-        scissorRect.right = SceneWidth;
-        scissorRect.bottom = SceneHeight;
-        commandList->RSSetScissorRects(1, &scissorRect);
+        SetViewportAndScissor(commandList, SceneWidth, SceneHeight);
 
         // 步骤3：绑定根签名和 Lighting Pass 管线状态
         // Step 3: Bind root signature and Lighting Pass pipeline state
@@ -1590,9 +1534,9 @@ namespace YingLong
 
         // 根参数 6：Tile 光源列表 SRV 描述符表（t6-t7，像素着色器）
         // Root param 6: Tile light list SRV descriptor table (t6-t7, pixel shader)
-        if (cbvSrvHeap && pCore->IsLightCullingReady())
+        if (cbvSrvHeap && lightCulling && lightCulling->IsReady())
         {
-            D3D12_GPU_DESCRIPTOR_HANDLE lightListHandle = pCore->GetLightIndexListSRVHandle();
+            D3D12_GPU_DESCRIPTOR_HANDLE lightListHandle = lightCulling->GetLightIndexListSRVHandle(*cbvSrvHeap);
             if (lightListHandle.ptr != 0)
             {
                 commandList->SetGraphicsRootDescriptorTable(6, lightListHandle);

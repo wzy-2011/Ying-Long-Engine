@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file PhysicsSystem.h
  * @brief 物理系统 / Physics system
  *
@@ -112,6 +112,31 @@ namespace YingLong
          */
         void RenderImGuiEditor(Scene& scene);
 
+        // === 力 / 冲量 / 速度 API ===
+        // === Force / Impulse / Velocity API ===
+
+        void ApplyForce(Scene& scene, entt::entity e, const XMFLOAT3& force);
+        void ApplyImpulse(Scene& scene, entt::entity e, const XMFLOAT3& impulse);
+        void ApplyTorque(Scene& scene, entt::entity e, const XMFLOAT3& torque);
+        void ApplyAngularImpulse(Scene& scene, entt::entity e, const XMFLOAT3& impulse);
+        void SetLinearVelocity(Scene& scene, entt::entity e, const XMFLOAT3& vel);
+        void SetAngularVelocity(Scene& scene, entt::entity e, const XMFLOAT3& vel);
+
+        // === 碰撞事件 API ===
+        // === Collision Event API ===
+
+        struct CollisionEvent
+        {
+            entt::entity EntityA;
+            entt::entity EntityB;
+            XMFLOAT3 ContactPoint;
+            XMFLOAT3 ContactNormal;
+            float ContactDistance;
+            bool IsTrigger;
+        };
+
+        std::vector<CollisionEvent> GetAndClearCollisionEvents();
+
         /**
          * @brief 遗留单实体更新（System ABI 兼容性）
          *        Legacy single-entity update (System ABI compatibility)
@@ -152,6 +177,25 @@ namespace YingLong
          * @param tr 变换组件引用 / Transform component reference
          */
         void WriteBackToTransform(const PxRigidDynamic& actor, TransformComponent& tr) const;
+
+        /**
+         * @brief 同步 PxRigidDynamic 的速度到 RigidbodyComponent
+         *        Sync PxRigidDynamic velocities to RigidbodyComponent
+         *
+         * @param actor PhysX 刚体动态对象 / PhysX rigid dynamic actor
+         * @param rb 刚体组件引用 / Rigidbody component reference
+         */
+        void SyncVelocities(const PxRigidDynamic& actor, RigidbodyComponent& rb) const;
+
+        /**
+         * @brief 从 PxActor 查找对应的 entt::entity
+         *        Find the entt::entity corresponding to a PxActor
+         *
+         * @param reg 注册表引用 / Registry reference
+         * @param actor PhysX Actor 指针 / PhysX Actor pointer
+         * @return entt::entity 对应的实体，找不到返回 entt::null
+         */
+        entt::entity FindEntityByActor(entt::registry& reg, PxActor* actor) const;
 
         /**
          * @brief entt on_destroy<RigidbodyComponent> 回调

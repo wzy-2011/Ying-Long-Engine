@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -196,9 +196,11 @@
     <ClInclude Include="CodeFile\Graphics\DX12\DX12DescriptorHeap.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12Drawable.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12Fence.h" />
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12LightCullingManager.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12PipelineState.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12Primitives.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12Renderer.h" />
+    <ClInclude Include="CodeFile\Graphics\DX12\DX12Types.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12RootSignature.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12ShaderCompiler.h" />
     <ClInclude Include="CodeFile\Graphics\DX12\DX12UploadBuffer.h" />
@@ -271,6 +273,7 @@
     <ClCompile Include="CodeFile\Graphics\DX12\DX12DescriptorHeap.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12Drawable.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12Fence.cpp" />
+    <ClCompile Include="CodeFile\Graphics\DX12\DX12LightCullingManager.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12PipelineState.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12Primitives.cpp" />
     <ClCompile Include="CodeFile\Graphics\DX12\DX12Renderer.cpp" />

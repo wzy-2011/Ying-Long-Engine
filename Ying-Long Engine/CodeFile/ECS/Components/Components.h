@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file Components.h
  * @brief ECS 所有组件定义 / All ECS component definitions
  *
@@ -141,6 +141,26 @@ namespace YingLong
         float AngularDamping = 0.5f;
 
         /**
+         * @brief 线速度（运行时同步） / Linear velocity (runtime sync)
+         *
+         * 每帧由 PhysicsSystem 从 PxRigidDynamic 同步。只读用途；
+         * 设置速度请使用 PhysicsSystem::SetLinearVelocity。
+         * Synced from PxRigidDynamic every frame by PhysicsSystem.
+         * Read-only for inspection; use PhysicsSystem::SetLinearVelocity to set.
+         */
+        XMFLOAT3 LinearVelocity = { 0.0f, 0.0f, 0.0f };
+
+        /**
+         * @brief 角速度（运行时同步） / Angular velocity (runtime sync)
+         *
+         * 每帧由 PhysicsSystem 从 PxRigidDynamic 同步。只读用途；
+         * 设置速度请使用 PhysicsSystem::SetAngularVelocity。
+         * Synced from PxRigidDynamic every frame by PhysicsSystem.
+         * Read-only for inspection; use PhysicsSystem::SetAngularVelocity to set.
+         */
+        XMFLOAT3 AngularVelocity = { 0.0f, 0.0f, 0.0f };
+
+        /**
          * @brief 运行时 Actor 句柄 / Runtime actor handle
          *
          * 由 PhysicsSystem 创建和释放，持有 PxRigidDynamic 或 PxRigidStatic。
@@ -189,6 +209,19 @@ namespace YingLong
         float StaticFriction = 0.5f;    ///< 静摩擦系数 / Static friction coefficient
         float DynamicFriction = 0.5f;   ///< 动摩擦系数 / Dynamic friction coefficient
         float Restitution = 0.1f;       ///< 弹性系数 / Restitution (bounciness)
+
+        /**
+         * @brief 是否为触发器 / Whether this collider is a trigger
+         *
+         * 触发器不参与物理碰撞响应（不会推开其他物体），但会产生
+         * 碰撞事件（onTrigger），适合用于区域检测、拾取等。
+         * 运行时可通过 ImGui 切换。
+         *
+         * Triggers don't participate in collision response (won't push other
+         * bodies away) but generate trigger events (onTrigger). Good for
+         * area detection, pickups, etc. Can be toggled at runtime via ImGui.
+         */
+        bool IsTrigger = false;
     };
 
     /**

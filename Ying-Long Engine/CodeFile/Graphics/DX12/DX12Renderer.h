@@ -88,9 +88,6 @@ namespace YingLong
         // Lazily created on first SetLightCountData() call.
         std::unique_ptr<ConstantBufferDX12<DX12LightCountCB>> pLightCountBuffer;
 
-        // Light culling constant buffer for the compute shader (Tile-Based Light Culling)
-        std::unique_ptr<ConstantBufferDX12<LightCullingConstantsCB>> pLightCullingConstants;
-
         Camera* pCamera;
 
         int Width;
@@ -122,5 +119,9 @@ namespace YingLong
         void BeginGeometryPass(const float clearColor[4]);
         void EndGeometryPass();
         void ExecuteLightingPass();
+
+        // Shared helpers to reduce code duplication
+        void SetViewportAndScissor(ID3D12GraphicsCommandList* commandList, int width, int height);
+        void RestoreBackBufferAndViewport(ID3D12GraphicsCommandList* commandList);
     };
 }

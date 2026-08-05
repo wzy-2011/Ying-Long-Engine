@@ -47,7 +47,7 @@ namespace YingLong
 	:
 	SplashWindow(1000, 800, L"应龙引擎 加载中", true),
 	MainWindow(1750, 900, windowTitle.c_str()),
-	bUseDX12(false),
+	bUseDX12(true),
 	pDX12DemoScene(nullptr)
 	{
 		// 标记初始化是否完成，用于主线程等待

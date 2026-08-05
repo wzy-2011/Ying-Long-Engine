@@ -3930,9 +3930,17 @@ ImGuiContext::ImGuiContext(ImFontAtlas* shared_font_atlas)
                         ImFontConfig chineseCfg;
                         chineseCfg.MergeMode = true;
                         chineseCfg.FontDataOwnedByAtlas = true;
-                        // Use full CJK Unified Ideographs block (0x4E00-0x9FFF)
-                        // to cover all common Chinese characters including "render".
-                        static ImWchar chineseRanges[] = { 0x4E00, 0x9FFF, 0 };
+                        // Cover CJK ideographs + common Chinese punctuation marks.
+                        // Includes General Punctuation (0x2000-0x206F), CJK Symbols/Punctuations (0x3000-0x303F),
+                        // CJK Unified Ideographs (0x4E00-0x9FFF), and Halfwidth/Fullwidth Forms (0xFF00-0xFFEF).
+                        static ImWchar chineseRanges[] =
+                        {
+                            0x2000, 0x206F, // General Punctuation (quotes, dashes, etc.)
+                            0x3000, 0x303F, // CJK Symbols and Punctuations (。、 etc.)
+                            0x4E00, 0x9FFF, // CJK Unified Ideographs
+                            0xFF00, 0xFFEF, // Halfwidth and Fullwidth Forms (，． etc.)
+                            0
+                        };
                         IO.Fonts->AddFontFromMemoryTTF(fontData, (int)fileSize, 16.0f, &chineseCfg,
                             chineseRanges);
                         break; // Successfully loaded a Chinese font

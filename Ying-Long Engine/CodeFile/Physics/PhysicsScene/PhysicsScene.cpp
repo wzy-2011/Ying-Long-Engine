@@ -1,7 +1,78 @@
-﻿#include "PhysicsScene.h"
+#include "PhysicsScene.h"
 
 namespace YingLong
 {
+    // Custom filter shader: enables collision + contact/trigger notifications
+    // for all shape pairs, so onContact and onTrigger callbacks fire.
+    static PxFilterFlags CollisionFilterShader(
+        PxFilterObjectAttributes attributes0, PxFilterData filterData0,
+        PxFilterObjectAttributes attributes1, PxFilterData filterData1,
+        PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+    {
+        pairFlags = PxPairFlag::eCONTACT_DEFAULT
+                  | PxPairFlag::eNOTIFY_TOUCH_FOUND
+                  | PxPairFlag::eNOTIFY_TOUCH_LOST;
+        return PxFilterFlag::eDEFAULT;
+    }
+
+    // === PhysicsCollisionCallback ===
+
+    void PhysicsCollisionCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs)
+    {
+        for (PxU32 i = 0; i < nbPairs; i++)
+        {
+            const PxContactPair& pair = pairs[i];
+            // Extract contact points using extractContacts
+            PxU32 contactCount = pair.contactCount;
+            if (contactCount == 0)
+                continue;
+
+            PxContactPairPoint* contactPoints = new PxContactPairPoint[contactCount];
+            PxU32 numContacts = pair.extractContacts(contactPoints, contactCount);
+
+            if (numContacts > 0)
+            {
+                const PxContactPairPoint& cp = contactPoints[0];
+                RawCollisionEvent evt;
+                evt.ActorA = pairHeader.actors[0];
+                evt.ActorB = pairHeader.actors[1];
+                evt.ContactPoint = XMFLOAT3(cp.position.x, cp.position.y, cp.position.z);
+                evt.ContactNormal = XMFLOAT3(cp.normal.x, cp.normal.y, cp.normal.z);
+                evt.ContactDistance = cp.separation;
+                evt.IsTrigger = false;
+                m_Events.push_back(evt);
+            }
+
+            delete[] contactPoints;
+        }
+    }
+
+    void PhysicsCollisionCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
+    {
+        for (PxU32 i = 0; i < count; i++)
+        {
+            const PxTriggerPair& tp = pairs[i];
+            // Skip pairs where an actor was removed
+            if (tp.status == PxPairFlag::eNOTIFY_TOUCH_LOST)
+                continue;
+
+            RawCollisionEvent evt;
+            evt.ActorA = tp.triggerActor;
+            evt.ActorB = tp.otherActor;
+            evt.IsTrigger = true;
+            m_Events.push_back(evt);
+        }
+    }
+
+    std::vector<RawCollisionEvent> PhysicsCollisionCallback::GetAndClearEvents()
+    {
+        std::vector<RawCollisionEvent> result;
+        std::swap(result, m_Events);
+        return result;
+    }
+
+    // === PhysicsScene ===
+
     PhysicsScene::PhysicsScene()
     {
     }
@@ -12,11 +83,15 @@ namespace YingLong
         sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
         pCpuDispatcher = PxDefaultCpuDispatcherCreate(std::thread::hardware_concurrency());
         sceneDesc.cpuDispatcher = pCpuDispatcher;
-        sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+        sceneDesc.filterShader = CollisionFilterShader;
 
         // Use Persistent Contact Manifold for more stable box-box and box-static
         // collisions (reduces jittering/tunnelling at rest).
         sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;
+
+        // Enable notification for contact and trigger events
+        sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+        sceneDesc.simulationEventCallback = &m_CollisionCallback;
 
         // Suppress micro-bounces: relative velocities below this threshold are
         // treated as non-impacting contacts. Without this, tiny residual velocities
